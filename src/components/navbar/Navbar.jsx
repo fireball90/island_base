@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './Navbar.css';
 import { Outlet, Link } from "react-router-dom";
 
@@ -7,11 +6,11 @@ import { Outlet, Link } from "react-router-dom";
 const  Navigation = () => {
     return (
         <>
-        <nav class="nav-container">
-            <div class="nav-header">
+        <nav className="nav-container">
+            <div className="nav-header">
                         <p>ISLANDERS</p>
             </div>
-            <div class="nav-links">    
+            <div className="nav-links">    
                 <ul>       
                     <li><Link to="/management">Menedzselés</Link></li>   
                     <li><Link to="/war">Csata</Link></li>

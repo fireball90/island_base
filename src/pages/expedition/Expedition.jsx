@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 ReactDOM.render(React.createElement(Expedition), document.getElementById("root"));
 function Expedition() {
   return <div>
-            <div class="d-flex align-items-center justify-content-center">
+            <div className="d-flex align-items-center justify-content-center">
                 <BackgroundComponent>
                     
                 </BackgroundComponent>
@@ -14,7 +14,7 @@ function Expedition() {
 
 function BackgroundComponent(){
     return (
-        <div class="content-bg">
+        <div className="content-bg">
             <p>Expedition</p>
         </div>
     );

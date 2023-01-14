@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-ReactDOM.render(React.createElement(Register), document.getElementById("root"));
+
 function Register() {
   return <div id="islandbg"><form id="form" class="d-flex align-items-center">
       <InputComponent InputId={"username"} LabelText={"Felhasználó név:"} InputType={"login"}></InputComponent>
@@ -14,17 +13,17 @@ function Register() {
 }
 function InputComponent({InputId, LabelText, InputType}) {
     return <div>
-    <label for={InputId} class="col-sm-2 form-label">{LabelText}</label>
+    <label for={InputId} className="col-sm-2 form-label">{LabelText}</label>
     <div class="col-sm-10">
-      <input type={InputType} readonly class="form-control" id={InputId}/>
+      <input type={InputType} readonly className="form-control" id={InputId}/>
     </div>
   </div>
 }
 function ButtonComponent() {
     return  <div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-10">
-                    <button class="gomb" type="button" onClick={() =>{
+                <div className="col-sm-2"></div>
+                <div className="col-sm-10">
+                    <button className="gomb" type="button" onClick={() =>{
                          var usernameInput = document.getElementById("username");
                          var emailInput = document.getElementById("email");
                          var pwdInput = document.getElementById("pwd");
@@ -45,8 +44,8 @@ function ButtonComponent() {
 }
 function LinkComponent(){
     return <div className="mb-3 row">
-                <div class="col-sm-2"></div>
-                <div class="col-sm-10">
+                <div className="col-sm-2"></div>
+                <div className="col-sm-10">
                     <a href="login.jsx">Vissza belépéshez</a>
                 </div>
     </div>

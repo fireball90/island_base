@@ -1,4 +1,4 @@
-ul {
+.nav-container ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -8,20 +8,20 @@ ul {
     text-align: center;
   }
   
-li {
+  .nav-container li {
     font-size: 20px;
     font-weight: 900;
     display: inline;
 }
   
-li a {
+.nav-container li a {
     color: rgb(126, 107, 0);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
   
-li a:hover {
+.nav-container li a:hover {
     color: red;
     text-decoration:underline;
 }
