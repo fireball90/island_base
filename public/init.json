@@ -1,9 +1,9 @@
 {
     "availableBuildingAreas": [
-        { "coordX": 5, "coordY": 8 },
-        { "coordX": 20, "coordY": 10 },
-        { "coordX": 8, "coordY": 14 },
-        { "coordX": 15, "coordY": 6 }
+        { "coordX": 5, "coordY": 7 },
+        { "coordX": 6, "coordY": 3 },
+        { "coordX": 15, "coordY": 11 },
+        { "coordX": 12, "coordY": 6 }
     ],
     "builtBuildings": [
         {
