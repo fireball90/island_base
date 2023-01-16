@@ -33,39 +33,75 @@ export default class GameMap extends Component {
     }
 
     calculateCameraPosition() {
+        const headerHeight = 90
         const screenWidth = window.innerWidth
-        const screenHeight = window.innerHeight - 90 // fejléc magassága
+        const screenHeight = window.innerHeight - headerHeight
 
-        let tileSize = screenWidth / 30
+        const islandWidth = 50
+        const islandHeight = 30
+        const waterWidth = 70
+        const waterHeight = 50
 
-        if (screenHeight > tileSize * 20) {  
+        let tileSize = screenWidth / islandWidth
+        if (screenHeight > tileSize * islandHeight) {  
             this.setState(state => ({
                 ...state,
                 tileSize: tileSize,
-                waterWidth: screenWidth / 3 * 5,
-                waterHeight: tileSize * 40,
-                waterX: (screenWidth - screenWidth / 3 * 5) / 2,
-                waterY: (screenHeight - tileSize * 40) / 2,
+                waterWidth: screenWidth / (islandWidth / 10) * (waterWidth / 10),
+                waterHeight: tileSize * waterHeight,
+                waterX: (screenWidth - screenWidth / (islandWidth / 10) * (waterWidth / 10)) / 2,
+                waterY: (screenHeight - tileSize * waterHeight) / 2,
                 islandWidth: screenWidth, 
-                islandHeight: tileSize * 20, 
+                islandHeight: tileSize * islandHeight, 
                 islandX: (screenWidth - screenWidth) / 2,
-                islandY: (screenHeight - tileSize * 20) / 2
+                islandY: (screenHeight - tileSize * islandHeight) / 2
             }))
         } else {
-            tileSize = screenHeight / 20
+            tileSize = screenHeight / islandHeight
             this.setState(state => ({
                 ...state,
                 tileSize: tileSize,
-                waterWidth: tileSize * 50,
-                waterHeight: screenHeight / 2 * 4,
-                waterX: (screenWidth - tileSize * 50) / 2,
-                waterY: (screenHeight - screenHeight / 2 * 4) / 2,
-                islandWidth: tileSize * 30, 
+                waterWidth: tileSize * waterWidth,
+                waterHeight: screenHeight / (islandHeight / 10) * (waterHeight / 10),
+                waterX: (screenWidth - tileSize * waterWidth) / 2,
+                waterY: (screenHeight - screenHeight / (islandHeight / 10) * (waterHeight / 10)) / 2,
+                islandWidth: tileSize * islandWidth, 
                 islandHeight: screenHeight,
-                islandX: ((screenWidth- tileSize * 30) / 2),
+                islandX: ((screenWidth- tileSize * islandWidth) / 2),
                 islandY: ((screenHeight - screenHeight) / 2)
             }))
         }
+
+        // let tileSize = screenWidth / 30
+
+        // if (screenHeight > tileSize * 20) {  
+        //     this.setState(state => ({
+        //         ...state,
+        //         tileSize: tileSize,
+        //         waterWidth: screenWidth / 3 * 5,
+        //         waterHeight: tileSize * 40,
+        //         waterX: (screenWidth - screenWidth / 3 * 5) / 2,
+        //         waterY: (screenHeight - tileSize * 40) / 2,
+        //         islandWidth: screenWidth, 
+        //         islandHeight: tileSize * 20, 
+        //         islandX: (screenWidth - screenWidth) / 2,
+        //         islandY: (screenHeight - tileSize * 20) / 2
+        //     }))
+        // } else {
+        //     tileSize = screenHeight / 20
+        //     this.setState(state => ({
+        //         ...state,
+        //         tileSize: tileSize,
+        //         waterWidth: tileSize * 50,
+        //         waterHeight: screenHeight / 2 * 4,
+        //         waterX: (screenWidth - tileSize * 50) / 2,
+        //         waterY: (screenHeight - screenHeight / 2 * 4) / 2,
+        //         islandWidth: tileSize * 30, 
+        //         islandHeight: screenHeight,
+        //         islandX: ((screenWidth- tileSize * 30) / 2),
+        //         islandY: ((screenHeight - screenHeight) / 2)
+        //     }))
+        // }
     }
 
     resize(scale, mouseX, mouseY) {
@@ -581,13 +617,13 @@ export default class GameMap extends Component {
                         this.props.availableBuildingAreas.map((area, index) => (
                             <Tile 
                                 key={index}
-                                width={this.state.tileSize}
-                                height={this.state.tileSize}
-                                top={(area.coordY * this.state.tileSize)}
-                                left={(area.coordX * this.state.tileSize)}
+                                width={this.state.tileSize * 2}
+                                height={this.state.tileSize * 2}
+                                top={(area.coordY * this.state.tileSize * 2)}
+                                left={(area.coordX * this.state.tileSize * 2)}
                             >
                                 <BuildingArea 
-                                    active={ this.props.waitToBuild != null }
+                                    active={this.props.waitToBuild != null }
                                     coordX={area.coordX}
                                     coordY={area.coordY}
                                     buildBuilding={this.props.buildBuilding}
@@ -600,10 +636,10 @@ export default class GameMap extends Component {
                         this.props.builtBuildings.map((building, index) => (
                             <Tile 
                                 key={index}
-                                width={this.state.tileSize}
-                                height={this.state.tileSize}
-                                top={(building.coordY * this.state.tileSize)}
-                                left={(building.coordX * this.state.tileSize)}>
+                                width={this.state.tileSize * 2}
+                                height={this.state.tileSize * 2}
+                                top={(building.coordY * this.state.tileSize * 2)}
+                                left={(building.coordX * this.state.tileSize * 2)}>
                                 <Building 
                                     building={building}
                                     zoom={this.state.zoom}

@@ -22,7 +22,7 @@
     z-index: 1;
     position: absolute;
     image-rendering: pixelated;
-    background-image: url('../../../../public/assets/island.png');
+    background-image: url('../../../../public/assets/europian_island.png');
     background-repeat: no-repeat;
     background-size: cover;
 }

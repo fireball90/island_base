@@ -4,8 +4,8 @@ import style from './Management.module.css'
 
 export default function Management() {
   return (
-    <div className={style.container}>
-      <IslandManagement/>
-    </div>
+      <div className={style.container}>
+        <IslandManagement/>
+      </div>
     ) 
 }
