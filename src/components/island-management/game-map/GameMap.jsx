@@ -589,6 +589,7 @@ export default class GameMap extends Component {
                         height: this.state.islandHeight,
                         top: this.state.islandY,
                         left: this.state.islandX,
+                        backgroundImage: `url(${this.props.islandImagePath})`
                     }}>
                         
                     <div className={style.animations}>

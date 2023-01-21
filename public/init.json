@@ -102,5 +102,6 @@
     ],
     "sprites": [
         "/assets/sprites/sprite-0001.png"
-    ]
+    ],
+    "islandImagePath": "/assets/europian_island.png"
 }

@@ -1,22 +1,13 @@
 import React from 'react';
+import IslandsPVP from '../../components/islands-pvp/IslandsPVP';
+import style from './War.module.css'
 
 function War() {
-  return <div>
-            <div class="d-flex align-items-center justify-content-center">
-                <BackgroundComponent>
-                    
-                </BackgroundComponent>
-            </div>
-        </div>
-     
-}
-
-function BackgroundComponent(){
     return (
-        <div className="content-bg">
-            <p>War</p>
+        <div className={style.container}>
+            <IslandsPVP />
         </div>
-    );
+    ) 
 }
 
 export default War;

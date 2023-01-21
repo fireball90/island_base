@@ -33,7 +33,8 @@ export default class IslandManagement extends Component {
       routeTiles: [],
       waitToBuild: null,
       selectedBuildingToUpdate: null,
-      sprites: []
+      sprites: [],
+      islandImagePath: ""
     }
 
     this.updateItemStartTimers = []
@@ -117,7 +118,8 @@ export default class IslandManagement extends Component {
         golds: initFile.items.golds
       },
       routeTiles: initFile.routeTiles,
-      sprites: initFile.sprites
+      sprites: initFile.sprites,
+      islandImagePath: initFile.islandImagePath
     }), () => {
       for(let building of this.state.builtBuildings) {
         this.startUpdateItemTimer(building)
@@ -382,6 +384,7 @@ export default class IslandManagement extends Component {
           selectBuildingToUpdate={this.selectBuildingToUpdate}
           routeTiles={this.state.routeTiles}
           sprites={this.state.sprites}
+          islandImagePath={this.state.islandImagePath}
         />
         <UpdateBuildingDialog
           show={this.state.selectedBuildingToUpdate != null}
