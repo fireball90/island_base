@@ -6,6 +6,7 @@ function War() {
     return (
         <div className={style.container}>
             <IslandsPVP />
+
         </div>
     ) 
 }

@@ -6,35 +6,3 @@ body {
     sans-serif;
 }
 
-.middle{
-  margin: auto;
-  height: 100%;
-}
-
-#islandbg{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: auto;
-  color: rgb(79, 173, 255);
-  text-shadow: 1px 1px black;
-  font-size: 20px;
-  font-weight: 800;
-  width:600px;
-  height: 800px;
-  background-image: url('../src/images/loginsziget.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-input{
-  background-color: rgb(79, 173, 255);
-}
-
-.content-bg{
-  margin-top: 20px;
-  background-color: #dcbf6f;
-  width: 90%;
-  height: 800px;
-}
