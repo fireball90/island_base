@@ -1,22 +1,35 @@
 import React from 'react';
-import ButtonComponent from '../../components/button/ButtonComponent';
+import style from '../login/login.css';
 
-function Login() {
-  return <div id="islandbg"><form id="form" className="d-flex align-items-center justify-items-center">
-      <InputComponent InputId={"login"} LabelText={"Login"} InputType={"login"}></InputComponent>
-      <InputComponent InputId={"pwd"} LabelText={"Pwd"} InputType={"password"}></InputComponent>
-      <ButtonComponent></ButtonComponent>
-      <button>Hello</button>
-      </form></div>
+export function Login() {
+  return  <div className='d-flex justify-content-center align-items-center'>
+            <div className='login-container'>
+                <div className=''>
+        
+                </div>
+                  <form id="form" className="">
+                    <div className="form-group row pb-3">
+                      <label className="col-form-label">Név:</label>
+                      <div className="col-sm-6">
+                        <input type="text" name="name" className="form-control" />
+                      </div>
+                    </div>
+                    <div className="form-group row pb-3">
+                      <label className="col-form-label">Ár:</label>
+                      <div className="col-sm-6">
+                        <input type="number" name="price" className="form-control" />
+                      </div>
+                    </div>
+                      <button type="submit" className='btn btn-button1'>Belépés</button>
+                  </form>
+                <div className=''>
+                    <p className='ml-auto'><a href='/register'>Még nem regisztrált? Kattintson ide!</a></p>
+                    <p className='ml-auto'><a href='/pwreset'>Elfelejtette a jelszavát?</a></p>
+                </div>
+            </div>
+          </div>
      
 }
-function InputComponent({InputId, LabelText, InputType}) {
-    return <div>
-    <label htmlFor={InputId} className="col-sm-2 form-label">{LabelText}</label>
-    <div class="col-sm-10">
-      <input type={InputType} readOnly className="form-control" id={InputId}/>
-    </div>
-  </div>
-}//className="mb-3 row"
+
 
 export default Login;
