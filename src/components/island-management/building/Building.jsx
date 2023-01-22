@@ -70,7 +70,7 @@ export default class Building extends Component{
 
     render() {
         const display = (
-            this.props.building.alreadyProducedGold +
+            this.props.building.alreadyProducedCoin +
             this.props.building.alreadyProducedIrons +
             this.props.building.alreadyProducedStones +
             this.props.building.alreadyProducedWoods > 0 )
@@ -98,8 +98,8 @@ export default class Building extends Component{
                             <div className="d-flex flex-column justify-content-center">
                                 <ul className="list-unstyled">
                                     {
-                                        this.props.building.alreadyProducedGold > 0 ? 
-                                        <li>{ this.props.building.alreadyProducedGold } termelt arany</li> : 
+                                        this.props.building.alreadyProducedCoin > 0 ? 
+                                        <li>{ this.props.building.alreadyProducedCoin } termelt arany</li> : 
                                         null
                                     }    
                                     {

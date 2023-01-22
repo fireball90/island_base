@@ -19,7 +19,7 @@ export default class IslandManagement extends Component {
       builtBuildings: [],
       unbuiltBuildings: [],
       stats: {
-        xp: 0,
+        experiencePoints: 0,
         strength: 0,
         ability: 0,
         intelligence: 0
@@ -28,7 +28,7 @@ export default class IslandManagement extends Component {
         woods: 0,
         stones: 0,
         irons: 0,
-        golds: 0
+        coins: 0
       },
       routeTiles: [],
       waitToBuild: null,
@@ -71,17 +71,17 @@ export default class IslandManagement extends Component {
         new Date(b.buildDate),
         b.description, 
         b.imagePath, 
-        b.goldsForUpdate, 
+        b.coinsForUpdate, 
         b.ironsForUpdate, 
         b.stonesForUpdate, 
         b.woodsForUpdate, 
         b.productionInterval,
         new Date(b.lastCollectTime),
-        b.produceGoldCount,
+        b.produceCoinCount,
         b.produceIronsCount,
         b.produceStonesCount,
         b.produceWoodsCount,
-        this.calculateProducedItem(new Date(b.lastCollectTime), b.produceGoldCount, b.productionInterval),
+        this.calculateProducedItem(new Date(b.lastCollectTime), b.produceCoinCount, b.productionInterval),
         this.calculateProducedItem(new Date(b.lastCollectTime), b.produceIronsCount, b.productionInterval),
         this.calculateProducedItem(new Date(b.lastCollectTime), b.produceStonesCount, b.productionInterval),
         this.calculateProducedItem(new Date(b.lastCollectTime), b.produceWoodsCount, b.productionInterval),
@@ -92,7 +92,7 @@ export default class IslandManagement extends Component {
     const unbuiltBuildings = initFile.unbuiltBuildings?.map(b => 
       new UnbuiltBuildingModel(
         b.name,
-        b.goldsForBuild,
+        b.coinsForBuild,
         b.ironsForBuild,
         b.stonesForBuild,
         b.woodsForBuild
@@ -106,7 +106,7 @@ export default class IslandManagement extends Component {
       builtBuildings: builtBuildings,
       unbuiltBuildings: unbuiltBuildings,
       stats: {
-        xp: initFile.stats.xp,
+        experiencePoints: initFile.stats.experiencePoints,
         strength: initFile.stats.strength,
         ability: initFile.stats.ability,
         intelligence: initFile.stats.intelligence
@@ -115,7 +115,7 @@ export default class IslandManagement extends Component {
         woods: initFile.items.woods,
         stones: initFile.items.stones,
         irons: initFile.items.irons,
-        golds: initFile.items.golds
+        coins: initFile.items.coins
       },
       routeTiles: initFile.routeTiles,
       sprites: initFile.sprites,
@@ -186,7 +186,7 @@ export default class IslandManagement extends Component {
           woods: state.items.woods - chosenBuilding.woodsForBuild,
           stones: state.items.stones - chosenBuilding.stonesForBuild,
           irons: state.items.irons - chosenBuilding.ironsForBuild,
-          golds: state.items.golds - chosenBuilding.goldsForBuild
+          coins: state.items.coins - chosenBuilding.coinsForBuild
         },
         waitToBuild: null
       }))
@@ -222,7 +222,7 @@ export default class IslandManagement extends Component {
         woods: state.items.woods - building.woodsForUpdate,
         stones: state.items.stones - building.stonesForUpdate,
         irons: state.items.irons - building.ironsForUpdate,
-        golds: state.items.golds - building.goldsForUpdate
+        coins: state.items.coins - building.coinsForUpdate
       },
       selectedBuildingToUpdate: null
     }))
@@ -246,7 +246,7 @@ export default class IslandManagement extends Component {
   handleProducedItemUpdate(building) {
     const tickedBuilding = this.state.builtBuildings.find(b => b.name == building.name)
 
-    tickedBuilding.alreadyProducedGold += tickedBuilding.produceGoldCount
+    tickedBuilding.alreadyProducedCoin += tickedBuilding.produceCoinCount
     tickedBuilding.alreadyProducedIrons += tickedBuilding.produceIronsCount
     tickedBuilding.alreadyProducedStones += tickedBuilding.produceStonesCount
     tickedBuilding.alreadyProducedWoods += tickedBuilding.produceWoodsCount
@@ -318,13 +318,13 @@ export default class IslandManagement extends Component {
       building.buildDate,
       building.description, 
       building.imagePath, 
-      building.goldsForUpdate, 
+      building.coinsForUpdate, 
       building.ironsForUpdate, 
       building.stonesForUpdate, 
       building.woodsForUpdate, 
       building.productionInterval,
       new Date(),
-      building.produceGoldCount,
+      building.produceCoinCount,
       building.produceIronsCount,
       building.produceStonesCount,
       building.produceWoodsCount,
@@ -344,7 +344,7 @@ export default class IslandManagement extends Component {
         woods: state.items.woods + building.alreadyProducedWoods,
         stones: state.items.stones + building.alreadyProducedStones,
         irons: state.items.irons + building.alreadyProducedIrons,
-        golds: state.items.golds + building.alreadyProducedGold
+        coins: state.items.coins + building.alreadyProducedCoin
       }
     }))
   }
@@ -373,6 +373,7 @@ export default class IslandManagement extends Component {
           unbuiltBuildings={this.state.unbuiltBuildings}
           selectWaitToBuild={this.selectWaitToBuild}
           waitToBuild={this.state.waitToBuild}
+          experiencePoints={this.state.stats.experiencePoints}
         />
         <GameMap
           isInitReady={this.state.isInitReady}

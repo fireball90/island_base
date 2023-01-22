@@ -83,7 +83,7 @@ export default class UpdateBuildingDialog extends Component {
                         <tbody>
                             <tr>
                                 <td>Arany</td>
-                                <td>{ this.props.building?.produceGoldCount } darab</td>
+                                <td>{ this.props.building?.produceCoinCount } darab</td>
                                 <td>{ this.props.building?.productionInterval / 60000 } perc</td>
                             </tr>
                             <tr>
@@ -119,10 +119,10 @@ export default class UpdateBuildingDialog extends Component {
                             <tr>
                                 <td>Arany</td>
                                 <td>
-                                    {this.props.items.golds} darab
+                                    {this.props.items.coins} darab
                                 </td>
                                 <td>
-                                    {this.props.building?.goldsForUpdate} darab
+                                    {this.props.building?.coinsForUpdate} darab
                                 </td>
                             </tr>
                             <tr>
@@ -167,7 +167,7 @@ export default class UpdateBuildingDialog extends Component {
                         variant="primary" 
                         disabled={
                             !this.props.building?.checkCanBeUpdate(
-                                this.props.items.golds,
+                                this.props.items.coins,
                                 this.props.items.irons,
                                 this.props.items.stones,
                                 this.props.items.woods,

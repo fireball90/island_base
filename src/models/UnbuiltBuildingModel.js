@@ -1,19 +1,19 @@
 export class UnbuiltBuildingModel {
     constructor(
-        name, goldsForBuild, ironsForBuild, stonesForBuild, woodsForBuild) {
+        name, coinsForBuild, ironsForBuild, stonesForBuild, woodsForBuild) {
         
         this.name = name
-        this.goldsForBuild = goldsForBuild
+        this.coinsForBuild = coinsForBuild
         this.ironsForBuild = ironsForBuild
         this.stonesForBuild = stonesForBuild
         this.woodsForBuild = woodsForBuild
     }
 
     checkCanBeBuilt(
-        availableGolds, availableIrons, availableStones, availableWoods) {
+        availableCoins, availableIrons, availableStones, availableWoods) {
         
         return ( 
-            this.goldsForBuild <= availableGolds && 
+            this.coinsForBuild <= availableCoins && 
             this.ironsForBuild <= availableIrons && 
             this.stonesForBuild <= availableStones && 
             this.woodsForBuild <= availableWoods )

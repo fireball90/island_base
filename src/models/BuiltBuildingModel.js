@@ -8,17 +8,17 @@ export class BuiltBuildingModel {
         buildDate,
         description, 
         imagePath, 
-        goldsForUpdate, 
+        coinsForUpdate, 
         ironsForUpdate, 
         stonesForUpdate, 
         woodsForUpdate, 
         productionInterval,
         lastCollectTime,
-        produceGoldCount,
+        produceCoinCount,
         produceIronsCount,
         produceStonesCount,
         produceWoodsCount,
-        alreadyProducedGold,
+        alreadyProducedCoin,
         alreadyProducedIrons,
         alreadyProducedStones,
         alreadyProducedWoods,
@@ -32,26 +32,26 @@ export class BuiltBuildingModel {
         this.buildDate = buildDate
         this.description = description
         this.imagePath = imagePath
-        this.goldsForUpdate = goldsForUpdate
+        this.coinsForUpdate = coinsForUpdate
         this.ironsForUpdate = ironsForUpdate
         this.stonesForUpdate = stonesForUpdate
         this.woodsForUpdate = woodsForUpdate
         this.productionInterval = productionInterval
         this.lastCollectTime = lastCollectTime
-        this.produceGoldCount = produceGoldCount
+        this.produceCoinCount = produceCoinCount
         this.produceIronsCount = produceIronsCount
         this.produceStonesCount = produceStonesCount
         this.produceWoodsCount = produceWoodsCount
-        this.alreadyProducedGold = alreadyProducedGold 
+        this.alreadyProducedCoin = alreadyProducedCoin
         this.alreadyProducedIrons = alreadyProducedIrons
         this.alreadyProducedStones = alreadyProducedStones
         this.alreadyProducedWoods = alreadyProducedWoods
         this.nextProductionDate = nextProductionDate
     }
 
-    checkCanBeUpdate(availableGolds, availableIrons, availableStones, availableWoods) {        
+    checkCanBeUpdate(availableCoins, availableIrons, availableStones, availableWoods) {        
         return ( 
-            this.goldsForUpdate <= availableGolds &&
+            this.coinsForUpdate <= availableCoins &&
             this.ironsForUpdate <= availableIrons && 
             this.stonesForUpdate <= availableStones && 
             this.woodsForUpdate <= availableWoods &&

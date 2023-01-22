@@ -71,37 +71,6 @@ export default class GameMap extends Component {
                 islandY: ((screenHeight - screenHeight) / 2)
             }))
         }
-
-        // let tileSize = screenWidth / 30
-
-        // if (screenHeight > tileSize * 20) {  
-        //     this.setState(state => ({
-        //         ...state,
-        //         tileSize: tileSize,
-        //         waterWidth: screenWidth / 3 * 5,
-        //         waterHeight: tileSize * 40,
-        //         waterX: (screenWidth - screenWidth / 3 * 5) / 2,
-        //         waterY: (screenHeight - tileSize * 40) / 2,
-        //         islandWidth: screenWidth, 
-        //         islandHeight: tileSize * 20, 
-        //         islandX: (screenWidth - screenWidth) / 2,
-        //         islandY: (screenHeight - tileSize * 20) / 2
-        //     }))
-        // } else {
-        //     tileSize = screenHeight / 20
-        //     this.setState(state => ({
-        //         ...state,
-        //         tileSize: tileSize,
-        //         waterWidth: tileSize * 50,
-        //         waterHeight: screenHeight / 2 * 4,
-        //         waterX: (screenWidth - tileSize * 50) / 2,
-        //         waterY: (screenHeight - screenHeight / 2 * 4) / 2,
-        //         islandWidth: tileSize * 30, 
-        //         islandHeight: screenHeight,
-        //         islandX: ((screenWidth- tileSize * 30) / 2),
-        //         islandY: ((screenHeight - screenHeight) / 2)
-        //     }))
-        // }
     }
 
     resize(scale, mouseX, mouseY) {
@@ -557,7 +526,7 @@ export default class GameMap extends Component {
 
     render() {
         return !this.props.isInitReady ? (
-            <div className="vh-100 vw-100 d-flex justify-content-center align-items-center">
+            <div className="vw-100 d-flex justify-content-center align-items-center" style={{ height: 'calc(100vh - 90px)' }}>
                 <Spinner animation="grow" />
             </div>
         ) : (
