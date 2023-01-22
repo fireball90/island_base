@@ -1,4 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Frijole&family=Permanent+Marker&family=Press+Start+2P&family=Rubik+Dirt&display=swap');
+
+/*
+font-family: 'Frijole', cursive;
+font-family: 'Permanent Marker', cursive;
+font-family: 'Press Start 2P', cursive;
+font-family: 'Rubik Dirt', cursive;
+*/
+
 .nav-container ul {
+    font-family: 'Rubik Dirt', cursive;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -8,28 +18,28 @@
     text-align: center;
   }
   
-  .nav-container li {
-    font-size: 20px;
+.nav-container li {
+    font-size: 24px;
     font-weight: 900;
     display: inline;
 }
   
 .nav-container li a {
-    color: rgb(126, 107, 0);
+    color: rgb(110, 62, 22);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    text-shadow: 1px 1px rgb(255, 208, 148);
 }
   
 .nav-container li a:hover {
-    color: red;
-    text-decoration:underline;
+    color: rgb(150, 88, 30);
 }
 .nav-header{
     display: block;
     font-size: 30px;
     float: left;
-    padding: 20px;
+    padding: 15px;
 }
 .nav-links{
     display: block;
@@ -39,5 +49,12 @@
     height: 90px;
     justify-content:space-between;
     display: flex;
-    background-color: #dcbf6f;
+    /*background-color: #dcbf6f;*/
+    background-image: url('../../../public/images/menubg.png');
+    background-repeat: repeat-x;
+    background-size: contain;
+}
+.nav-img{
+    width: 300px;
+    height: 50px;   
 }

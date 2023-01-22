@@ -1,32 +1,27 @@
 import React from 'react';
+import '../pwreset/pwreset.css';
 
-function Pwreset() {
-  return <div id="islandbg"><form id="form" class="d-flex align-items-center">
-      <InputComponent InputId={"email"} LabelText={"Adja meg a regisztrálásnál használt email címét:"} InputType={"email"}></InputComponent>
-      <ButtonComponent></ButtonComponent>
-      </form></div>
+export function Pwreset() {
+  return <div className='d-flex justify-content-center align-items-center'>
+          <div className='pwreset-container'>
+              <div className=''>
+                  <img className='pwreset-img' alt='ISLANDERS' src='../images/islanders_logo.png'></img>
+              </div>
+                <form id="form" className="">
+                  <div className="form-group row pb-3">
+                    <label className="col-form-label">REGISZTRÁLÁSNÁL HASZNÁLT EMAIL CÍM</label>
+                    <div className="col-sm-6">
+                      <input type="email" name="email" className="form-control" />
+                    </div>
+                  </div>
+                    <button type="submit" className='btn btn-button2'>Küldés</button>
+                </form>
+              <div className=''>
+                  <p className='ml-auto'><a href='/register'>Visszatérés a login felületre</a></p>
+              </div>
+          </div>
+        </div>
      
 }
-function InputComponent({InputId, LabelText, InputType}) {
-    return <div>
-    <label for={InputId} className="col-sm-2 form-label">{LabelText}</label>
-    <div class="col-sm-10">
-      <input type={InputType} readonly className="form-control" id={InputId}/>
-    </div>
-  </div>
-}
-function ButtonComponent() {
-    return  <div>
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10">
-                    <button type="button" onClick={() =>{
-                         var emailInput = document.getElementById("email");
-                         var emailVal = emailInput.value;
 
-                         //CheckEmail();
-                    }}>
-                    Küldés
-                </button></div>
-            </div>
-}
 export default Pwreset;

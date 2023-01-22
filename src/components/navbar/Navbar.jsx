@@ -8,7 +8,7 @@ const  Navigation = () => {
         <>
         <nav className="nav-container">
             <div className="nav-header">
-                        <p>ISLANDERS</p>
+                        <img className='nav-img' alt='ISLANDERS' src='../images/islanders_logo.png'></img>
             </div>
             <div className="nav-links">    
                 <ul>       
@@ -16,12 +16,11 @@ const  Navigation = () => {
                     <li><Link to="/war">Csata</Link></li>
                     <li><Link to="/expedition">Expedíció</Link></li>
                     <li><Link to="/market">Piac</Link></li>
-                    <li><Link to="/shop">Bolt</Link></li>
                     <li><Link to="/tutorial">Útmutató</Link></li>
                     <li><Link to="/notifications">Értesítések</Link></li>
                     <li><Link to="/login">Kilépés</Link></li>
                     <li><Link to="/myprofile">Saját fiók</Link></li>
-                    <li><Link to="/myprofile"><img></img></Link></li>                                   
+                    <li><Link to="/myprofile"><img alt='ProfilePic'></img></Link></li>                                   
                 </ul>
             </div>
         </nav>

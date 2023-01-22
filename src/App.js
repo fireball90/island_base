@@ -1,4 +1,6 @@
 import Login from './pages/login/Login';
+import Register from './pages/register/Register';
+import Pwreset from './pages/pwreset/Pwreset';
 import Expedition from './pages/expedition/Expedition';
 import Management from './pages/management/Management';
 import Market from './pages/market/Market';
@@ -25,6 +27,8 @@ function App() {
           <Route path="notifications" element={<Notifications />} />
           <Route path="login" element={<Login />} />
           <Route path="myprofile" element={<Myprofile />} />
+          <Route path="register" element={<Register />} />
+          <Route path="pwreset" element={<Pwreset />} />
         </Route>
       </Routes>
     </BrowserRouter>
