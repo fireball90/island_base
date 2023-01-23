@@ -11,6 +11,7 @@ import Tutorial from './pages/tutorial/Tutorial';
 import War from './pages/war/War';
 import Navigation from './components/navbar/Navbar';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Error from './pages/error/Error';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="myprofile" element={<Myprofile />} />
           <Route path="register" element={<Register />} />
           <Route path="pwreset" element={<Pwreset />} />
+          <Route path="error" element={<Error />}/>
         </Route>
       </Routes>
     </BrowserRouter>
