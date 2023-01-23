@@ -222,23 +222,25 @@ export default class PVPMap extends Component {
                         left: this.state.arenaX,
                     }}>
                     {
-                        this.props.enemyIslands.map((island, index) => (
-                            <Tile
-                                key={index}
-                                width={this.state.tileSize}
-                                height={this.state.tileSize}
-                                left={island.xPosition * this.state.tileSize}
-                                top={island.yPosition * this.state.tileSize}    
-                            >
-                                <EnemyIsland 
-                                    playerId={island.playerId}
-                                    username={island.username}
-                                    sprite={island.sprite}
-                                    experiencePoints={island.experiencePoints}
-                                    zoom={this.state.zoom}
-                                />
-                            </Tile>
-                        ))
+                        this.props.pvpAvailable ? (
+                            this.props.enemyIslands.map((island, index) => (
+                                <Tile
+                                    key={index}
+                                    width={this.state.tileSize}
+                                    height={this.state.tileSize}
+                                    left={island.xPosition * this.state.tileSize}
+                                    top={island.yPosition * this.state.tileSize}    
+                                >
+                                    <EnemyIsland 
+                                        playerId={island.playerId}
+                                        username={island.username}
+                                        sprite={island.sprite}
+                                        experiencePoints={island.experiencePoints}
+                                        zoom={this.state.zoom}
+                                    />
+                                </Tile>
+                            ))
+                        ) : null
                     }
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, OverlayTrigger } from "react-bootstrap";
-import { Popover } from "bootstrap";
+import { Badge } from 'react-bootstrap';
+import { GameMath } from '../../../game-math/GameMath';
 import MovablePopover from "../../island-management/movable-popover/MovablePopover"
 
 import style from "./EnemyIsland.module.css"
@@ -14,6 +15,9 @@ export class EnemyIsland extends Component {
     }
 
     render() {
+        const health = 100 + (GameMath.CalculateLevel(this.props.experiencePoints) * 10)
+        const level = GameMath.CalculateLevel(this.props.experiencePoints)
+
         return (
             <div 
                 className={style.island} 
@@ -28,12 +32,22 @@ export class EnemyIsland extends Component {
                             <MovablePopover
                                 zoom={this.props.zoom} 
                             >
-                                <div>
-                                    {this.props.username}
-                                        
-                                    {this.props.experiencePoints}
+                                <div className="mb-3 text-center">
+                                    <div style={{ width: '6rem' }} className="mb-1">
+                                        <span className="fw-bold">{this.props.username}</span>
+                                    </div>
+                                    <div className="d-flex align-items-baseline justify-content-center">
+                                        <Badge>{level}</Badge><span className="ms-1">szint</span>
+                                    </div>
+                                    <div className="d-flex align-items-baseline justify-content-center">   
+                                        <Badge>{health}</Badge><span className="ms-1">élet</span>
+                                    </div>
                                 </div>
-                                <Button>Támad</Button>
+                                <div className="text-center">
+                                    <Button>
+                                        <i className="bi bi-fire"></i>
+                                    </Button>
+                                </div>
                             </MovablePopover>
                         }
                     >

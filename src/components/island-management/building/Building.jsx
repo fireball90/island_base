@@ -99,7 +99,7 @@ export default class Building extends Component{
                                 <ul className="list-unstyled">
                                     {
                                         this.props.building.alreadyProducedCoin > 0 ? 
-                                        <li>{ this.props.building.alreadyProducedCoin } termelt arany</li> : 
+                                        <li>{ this.props.building.alreadyProducedCoin } termelt érme</li> : 
                                         null
                                     }    
                                     {
@@ -118,12 +118,13 @@ export default class Building extends Component{
                                         null
                                     }  
                                 </ul>
-
-                                <Button 
-                                    onClick={() => this.handleClick()}
-                                    variant="primary">
-                                    <i className="bi bi-cart-check-fill"></i>
-                                </Button>
+                                <div className='text-center'>
+                                    <Button 
+                                        onClick={() => this.handleClick()}
+                                        variant="primary">
+                                        <i className="bi bi-cart-check-fill"></i>
+                                    </Button>
+                                </div>
                             </div>
                         </MovablePopover>
                     }

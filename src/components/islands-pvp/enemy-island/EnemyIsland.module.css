@@ -15,3 +15,8 @@
     top: calc(50% - 1rem);
     left: 50%;
 }
+
+.name {
+    width: 14rem;
+    background-color: antiquewhite;
+}
