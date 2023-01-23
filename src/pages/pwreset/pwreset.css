@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Frijole&family=Permanent+Marker&family=Press+Start+2P&family=Rubik+Dirt&display=swap');
+/*
+font-family: 'Frijole', cursive;
+font-family: 'Permanent Marker', cursive;
+font-family: 'Press Start 2P', cursive;
+font-family: 'Rubik Dirt', cursive;
+*/
+
 .pwreset-container {
     margin-top: 10px;
     width: 500px;
@@ -5,16 +13,57 @@
     background-image: url('../../../public/images/sziget/pwreset.png');
     background-repeat: no-repeat;
     background-size: contain;
+    image-rendering:pixelated;
 }
 
 .pwreset-img {
     max-width: 410px;
 }
+.pwreset-img2 {
+    max-width: 310px;
+}
 
-.btn-button2 {
+.btn-button-reset {
     width: 200px;
     height: 50px;
     background-image: url('../../../public/images/buttons/button_bg_2.png');
     background-repeat: no-repeat;
     background-size: cover;
+    color: aliceblue;
+    text-shadow: 1px 1px rgb(255, 255, 255);
+    font-family: 'Permanent Marker', cursive;
+    margin-top: 5px;
+}
+.btn-button-reset:hover{
+    width: 220px;
+    height: 55px;
+    background-image: url('../../../public/images/buttons/button_bg_2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px rgb(3, 3, 3);
+    font-family: 'Permanent Marker', cursive;
+    font-size: 18px;
+    margin-top: 0px;
+}
+.pwreset-label{
+    text-shadow: 2px 2px black;
+    color: rgb(255, 0, 0);
+    font-family: 'Frijole', cursive;
+    font-size: 20px;
+}
+
+.pwreset-input{
+    text-align: center;
+    background-color: rgb(248, 163, 163);
+}
+
+.pwreset-link a{
+    color: rgb(255, 17, 0);
+    font-size: 16px;
+    font-family: 'Rubik Dirt', cursive;
+    text-shadow: 1px 1px rgb(0, 0, 0);
+}
+.pwreset-link a:hover{
+    color: rgb(182, 24, 24);
 }
