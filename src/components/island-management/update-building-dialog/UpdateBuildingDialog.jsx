@@ -56,6 +56,7 @@ export default class UpdateBuildingDialog extends Component {
             <Modal
                 show={this.props.show}
                 centered
+                size="lg"
                 >
                 <Modal.Header>
                     <Modal.Title id="contained-modal-title-vcenter">

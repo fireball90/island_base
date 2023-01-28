@@ -37,14 +37,16 @@ export class EnemyIsland extends Component {
                                         <span className="fw-bold">{this.props.username}</span>
                                     </div>
                                     <div className="d-flex align-items-baseline justify-content-center">
-                                        <Badge>{level}</Badge><span className="ms-1">szint</span>
+                                        <Badge pill>{level}</Badge><span className="ms-1">szint</span>
                                     </div>
                                     <div className="d-flex align-items-baseline justify-content-center">   
-                                        <Badge>{health}</Badge><span className="ms-1">élet</span>
+                                        <Badge pill>{health}</Badge><span className="ms-1">élet</span>
                                     </div>
                                 </div>
                                 <div className="text-center">
-                                    <Button>
+                                    <Button 
+                                        onClick={() => this.props.openPVPConfirmDialog(this.props.playerId)}
+                                    >
                                         <i className="bi bi-fire"></i>
                                     </Button>
                                 </div>

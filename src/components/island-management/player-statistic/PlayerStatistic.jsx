@@ -30,11 +30,11 @@ export default class PlayerStatistic extends Component {
                     <Card.Body className="border-bottom">
                         <div>
                             <Card.Title as="h5">
-                                Szint <Badge>{level}</Badge>
+                                Szint <Badge pill>{level}</Badge>
                             </Card.Title>
                             <div className="d-flex flex-row justify-content-start align-items-center">
                                 <i class="bi bi-coin"></i>
-                                <Badge className="ms-2">{this.props.items.coins}</Badge>
+                                <Badge pill className="ms-2">{this.props.items.coins}</Badge>
                             </div>
                             <ProgressBar 
                                 now={ Math.round(progressPercent) } 

@@ -9,8 +9,7 @@ export default function BlockMessage({ show, title, message }) {
     function handleClick() {
         setMessageVisible(false)
     }
-    console.log('show')
-    console.log(show)
+
     return show ? (
         <div className={style.block}>
             {

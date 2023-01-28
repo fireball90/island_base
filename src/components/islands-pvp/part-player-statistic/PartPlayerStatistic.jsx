@@ -27,7 +27,7 @@ export default class PartPlayerStatistic extends Component {
                 <Card style={{ width: '18rem' }} className="border-0 rounded-0">
                     <Card.Body className="border-bottom">
                         <Card.Title as="h5">
-                            Szint <Badge>{level}</Badge>
+                            Szint <Badge pill>{level}</Badge>
                         </Card.Title>
                         <ProgressBar 
                             now={ Math.round(progressPercent) } 
@@ -41,7 +41,10 @@ export default class PartPlayerStatistic extends Component {
                         </div>
                     </Card.Body>
                     <Card.Body>
-                        <Card.Title as="h5" className="mb-0">Képességpontok</Card.Title>
+                        <Card.Title as="h5" className="mb-2">Képességpontok</Card.Title>
+                        <Card.Text>
+                            Elérhető:<Badge pill className="ms-1">{ this.props.availableTalentPoints }</Badge>
+                        </Card.Text>
                     </Card.Body>
                     <ListGroup variant="flush" className="rounded-0 border-top border-bottom">
                         <ListGroup.Item>
@@ -59,6 +62,7 @@ export default class PartPlayerStatistic extends Component {
                                         <Button
                                             variant="outline-primary" 
                                             size="sm" 
+                                            onClick={() => this.props.increaseStrengthPoints()}
                                         >
                                             <i class="bi bi-plus-lg"></i>
                                         </Button>
@@ -96,6 +100,7 @@ export default class PartPlayerStatistic extends Component {
                                         <Button
                                             variant="outline-primary" 
                                             size="sm" 
+                                            onClick={() => this.props.increateAbilityPoints()}
                                         >
                                             <i class="bi bi-plus-lg"></i>
                                         </Button>
@@ -132,7 +137,8 @@ export default class PartPlayerStatistic extends Component {
                                     <ButtonGroup aria-label="Basic example">
                                             <Button
                                                 variant="outline-primary" 
-                                                size="sm" 
+                                                size="sm"
+                                                onClick={() => this.props.increaseIntelligencePoints()} 
                                             >
                                                 <i class="bi bi-plus-lg"></i>
                                             </Button>

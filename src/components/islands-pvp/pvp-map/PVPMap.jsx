@@ -237,6 +237,8 @@ export default class PVPMap extends Component {
                                         sprite={island.sprite}
                                         experiencePoints={island.experiencePoints}
                                         zoom={this.state.zoom}
+
+                                        openPVPConfirmDialog={this.props.openPVPConfirmDialog}
                                     />
                                 </Tile>
                             ))

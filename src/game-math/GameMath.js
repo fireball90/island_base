@@ -5,4 +5,8 @@ export class GameMath {
     static CalculateXP(level) {
         return level ** 2
     }
+
+    static LimitXP(experiencePoints) {
+        return experiencePoints > 900 ? 900 : experiencePoints
+    }
 }
