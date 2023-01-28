@@ -8,5 +8,5 @@
 .manager-side-menu{
     background-image: url('../../../../public/images/balbg1.png');
     background-repeat: repeat-y;
-    background-size: contain;
+    background-size: auto;
 }
