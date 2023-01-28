@@ -13,7 +13,7 @@ export default function BattleReportDialog({ battleResult, resetBattleReport }) 
       >
         <Modal.Header>
             <div>
-                <h5 className="mb-1">Csata eredményének részletes megtekintése</h5>
+                <h5 className="mb-1">Csata eredményének megtekintése</h5>
                 <div className="text-muted"> Az idővonalon részletesen végigkövetheted a csata történeseit</div>
             </div>
         </Modal.Header>
