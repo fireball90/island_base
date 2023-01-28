@@ -26,13 +26,13 @@ export default class PlayerStatistic extends Component {
 
         return (
             <div className="stats">
-                <Card style={{ width: '18rem' }} className="border-0 rounded-0">
+                <Card style={{ width: '18rem', padding:'10px' }} className="manager-side-menu border-0 rounded-0 bg-transparent">
                     <Card.Body className="border-bottom">
                         <div>
                             <Card.Title as="h5">
                                 Szint <Badge pill>{level}</Badge>
                             </Card.Title>
-                            <div className="d-flex flex-row justify-content-start align-items-center">
+                            <div className="d-flex flex-row justify-content-start align-items-center ">
                                 <i class="bi bi-coin"></i>
                                 <Badge pill className="ms-2">{this.props.items.coins}</Badge>
                             </div>
@@ -54,28 +54,28 @@ export default class PlayerStatistic extends Component {
                     <ListGroup variant="flush" className="border-top border-bottom">
                         <ListGroup.Item
                             as="li"
-                            className="d-flex justify-content-between align-items-center"
+                            className="d-flex justify-content-between align-items-center bg-transparent"
                         >
                             Vas
-                            <Badge bg="primary" pill>
+                            <Badge bg="danger" pill>
                             { this.props.items.irons }
                             </Badge>
                         </ListGroup.Item>
                         <ListGroup.Item
                             as="li"
-                            className="d-flex justify-content-between align-items-center"
+                            className="d-flex justify-content-between align-items-center bg-transparent"
                         >
                             Kő
-                            <Badge bg="primary" pill>
+                            <Badge bg="danger" pill>
                             { this.props.items.stones }
                             </Badge>
                         </ListGroup.Item>
                         <ListGroup.Item
                             as="li"
-                            className="d-flex justify-content-between align-items-center"
+                            className="d-flex justify-content-between align-items-center bg-transparent"
                         >
                             Fa
-                            <Badge bg="primary" pill>
+                            <Badge bg="danger" pill>
                             { this.props.items.woods }
                             </Badge>
                         </ListGroup.Item>
@@ -92,12 +92,12 @@ export default class PlayerStatistic extends Component {
                                         <ListGroup.Item
                                             key={index}
                                             as="li"
-                                            className="d-flex justify-content-between align-items-center"
+                                            className="d-flex justify-content-between align-items-center bg-transparent"
                                         >
                                             { building.name }
                                             <ButtonGroup aria-label="Basic example">
                                                 <Button 
-                                                    variant="outline-primary" 
+                                                    variant="outline-dark" 
                                                     size="sm" 
                                                     onClick={() => this.props.selectWaitToBuild(building.name)}
                                                     disabled={!building.checkCanBeBuilt(
@@ -113,7 +113,7 @@ export default class PlayerStatistic extends Component {
                                                     overlay={
                                                         <Popover id="popover-basic" className="rounded-0">
                                                             <Popover.Header as="h3" className="bg-body">Szükséges nyersanyagok</Popover.Header>
-                                                            <Popover.Body className="d-flex flex-column">
+                                                            <Popover.Body className="d-flex flex-column bg-transparent">
                                                                 <span className='mb-1 fs-6'>Arany: { building.coinsForBuild }</span>
                                                                 <span className='mb-1 fs-6'>Vas: { building.ironsForBuild }</span>
                                                                 <span className='mb-1 fs-6'>Kő: { building.stonesForBuild }</span>
@@ -121,7 +121,7 @@ export default class PlayerStatistic extends Component {
                                                             </Popover.Body>
                                                         </Popover>
                                                     }>
-                                                    <Button variant="outline-primary" size="sm">
+                                                    <Button variant="outline-dark" size="sm">
                                                         <i className="bi bi-question-lg"></i>
                                                     </Button>
                                                 </OverlayTrigger>
