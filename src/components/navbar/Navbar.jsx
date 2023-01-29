@@ -21,7 +21,7 @@ const  Navigation = () => {
                     <li><Link to="/notifications">Értesítések</Link></li>
                     <li><Link to="/login">Kilépés</Link></li>
                     <li><Link to="/myprofile">Saját fiók</Link></li>
-                    <li><Link to="/myprofile"><img alt='ProfilePic'></img></Link></li>                                   
+                    <li><Link to="/myprofile"><img className='navbar-profile-img' src="../images/profile_pictures/viking_profile.png" alt='ProfilePic'></img></Link></li>                                   
                 </ul>
             </div>
         </nav>

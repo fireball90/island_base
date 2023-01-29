@@ -35,16 +35,7 @@ font-family: 'Rubik Dirt', cursive;
     margin-top: 5px;
 }
 .btn-button3:hover{
-    width: 220px;
-    height: 55px;
-    background-image: url('../../../public/images/buttons/button_bg_3.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: rgb(0, 0, 0);
-    text-shadow: 1px 1px rgb(179, 9, 88);
-    font-family: 'Frijole', cursive;
-    font-size: 18px;
-    margin-top: 0px;
+    transform: scale(1.15,1.15);
 }
 
 .register-label{

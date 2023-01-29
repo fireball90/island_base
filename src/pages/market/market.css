@@ -1,0 +1,23 @@
+.market-listings-container{
+    height: 600px;
+    background-color: rgb(134, 91, 10);
+    padding:20px; 
+    margin-bottom:10px;      
+}
+.market-container{
+    background-color: rgb(209, 154, 52);
+    height: 700px;
+    margin-top: 20px;
+    margin-left:50px;
+    margin-right:50px;
+}
+.listing-container{
+    width: 95%;
+    background-color: rgb(95, 64, 5);
+    height: 100px;
+    margin: 10px;
+    color: aliceblue;
+}
+.listing-container img{
+    image-rendering: pixelated;
+}
