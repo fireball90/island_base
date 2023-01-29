@@ -1,22 +1,14 @@
 import React from 'react';
 
-function Market() {
+export function Market() {
   return <div>
-            <div className="d-flex align-items-center justify-content-center">
-                <BackgroundComponent>
-                    
-                </BackgroundComponent>
+            <div className="d-flex align-items-center justify-content-center content-bg">
+            <p>Market</p>
             </div>
         </div>
      
 }
 
-function BackgroundComponent(){
-    return (
-        <div className="content-bg">
-            <p>Market</p>
-        </div>
-    );
-}
+
 
 export default Market;
