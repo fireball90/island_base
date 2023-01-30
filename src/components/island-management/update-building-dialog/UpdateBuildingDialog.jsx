@@ -159,7 +159,7 @@ export default class UpdateBuildingDialog extends Component {
                     </Table>
                 </Modal.Body>
                 <Modal.Footer
-                        className='p-5 pt-0 pb-0 mb-4  bg-transparent'>
+                        className='p-5 pt-0 pb-0 mb-4 bg-transparent'>
                     <Button                         
                         onClick={() => this.props.cancelUpdateBuilding()}
                         variant="outline-primary"

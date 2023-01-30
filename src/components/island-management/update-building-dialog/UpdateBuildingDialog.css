@@ -1,6 +1,7 @@
 .modal-content {
     border: none !important;
     border-radius: 0% !important;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
 .update-modal-bg{
     background-image: url('../../../../public/images/fejlesztes_bg_1.png');
