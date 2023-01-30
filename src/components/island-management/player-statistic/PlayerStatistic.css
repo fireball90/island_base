@@ -6,7 +6,7 @@
 }
 
 .manager-side-menu{
-    background-image: url('../../../../public/images/balbg1.png');
+    background-image: url('../../../../public/images/stat_1_light.png');
     background-repeat: repeat-y;
-    background-size: auto;
+    background-size: contain;
 }

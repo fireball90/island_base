@@ -50,9 +50,10 @@ font-family: 'Rubik Dirt', cursive;
     justify-content:space-between;
     display: flex;
     /*background-color: #dcbf6f;*/
-    background-image: url('../../../public/images/menubg.png');
+    background-image: url('../../../public/images/header_2_light.png');
     background-repeat: repeat-x;
     background-size: contain;
+
 }
 .nav-img{
     width: 300px;
