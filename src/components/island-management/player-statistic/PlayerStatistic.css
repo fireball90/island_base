@@ -6,7 +6,9 @@
 }
 
 .manager-side-menu{
-    background-image: url('../../../../public/images/stat_1_light.png');
+    background-image: url('../../../../public/images/stat_1.png');
     background-repeat: repeat-y;
     background-size: contain;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px black;
 }

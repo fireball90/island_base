@@ -26,14 +26,14 @@ export default class PlayerStatistic extends Component {
 
         return (
             <div className="stats">
-                <Card style={{ width: '18rem', padding:'10px' }} className="manager-side-menu border-0 rounded-0 bg-transparent">
+                <Card style={{ width: '18rem', padding:'10px' }} className="manager-side-menu border-0 rounded-0 bg-transparent ">
                     <Card.Body className="border-bottom">
                         <div>
-                            <Card.Title as="h5">
+                            <Card.Title as="h5" className='text-center'>
                                 Szint <Badge pill>{level}</Badge>
                             </Card.Title>
-                            <div className="d-flex flex-row justify-content-start align-items-center ">
-                                <i class="bi bi-coin"></i>
+                            <div className="d-flex flex-row justify-content-start align-items-center">
+                                <img  src="../images/icons/coin.png" alt='coin'></img>Coin
                                 <Badge pill className="ms-2">{this.props.items.coins}</Badge>
                             </div>
                             <ProgressBar 
@@ -49,33 +49,33 @@ export default class PlayerStatistic extends Component {
                         </div>
                     </Card.Body>
                     <Card.Body>
-                        <Card.Title as="h5">Építőanyagok</Card.Title>
+                        <Card.Title as="h5" className='text-center'>Építőanyagok</Card.Title>
                     </Card.Body>
-                    <ListGroup variant="flush" className="border-top border-bottom">
+                    <ListGroup variant="flush" className="border-top border-bottom ">
                         <ListGroup.Item
                             as="li"
-                            className="d-flex justify-content-between align-items-center bg-transparent"
-                        >
-                            Vas
-                            <Badge bg="danger" pill>
+                            className="d-flex justify-content-between align-items-center bg-transparent text-white"
+                        >   
+                            <span><img  src="../images/icons/steel.png" alt='steel'></img> Vas</span>
+                            <Badge bg="primary" pill>
                             { this.props.items.irons }
                             </Badge>
                         </ListGroup.Item>
                         <ListGroup.Item
                             as="li"
-                            className="d-flex justify-content-between align-items-center bg-transparent"
+                            className="d-flex justify-content-between align-items-center bg-transparent text-white"
                         >
-                            Kő
-                            <Badge bg="danger" pill>
+                            <span><img  src="../images/icons/stone.png" alt='stone'></img> Kő</span>
+                            <Badge bg="primary" pill>
                             { this.props.items.stones }
                             </Badge>
                         </ListGroup.Item>
                         <ListGroup.Item
                             as="li"
-                            className="d-flex justify-content-between align-items-center bg-transparent"
+                            className="d-flex justify-content-between align-items-center bg-transparent text-white"
                         >
-                            Fa
-                            <Badge bg="danger" pill>
+                            <span><img  src="../images/icons/wood.png" alt='wood'></img> Fa</span>
+                            <Badge bg="primary" pill>
                             { this.props.items.woods }
                             </Badge>
                         </ListGroup.Item>
@@ -92,12 +92,12 @@ export default class PlayerStatistic extends Component {
                                         <ListGroup.Item
                                             key={index}
                                             as="li"
-                                            className="d-flex justify-content-between align-items-center bg-transparent"
+                                            className="d-flex justify-content-between align-items-center bg-transparent text-white"
                                         >
                                             { building.name }
                                             <ButtonGroup aria-label="Basic example">
                                                 <Button 
-                                                    variant="outline-dark" 
+                                                    variant="outline-light" 
                                                     size="sm" 
                                                     onClick={() => this.props.selectWaitToBuild(building.name)}
                                                     disabled={!building.checkCanBeBuilt(
@@ -121,7 +121,7 @@ export default class PlayerStatistic extends Component {
                                                             </Popover.Body>
                                                         </Popover>
                                                     }>
-                                                    <Button variant="outline-dark" size="sm">
+                                                    <Button variant="light" size="sm">
                                                         <i className="bi bi-question-lg"></i>
                                                     </Button>
                                                 </OverlayTrigger>

@@ -8,7 +8,7 @@ font-family: 'Rubik Dirt', cursive;
 */
 
 .nav-container ul {
-    font-family: 'Rubik Dirt', cursive;
+    font-family: 'Permanent Marker', cursive;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -25,15 +25,15 @@ font-family: 'Rubik Dirt', cursive;
 }
   
 .nav-container li a {
-    color: rgb(110, 62, 22); 
+    color: rgb(255, 255, 255); 
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    text-shadow: 1px 1px rgb(255, 208, 148);
+    text-shadow: 1px 1px rgb(102, 61, 7);
 }
   
 .nav-container li a:hover {
-    color: rgb(150, 88, 30);
+    color: rgb(255, 171, 92);
 }
 .nav-header{
     display: block;
@@ -50,7 +50,7 @@ font-family: 'Rubik Dirt', cursive;
     justify-content:space-between;
     display: flex;
     /*background-color: #dcbf6f;*/
-    background-image: url('../../../public/images/header_2_light.png');
+    background-image: url('../../../public/images/header_2.png');
     background-repeat: repeat-x;
     background-size: contain;
 
