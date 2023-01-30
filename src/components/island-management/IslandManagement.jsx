@@ -394,6 +394,7 @@ export default class IslandManagement extends Component {
           updateBuilding={this.updateBuilding}
           cancelUpdateBuilding={this.cancelUpdateBuilding}
         />
+
       </div>)
   }
 }

@@ -57,20 +57,22 @@ export default class UpdateBuildingDialog extends Component {
                 show={this.props.show}
                 centered
                 size="lg"
+                className='bg-transparent text-light'
                 >
-                <Modal.Header>
-                    <Modal.Title id="contained-modal-title-vcenter">
+                <div className='update-modal-bg text-light p-4 pt-2'>
+                <Modal.Header> 
+                    <Modal.Title id="contained-modal-title-vcenter bg-transparent text-light">
                         { this.props.building?.name } ( { this.props.building?.level } / { this.props.building?.maxLevel } )   
-                        <h6 className="card-subtitle mb-2 text-muted">
+                        <h6 className="card-subtitle mb-0 text-light">
                             { this.props.building?.description }
                         </h6> 
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className="border p-2 mb-3">
+                    <div className="p-2 mb-2 bg-transparent text-light">
                         Termelés elkészül:  { this.state.timeRemainingUntilProduction?.getHours() - 1}h { this.state.timeRemainingUntilProduction?.getMinutes() }m { this.state.timeRemainingUntilProduction?.getSeconds() }s
                     </div>
-                    <Table responsive bordered>
+                    <Table responsive bordered className='text-light  bg-transparent'>
                         <thead>
                             <tr>
                                 <th colSpan="3">Termelt nyersanyagok</th>
@@ -105,7 +107,7 @@ export default class UpdateBuildingDialog extends Component {
                         </tbody>
                     </Table>
                 
-                    <Table responsive bordered>
+                    <Table responsive bordered className='text-light mb-0  bg-transparent'>
                     <thead>
                         <tr>
                             <th colSpan="3">Fejlesztéshez szükséges nyersanyagok</th>
@@ -156,8 +158,9 @@ export default class UpdateBuildingDialog extends Component {
                         </tbody>
                     </Table>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button 
+                <Modal.Footer
+                        className='p-5 pt-0 pb-0 mb-4  bg-transparent'>
+                    <Button                         
                         onClick={() => this.props.cancelUpdateBuilding()}
                         variant="outline-primary"
                         >
@@ -178,6 +181,7 @@ export default class UpdateBuildingDialog extends Component {
                         Fejlesztés <i className="bi bi-box-arrow-up"></i>
                     </Button>
                 </Modal.Footer>
+                </div>
             </Modal>
         )
     }
