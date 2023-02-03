@@ -10,6 +10,7 @@ import Shop from './pages/shop/Shop';
 import Tutorial from './pages/tutorial/Tutorial';
 import War from './pages/war/War';
 import Navigation from './components/navbar/Navbar';
+import Navigation2 from './components/navbar2/Navbar2';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Error from './pages/error/Error';
 
