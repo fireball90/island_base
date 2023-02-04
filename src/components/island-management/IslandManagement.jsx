@@ -37,8 +37,8 @@ export default class IslandManagement extends Component {
       islandImagePath: ""
     }
 
-    this.updateItemStartTimers = []
-    this.updateItemIntervals = []
+    this.updateItemStartTimers = new Map()
+    this.updateItemIntervals = new Map()
   }
     
   async fetchInitFile() {
@@ -188,6 +188,12 @@ export default class IslandManagement extends Component {
           irons: state.items.irons - chosenBuilding.ironsForBuild,
           coins: state.items.coins - chosenBuilding.coinsForBuild
         },
+        stats: {
+          experiencePoints: state.stats.experiencePoints + 20,
+          strength: state.stats.strength,
+          ability: state.stats.ability,
+          intelligence: state.stats.intelligence
+        },
         waitToBuild: null
       }))
     }
@@ -210,9 +216,22 @@ export default class IslandManagement extends Component {
   updateBuilding = (building) => {
 
     // Frissítési logika, ami ki lesz törölve, ha lesz backend
+    const buildDate = new Date()
+    buildDate.setMinutes(buildDate.getMinutes() + 1)
+
     building.level = building.level < building.maxLevel ? building.level + 1 : 3
     building.imagePath = `assets/house-lvl-${building.level}.png`
-    
+    building.buildDate = buildDate
+    building.lastCollectTime = buildDate
+    building.alreadyProducedCoin = 0
+    building.alreadyProducedIrons = 0
+    building.alreadyProducedStones = 0
+    building.alreadyProducedWoods = 0
+
+    this.clearOneUpdateItemStartTimer(building)
+    this.clearOneUpdateItemInterval(building)
+    this.startUpdateItemTimer(building)
+
     this.setState(state => ({
       ...state,
       builtBuildings: state.builtBuildings.map(b => (
@@ -223,6 +242,12 @@ export default class IslandManagement extends Component {
         stones: state.items.stones - building.stonesForUpdate,
         irons: state.items.irons - building.ironsForUpdate,
         coins: state.items.coins - building.coinsForUpdate
+      },
+      stats: {
+        experiencePoints: state.stats.experiencePoints + 10 * building.level,
+        strength: state.stats.strength,
+        ability: state.stats.ability,
+        intelligence: state.stats.intelligence
       },
       selectedBuildingToUpdate: null
     }))
@@ -277,7 +302,9 @@ export default class IslandManagement extends Component {
   }
 
   startUpdateItemTimer(building) {
+    console.log(building.buildDate)
     let start = this.calculateStartTimeInMiliseconds(building.buildDate, building.productionInterval)
+    console.log(start)
     let timer 
     let interval 
 
@@ -289,20 +316,38 @@ export default class IslandManagement extends Component {
       }, building.productionInterval)
     }, start) 
 
-    this.updateItemStartTimers.push(timer)
-    this.updateItemIntervals.push(interval)
+    this.updateItemStartTimers.set(building.name, timer)
+    this.updateItemIntervals.set(building.name, interval)
+  }
+
+  clearOneUpdateItemStartTimer(building) {
+    if (this.updateItemStartTimers.has(building.name)) {
+      clearTimeout(this.updateItemStartTimers.get(building.name))
+      this.updateItemStartTimers.delete(building.name)
+    } else {
+      console.log('error timer')
+    }
+  }
+
+  clearOneUpdateItemInterval(building) {
+    if (this.updateItemIntervals.has(building.name)) {
+      clearTimeout(this.updateItemIntervals.get(building.name))
+      this.updateItemIntervals.delete(building.name)
+    } else {
+      console.log('error interval')
+    } 
   }
 
   clearUpdateItemStartTimers() {
-    for(let timer of this.updateItemStartTimers) {
+    this.updateItemStartTimers.forEach(timer => {
       clearTimeout(timer)
-    }
+    })
   }
 
   clearUpdateItemIntervals() {
-    for(let interval of this.updateItemIntervals) {
+    this.updateItemIntervals.forEach(interval => {
       clearInterval(interval)
-    }
+    })
   }
 
   collectProducedItems = (building) => {
@@ -394,7 +439,6 @@ export default class IslandManagement extends Component {
           updateBuilding={this.updateBuilding}
           cancelUpdateBuilding={this.cancelUpdateBuilding}
         />
-
       </div>)
   }
 }

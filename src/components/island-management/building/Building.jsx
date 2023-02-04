@@ -17,6 +17,7 @@ export default class Building extends Component{
         }
 
         this.interval = null
+        this.ref = React.createRef()
     }
 
     handleClick() {
@@ -64,12 +65,18 @@ export default class Building extends Component{
         }
     }
 
+    componentDidUpdate() {
+        if (!this.checkAlreadyBuilded() && !this.state.remainingTime) {
+            this.startReaminingTimeTimer()
+        }
+    }
+
     componentWillUnmount() {
         this.clearRemainingTime()
     }
 
     render() {
-        const display = (
+        const itemsPopupIsDisplayed = (
             this.props.building.alreadyProducedCoin +
             this.props.building.alreadyProducedIrons +
             this.props.building.alreadyProducedStones +
@@ -77,9 +84,21 @@ export default class Building extends Component{
 
         return this.state.remainingTime != null ? 
         (
-            <div className="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
-                <i className="bi bi-hammer fs-4"></i>
-                <span className="fw-bold">{ this.state.remainingTime.getHours() - 1 }h { this.state.remainingTime.getMinutes() }m { this.state.remainingTime.getSeconds() }s</span>
+            <div className="w-100 h-100 bg-white" ref={this.ref}>
+                <OverlayTrigger
+                    show={true}
+                    container={this.ref}
+                    trigger={null}
+                    overlay={
+                        <MovablePopover>
+                            <div className="text-center">
+                                <i className="bi bi-clock fs-1"></i>
+                                <div className="fw-bold timer">{ this.state.remainingTime.getHours() - 1 }h { this.state.remainingTime.getMinutes() }m { this.state.remainingTime.getSeconds() }s</div>
+                            </div>
+                        </MovablePopover>
+                    }>
+                    <div></div>
+                </OverlayTrigger>
             </div>
         ) :
         (
@@ -87,7 +106,7 @@ export default class Building extends Component{
             <div className="w-100 h-100">
                 <div className="overlay-container" ref={this.ref}></div>
                 <OverlayTrigger
-                    show={ display }
+                    show={ itemsPopupIsDisplayed }
                     container={ this.ref }
                     trigger={null}
                     overlay={

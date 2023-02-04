@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { Spinner } from "react-bootstrap";
 import Tile from "../../island-management/tile/Tile"
 import { EnemyIsland } from "../enemy-island/EnemyIsland";
@@ -26,14 +26,13 @@ export default class PVPMap extends Component {
     }
 
     calculateCameraPosition() {
-        const headerHeight = 90
         const screenWidth = window.innerWidth
-        const screenHeight = window.innerHeight - headerHeight
+        const screenHeight = window.innerHeight
 
         const arenaWidth = 5
         const arenaHeight = 3
-        const waterWidth = 7
-        const waterHeight = 5
+        const waterWidth = 8
+        const waterHeight = 6
 
         let tileSize = screenWidth / arenaWidth
         if (screenHeight > tileSize * arenaHeight) {  
@@ -67,38 +66,53 @@ export default class PVPMap extends Component {
     }
 
     resize(scale, mouseX, mouseY) {
-        const screenCenterX = window.innerWidth / 2
-        const screenCenterY = window.innerHeight / 2
+        const cameraWidth = window.innerWidth
+        const cameraHeight = window.innerHeight
+        const cameraX = 0
+        const cameraY = 0
 
         let resizeOrigoX = mouseX
         let resizeOrigoY = mouseY
 
-        let newArenaWidth = this.state.arenaWidth * scale
-        let newArenaHeight = this.state.arenaHeight * scale
-        let newArenaX = resizeOrigoX - (resizeOrigoX - this.state.arenaX) * scale
-        let newArenaY = resizeOrigoY - (resizeOrigoY - this.state.arenaY) * scale
+        let newWaterWidth = this.state.waterWidth * scale
+        let newWaterHeight = this.state.waterHeight * scale
+        let newWaterX = resizeOrigoX - (resizeOrigoX - this.state.waterX) * scale
+        let newWaterY = resizeOrigoY - (resizeOrigoY - this.state.waterY) * scale
 
-        if (newArenaX > screenCenterX || newArenaX + newArenaWidth < screenCenterX) {
-            resizeOrigoX = screenCenterX
+        if (newWaterX + newWaterWidth < cameraWidth) {
+            resizeOrigoX = cameraWidth
         }
 
-        if (newArenaY > screenCenterY || newArenaY + newArenaHeight < screenCenterY) {
-            resizeOrigoY = screenCenterY
+        if (newWaterY + newWaterHeight < cameraHeight) {
+            resizeOrigoY = cameraHeight
         }
 
-        this.setState(state => ({
-            ...state,
-            tileSize: state.tileSize * scale,
-            waterWidth: state.waterWidth * scale,
-            waterHeight: state.waterHeight * scale,
-            waterX: resizeOrigoX - (resizeOrigoX - state.waterX) * scale,
-            waterY: resizeOrigoY - (resizeOrigoY - state.waterY) * scale,
-            arenaWidth: state.arenaWidth * scale,
-            arenaHeight: state.arenaHeight * scale,
-            arenaX: resizeOrigoX - (resizeOrigoX - state.arenaX) * scale,
-            arenaY: resizeOrigoY - (resizeOrigoY - state.arenaY) * scale,
-            zoom: state.zoom + scale
-        }))
+        if (newWaterX > cameraX) {
+            resizeOrigoX = cameraX
+        }
+
+        if (newWaterY > cameraY)
+        {
+            resizeOrigoY = cameraY
+        }
+
+        const zoomMeasure = (scale > 1 ? 1 : -1)
+     
+        if (this.state.zoom + zoomMeasure >= 0 && this.state.zoom + zoomMeasure <= 5) {
+            this.setState(state => ({
+                ...state,
+                tileSize: state.tileSize * scale,
+                waterWidth: state.waterWidth * scale,
+                waterHeight: state.waterHeight * scale,
+                waterX: resizeOrigoX - (resizeOrigoX - state.waterX) * scale,
+                waterY: resizeOrigoY - (resizeOrigoY - state.waterY) * scale,
+                arenaWidth: state.arenaWidth * scale,
+                arenaHeight: state.arenaHeight * scale,
+                arenaX: resizeOrigoX - (resizeOrigoX - state.arenaX) * scale,
+                arenaY: resizeOrigoY - (resizeOrigoY - state.arenaY) * scale,
+                zoom: state.zoom + zoomMeasure
+            }))
+        }
     }
 
     handlePreventDrag(event) {
@@ -107,8 +121,10 @@ export default class PVPMap extends Component {
 
     handleMouseMove(event) {
         if (this.state.isLeftButtonHolded) {
-            const screenCenterX = window.innerWidth / 2
-            const screenCenterY = window.innerHeight / 2
+            const cameraWidth = window.innerWidth
+            const cameraHeight = window.innerHeight
+            const cameraX = 0
+            const cameraY = 0
             
             let newArenaX = this.state.arenaX + event.movementX
             let newArenaY = this.state.arenaY + event.movementY
@@ -117,26 +133,27 @@ export default class PVPMap extends Component {
 
             let different = 0
 
-            if (newArenaX > screenCenterX ) {
-                different = newArenaX - screenCenterX
+            if (newWaterX + this.state.waterWidth < cameraWidth) {
+                different = newWaterX + this.state.waterWidth - cameraWidth
                 newArenaX -= different
                 newWaterX -= different
             }
 
-            if (newArenaX + this.state.arenaWidth < screenCenterX) {
-                different = newArenaX + this.state.arenaWidth - screenCenterX
-                newArenaX -= different
-                newWaterX -= different
-            }
-
-            if (newArenaY > screenCenterY ) {              
-                different = newArenaY - screenCenterY
+            if (newWaterY + this.state.waterHeight < cameraHeight) {
+                different = newWaterY + this.state.waterHeight - cameraHeight
                 newArenaY -= different
                 newWaterY -= different
             }
 
-            if (newArenaY + this.state.arenaHeight < screenCenterY) {
-                different = newArenaY + this.state.arenaHeight - screenCenterY
+            if (newWaterX > cameraX) {
+                different = newWaterX - cameraX
+                newArenaX -= different
+                newWaterX -= different
+            }
+
+            if (newWaterY > cameraY)
+            {
+                different = newWaterY - cameraY
                 newArenaY -= different
                 newWaterY -= different
             }
@@ -174,9 +191,9 @@ export default class PVPMap extends Component {
 
     handleWheel(event) {
         if (event.deltaY > 0) {
-            this.resize(0.9, event.pageX, event.pageY)
+            this.resize(0.8, event.pageX, event.pageY)
         } else {
-            this.resize(1.1, event.pageX, event.pageY)
+            this.resize(1.25, event.pageX, event.pageY)
         }
     }
 
@@ -190,7 +207,7 @@ export default class PVPMap extends Component {
 
     render() {
         return !this.props.isInitReady ? (
-            <div className="vw-100 d-flex justify-content-center align-items-center" style={{ height: 'calc(100vh - 90px)' }}>
+            <div className="vw-100 d-flex justify-content-center align-items-center">
                 <Spinner animation="grow" />
             </div>
         ) : (
@@ -222,7 +239,7 @@ export default class PVPMap extends Component {
                         left: this.state.arenaX,
                     }}>
                     {
-                        this.props.pvpAvailable ? (
+                        this.props.battleAvailable ? (
                             this.props.enemyIslands.map((island, index) => (
                                 <Tile
                                     key={index}

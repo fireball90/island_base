@@ -1,4 +1,8 @@
 .battleReportContainer {
-    height: 40vh;
+    height: 60vh;
     overflow-y: auto;
+}
+
+.battleReportItem {
+    background-color: aqua !important;
 }

@@ -9,3 +9,7 @@
     background-size: cover;
     cursor: pointer;
 }
+
+.timer {
+    white-space:nowrap;
+}

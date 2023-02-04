@@ -1,7 +1,6 @@
 {
-    "winnerUsername": "Magn_12C3",
-    "loserUsername": "NaHik1",
-    "winnedItems": {
+    "won": true,
+    "loot": {
         "woods": 20,
         "stones": 3,
         "irons": 43,

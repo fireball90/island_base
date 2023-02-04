@@ -70,7 +70,8 @@ export default class UpdateBuildingDialog extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="p-2 mb-2 bg-transparent text-light">
-                        Termelés elkészül:  { this.state.timeRemainingUntilProduction?.getHours() - 1}h { this.state.timeRemainingUntilProduction?.getMinutes() }m { this.state.timeRemainingUntilProduction?.getSeconds() }s
+                        <span className="me-1">Termelés elkészül:</span> 
+                        <span className="fw-bold">{ this.state.timeRemainingUntilProduction?.getHours() - 1}h { this.state.timeRemainingUntilProduction?.getMinutes() }m { this.state.timeRemainingUntilProduction?.getSeconds() }s</span>
                     </div>
                     <Table responsive bordered className='text-light  bg-transparent'>
                         <thead>

@@ -33,14 +33,13 @@ export default class GameMap extends Component {
     }
 
     calculateCameraPosition() {
-        const headerHeight = 90
         const screenWidth = window.innerWidth
-        const screenHeight = window.innerHeight - headerHeight
+        const screenHeight = window.innerHeight
 
         const islandWidth = 50
         const islandHeight = 30
-        const waterWidth = 70
-        const waterHeight = 50
+        const waterWidth = 80
+        const waterHeight = 60
 
         let tileSize = screenWidth / islandWidth
         if (screenHeight > tileSize * islandHeight) {  
@@ -74,38 +73,53 @@ export default class GameMap extends Component {
     }
 
     resize(scale, mouseX, mouseY) {
-        const screenCenterX = window.innerWidth / 2
-        const screenCenterY = window.innerHeight / 2
+        const cameraWidth = window.innerWidth
+        const cameraHeight = window.innerHeight
+        const cameraX = 0
+        const cameraY = 0
 
         let resizeOrigoX = mouseX
         let resizeOrigoY = mouseY
 
-        let newIslandWidth = this.state.islandWidth * scale
-        let newIslandHeight = this.state.islandHeight * scale
-        let newIslandX = resizeOrigoX - (resizeOrigoX - this.state.islandX) * scale
-        let newIslandY = resizeOrigoY - (resizeOrigoY - this.state.islandY) * scale
+        let newWaterWidth = this.state.waterWidth * scale
+        let newWaterHeight = this.state.waterHeight * scale
+        let newWaterX = resizeOrigoX - (resizeOrigoX - this.state.waterX) * scale
+        let newWaterY = resizeOrigoY - (resizeOrigoY - this.state.waterY) * scale
 
-        if (newIslandX > screenCenterX || newIslandX + newIslandWidth < screenCenterX) {
-            resizeOrigoX = screenCenterX
+        if (newWaterX + newWaterWidth < cameraWidth) {
+            resizeOrigoX = cameraWidth
         }
 
-        if (newIslandY > screenCenterY || newIslandY + newIslandHeight < screenCenterY) {
-            resizeOrigoY = screenCenterY
+        if (newWaterY + newWaterHeight < cameraHeight) {
+            resizeOrigoY = cameraHeight
         }
 
-        this.setState(state => ({
-            ...state,
-            tileSize: state.tileSize * scale,
-            waterWidth: state.waterWidth * scale,
-            waterHeight: state.waterHeight * scale,
-            waterX: resizeOrigoX - (resizeOrigoX - state.waterX) * scale,
-            waterY: resizeOrigoY - (resizeOrigoY - state.waterY) * scale,
-            islandWidth: state.islandWidth * scale,
-            islandHeight: state.islandHeight * scale,
-            islandX: resizeOrigoX - (resizeOrigoX - state.islandX) * scale,
-            islandY: resizeOrigoY - (resizeOrigoY - state.islandY) * scale,
-            zoom: state.zoom + scale
-        }))
+        if (newWaterX > cameraX) {
+            resizeOrigoX = cameraX
+        }
+
+        if (newWaterY > cameraY)
+        {
+            resizeOrigoY = cameraY
+        }
+
+        const zoomMeasure = (scale > 1 ? 1 : -1)
+
+        if (this.state.zoom + zoomMeasure >= 0 && this.state.zoom + zoomMeasure <= 5) {
+            this.setState(state => ({
+                ...state,
+                tileSize: state.tileSize * scale,
+                waterWidth: state.waterWidth * scale,
+                waterHeight: state.waterHeight * scale,
+                waterX: resizeOrigoX - (resizeOrigoX - state.waterX) * scale,
+                waterY: resizeOrigoY - (resizeOrigoY - state.waterY) * scale,
+                islandWidth: state.islandWidth * scale,
+                islandHeight: state.islandHeight * scale,
+                islandX: resizeOrigoX - (resizeOrigoX - state.islandX) * scale,
+                islandY: resizeOrigoY - (resizeOrigoY - state.islandY) * scale,
+                zoom: state.zoom + zoomMeasure
+            }))
+        }
     }
 
     handlePreventDrag(event) {
@@ -114,8 +128,10 @@ export default class GameMap extends Component {
 
     handleMouseMove(event) {
         if (this.state.isLeftButtonHolded) {
-            const screenCenterX = window.innerWidth / 2
-            const screenCenterY = window.innerHeight / 2
+            const cameraWidth = window.innerWidth
+            const cameraHeight = window.innerHeight
+            const cameraX = 0
+            const cameraY = 0
             
             let newIslandX = this.state.islandX + event.movementX
             let newIslandY = this.state.islandY + event.movementY
@@ -123,27 +139,27 @@ export default class GameMap extends Component {
             let newWaterY = this.state.waterY + event.movementY
 
             let different = 0
-
-            if (newIslandX > screenCenterX ) {
-                different = newIslandX - screenCenterX
+            if (newWaterX + this.state.waterWidth < cameraWidth) {
+                different = newWaterX + this.state.waterWidth - cameraWidth
                 newIslandX -= different
                 newWaterX -= different
             }
 
-            if (newIslandX + this.state.islandWidth < screenCenterX) {
-                different = newIslandX + this.state.islandWidth - screenCenterX
-                newIslandX -= different
-                newWaterX -= different
-            }
-
-            if (newIslandY > screenCenterY ) {              
-                different = newIslandY - screenCenterY
+            if (newWaterY + this.state.waterHeight < cameraHeight) {
+                different = newWaterY + this.state.waterHeight - cameraHeight
                 newIslandY -= different
                 newWaterY -= different
             }
 
-            if (newIslandY + this.state.islandHeight < screenCenterY) {
-                different = newIslandY + this.state.islandHeight - screenCenterY
+            if (newWaterX > cameraX) {
+                different = newWaterX - cameraX
+                newIslandX -= different
+                newWaterX -= different
+            }
+
+            if (newWaterY > cameraY)
+            {
+                different = newWaterY - cameraY
                 newIslandY -= different
                 newWaterY -= different
             }
@@ -181,9 +197,9 @@ export default class GameMap extends Component {
 
     handleWheel(event) {
         if (event.deltaY > 0) {
-            this.resize(0.9, event.pageX, event.pageY)
+            this.resize(0.8, event.pageX, event.pageY)
         } else {
-            this.resize(1.1, event.pageX, event.pageY)
+            this.resize(1.25, event.pageX, event.pageY)
         }
     }
 
@@ -526,7 +542,7 @@ export default class GameMap extends Component {
 
     render() {
         return !this.props.isInitReady ? (
-            <div className="vw-100 d-flex justify-content-center align-items-center" style={{ height: 'calc(100vh - 90px)' }}>
+            <div className="vw-100 d-flex justify-content-center align-items-center">
                 <Spinner animation="grow" />
             </div>
         ) : (

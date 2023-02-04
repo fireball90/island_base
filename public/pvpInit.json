@@ -1,12 +1,12 @@
 {
     "player": {
-        "experiencePoints": 0,
+        "experiencePoints": 300,
         "availableTalentPoints": 20,
         "strength": 0,
         "ability": 0,
         "intelligence": 0,
         "churchLevel": 1,
-        "pvpAvailable": true
+        "battleAvailableDate": "2023-01-30T20:31:00" 
     },
     "enemies": [
         {

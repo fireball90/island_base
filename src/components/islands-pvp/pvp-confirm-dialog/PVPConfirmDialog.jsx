@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Badge, Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 
 import "./PVPConfirmDialog.css"
@@ -14,17 +14,16 @@ export default function PVPConfirmDialog({
         <Modal
             show={attackedEnemyIsland}
             centered
-            size="lg"
         >
-            <Modal.Header>
-                Csata megerősítése
+            <Modal.Header className="border-0">
+                <Modal.Title>Csata megerősítése</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h5>Készülsz megtámadni <span className="text-primary">{ attackedEnemyIsland?.username }</span> játékost!</h5>
+                <div className="fw-bold mb-2">Biztosan megtámadod <span className="text-primary">{ attackedEnemyIsland?.username }</span> játékost?</div>
                 {
                     availableTalentPoints != 0 ? (
                         <p>
-                            { availableTalentPoints } fel nem használt képességpontod van. A mégse gombra kattintva elköltheted őket, és erősödhetsz a harc előtt.
+                            <Badge pill>{ availableTalentPoints }</Badge> fel nem használt képességpontod van. A mégse gombra kattintva elköltheted őket, és erősödhetsz a harc előtt.
                         </p>
                     ) :
                     (
@@ -34,7 +33,7 @@ export default function PVPConfirmDialog({
                     )
                 }
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className="border-0">
                 <Button 
                     variant="outline-primary" 
                     onClick={() => closePVPConfirmDialog()}>
