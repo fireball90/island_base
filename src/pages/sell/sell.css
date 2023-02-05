@@ -1,0 +1,20 @@
+
+.sell-all{
+    position:absolute;
+    z-index: 299;
+    backdrop-filter: blur(3px);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.sell-container{
+    background-image:url("../../../public/images/ui/contentbg.png");
+    position: absolute;
+    height: 800px;
+    margin-left: 150px;
+    margin-top: 70px;
+    width: 1600px;
+    z-index: 300;
+    padding-top: 20px;
+    color: azure;
+}
