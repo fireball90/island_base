@@ -1,9 +1,11 @@
 import React from 'react';
-import '../market/market.css';
+import '../sell/sell.css';
+import { Link } from "react-router-dom";
 
 export function Sell() {
     return <div className='sell-all'>
             <div className='sell-container'>
+            <Link to="/management"><img className="sell-close" alt="Bezárás" title='Bezárás' src='../images/ui/close.png'></img></Link>  
               <div className= "container-fluid">
                 <div className='row' style={{height:"700px"}}>
 
@@ -31,14 +33,17 @@ export function Sell() {
                         </select>
                         <label className='col-sm-12 col-form-label text-center'>Mennyit kérsz cserébe:</label>
                         <input type="number" name="theirPiece" className='form-control'></input>
-                        <div className='d-flex justify-content-center'>
-                          <button className='btn btn-danger'>Hirdetés feladása</button>
+                        <div className='d-flex justify-content-center pt-3'>
+                          <button className='sell-btn' onClick="">Hirdetés feladása</button>
                         </div>
                       </div>
                     </form>
-
+                </div>
+                <div className='why-tho d-flex justify-content-center align-items-center'>
+                  <Link to="/market"><button className="market-btn">Mégse</button></Link>  
                 </div>
             </div>
+
         </div>
      </div>
      </div>

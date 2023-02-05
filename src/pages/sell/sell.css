@@ -18,3 +18,22 @@
     padding-top: 20px;
     color: azure;
 }
+.sell-close{
+    width: 75px;
+    position: relative;
+    float: right;
+    z-index: 301;
+    margin-right: 20px
+}
+.sell-btn{
+    background-image: url("../../../public/images/ui/btn_bg_2.png");
+    width: 200px;
+    height: 70px;
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+    color: aliceblue;
+}
+.why-tho{
+    margin: auto;
+    padding: 0;
+}
