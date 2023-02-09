@@ -1,11 +1,12 @@
-.market-listings-container{
+.not-listings-container{
     height: 600px;
     background-color: rgba(139, 86, 17, 0.336);
     padding:20px; 
     margin-bottom:10px;      
     border-radius: 20px;
+    overflow: auto;
 }
-.market-all {
+.not-all {
     position:absolute;
     z-index: 299;
     backdrop-filter: blur(3px);
@@ -15,7 +16,7 @@
     max-height: 2160px;
     background-color: rgba(0, 0, 0, 0.3);
 }
-.market-container{
+.not-container{
     background-image:url("../../../public/images/ui/contentbg.png");
     position: absolute;
     height: 800px;
@@ -26,25 +27,33 @@
     padding-top: 20px;
     color: azure;
 }
-.listing-container{
+.not-list-container{
     width: 95%;
     background-color: rgba(0, 0, 0, 0.501);
-    height: 100px;
+    height: 250px;
     margin: 10px;
     color: aliceblue;
     border-radius: 10px;
 }
-.listing-container img{
+.not-list-container img{
     image-rendering: pixelated;
 }
-.market-close{
+.not-close{
     width: 75px;
     position: relative;
     float: right;
     z-index: 301;
 }
-.market-btn{
+.not-btn{
     background-image: url("../../../public/images/ui/btn_bg_1.png");
+    width: 200px;
+    height: 70px;
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+    color: aliceblue;
+}
+.not-btn2{
+    background-image: url("../../../public/images/ui/btn_bg_2.png");
     width: 200px;
     height: 70px;
     border: none;
