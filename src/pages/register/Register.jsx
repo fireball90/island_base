@@ -5,12 +5,15 @@ export function Register() {
   return <div className='d-flex justify-content-center align-items-center'>
           <div className='register-container justify-content-center d-flex align-items-center '>
             <div className='d-flex align-items-center flex-column'>
+
                 <div className=''>
                     <img className='register-img' alt='ISLANDERS' src='../images/islanders_logo.png'></img>
                 </div>
+
                 <div className=''>
                     <img className='register-img2' alt='REGISZTRÁCIÓ' src='../images/regisztracio.png'></img>
                 </div>
+
                 <form id="form" className="">
                   <div className="justify-content-center form-group row pb-3">
                     <label className="col-form-label text-center register-label">FELHASZNÁLÓ NÉV</label>
@@ -40,9 +43,11 @@ export function Register() {
                     <button type="submit" className='btn btn-button3'>Regisztráció</button>
                   </div>
                 </form>
+                
                 <div className='d-flex justify-content-center'>
                     <p className='ml-auto register-link'><a href='/login'>Már regisztrált? Lépjen be!</a></p>
                 </div>
+
             </div>   
           </div>
         </div>

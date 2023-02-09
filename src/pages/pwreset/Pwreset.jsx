@@ -5,12 +5,15 @@ export function Pwreset() {
   return <div className='d-flex justify-content-center align-items-center'>
           <div className='pwreset-container justify-content-center d-flex align-items-center'>
             <div className='d-flex align-items-center flex-column'>
+
               <div className=''>
                   <img className='pwreset-img' alt='ISLANDERS' src='../images/islanders_logo.png'></img>
               </div>
+
               <div className=''>
                   <img className='pwreset-img2' alt='PWRESET' src='../images/elfelejtett_jelszo.png'></img>
               </div>
+
                 <form id="form" className="">
                   <div className="justify-content-center form-group row pb-3">
                     <label className="col-form-label text-center pwreset-label">REGISZTRÁLÁSNÁL HASZNÁLT EMAIL CÍM</label>
@@ -22,9 +25,11 @@ export function Pwreset() {
                     <button type="submit" className='btn btn-button-reset'>Küldés</button>
                   </div>
                 </form>
+
               <div className=''>
                   <p className='ml-auto pwreset-link'><a href='/login'>Visszatérés a bejelentkezéshez</a></p>
               </div>
+              
             </div>
           </div>
         </div>
