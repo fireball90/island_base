@@ -52,6 +52,7 @@ font-family: 'Rubik Dirt', cursive;
     font-size: 16px;
     width: 300px;
     border-radius: 10px;
+    overflow-wrap: break-word;
 }
 
 .register-link a{
@@ -69,4 +70,5 @@ font-family: 'Rubik Dirt', cursive;
     text-shadow: 1px 1px black;
     background-color: rgba(255, 0, 0, 0.6);
     border-radius: 10px;
+    overflow-wrap: break-word;
 }

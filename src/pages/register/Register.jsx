@@ -5,8 +5,23 @@ import { useForm } from 'react-hook-form';
 
 export function Register() {
     const { register, handleSubmit,watch, formState: { errors } } = useForm()
-    const onSubmit = async data => {
-      alert(JSON.stringify(data));
+    const onSubmit = data => {
+      fetch('https://localhost:7276/api/Auth/Registration', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log('Success:', data);
+        alert('Sikeres regisztráció');
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
     };
     const password = useRef({});
     password.current = watch("password", "");
@@ -26,31 +41,29 @@ export function Register() {
                 <form id="form" className="" onSubmit={handleSubmit(onSubmit)}>
                   <div className="justify-content-center form-group row pb-1">
                     <label className="col-form-label text-center register-label">FELHASZNÁLÓ NÉV</label>
-                    <input className="register-input" type="text" placeholder="Név" id='name' {...register("name",{required: true, max: 30, min: 5, maxLength: 30, pattern: /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]+$/i})}/>
-                    {errors.name?.type === "required" && <span className='reg-error-msg'>Kérjük adjon meg egy felhasználónevet.</span>}
-                    {errors.name?.type === "min" && <span className='reg-error-msg'>5 és 30 karakter közti hosszúságú nevet adjon meg</span>}
-                    {errors.name?.type === "maxLength" && <span className='reg-error-msg'>5 és 30 karakter közti hosszúságú nevet adjon meg.</span>}
-                    {errors.name?.type === "pattern" && <span className='reg-error-msg'>Kérjük csak az angol ABC betűit és számokat használjon.</span>}
+                    <input className="register-input" type="text" placeholder="Név" id='username' {...register("username",{required: true, max: 30, min: 5, maxLength: 30, pattern: /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]+$/i})}/>
+                    {errors.username?.type === "required" && <span className='reg-error-msg'>Kérjük adjon meg egy felhasználónevet.</span>}
+                    {errors.username?.type === "min" && <span className='reg-error-msg'>5 és 30 karakter közti hosszúságú nevet adjon meg</span>}
+                    {errors.username?.type === "maxLength" && <span className='reg-error-msg'>5 és 30 karakter közti hosszúságú nevet adjon meg.</span>}
+                    {errors.username?.type === "pattern" && <span className='reg-error-msg'>Kérjük csak az angol ABC betűit és számokat használjon.</span>}
                   </div>
                   <div className="justify-content-center form-group row pb-1">
                     <label className="col-form-label text-center register-label">E-MAIL CÍM</label>
-                    <input className="register-input" type="email" placeholder="Email cím" id='email' {...register("email",{required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i})}/>
+                    <input className="register-input" type="text" placeholder="Email cím" id='email' {...register("email",{required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i})}/>
                     {errors.email?.type === "required" && <span className='reg-error-msg'>Kérem adjon meg egy email címet.</span>}
                     {errors.email?.type === "pattern" && <span className='reg-error-msg'>Kérem adjon meg egy helyes email címet. Pl: name@email.com</span>}
                   </div>
                   <div className="justify-content-center form-group row pb-1">
                     <label className="col-form-label text-center register-label">JELSZÓ</label>
                     <input className="register-input" name="password" type="password" placeholder="Jelszó" id='password' {...register("password", {required: true, max: 40, min: 8, maxLength: 40, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/i})}/>
-                    {errors.password?.type === "pattern" && <span className='reg-error-msg'>A jelszó tartalmazzon egy kisbetűt, egy nagybetűt, egy számot és egy speciális karaktert.</span>}
-                    {errors.password?.type === "required" && <span className='reg-error-msg'>Adjon meg egy jelszót</span>}
-                    {errors.password?.type === "min" && <span className='reg-error-msg'>Legalább 8 karakter hosszúnak kell lennie a jelszónak.</span>}
-                    {errors.password?.type === "maxLength" && <span className='reg-error-msg'>Legfeljebb 40 karakter hosszúnak kell lennie a jelszónak.</span>}
+                    {errors.password?.type === "pattern" && <span className='reg-error-msg'>A jelszó tartalmazzon egy kisbetűt, egy nagybetűt és egy számot.</span>}
+                    {errors.password?.type === "maxLength" && <span className='reg-error-msg'>A jelszónak 8 - 40 karakter hosszúnak kell lennie.</span>}
                   </div>
                   <div className="justify-content-center form-group row pb-1">
                     <label className="col-form-label text-center register-label">JELSZÓ ELLENŐRZÉSE</label>
-                    <input className="register-input" type="password" placeholder="Jelszó ellenőrzése" id='passwordCheck' {...register("passwordCheck",{validate: value =>
+                    <input className="register-input" type="password" placeholder="Jelszó ellenőrzése" id='confirmPassword' {...register("confirmPassword",{validate: value =>
             value === password.current})}/>
-                    {errors.passwordCheck && <span className='reg-error-msg'>Nem egyezik a fent megadott jelszóval!</span>}
+                    {errors.confirmPassword && <span className='reg-error-msg'>Nem egyezik a fent megadott jelszóval!</span>}
                   </div>
                   <div className='d-flex justify-content-center'>
                     <button type="submit" className='btn btn-button3'>Regisztráció</button>
