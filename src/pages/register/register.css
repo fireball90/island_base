@@ -47,7 +47,11 @@ font-family: 'Rubik Dirt', cursive;
 
 .register-input{
     text-align: center;
-    background-color: rgb(255, 221, 227);
+    background-color: rgb(255, 255, 255);
+    height: 50px;
+    font-size: 16px;
+    width: 300px;
+    border-radius: 10px;
 }
 
 .register-link a{
@@ -58,4 +62,11 @@ font-family: 'Rubik Dirt', cursive;
 }
 .register-link a:hover{
     color: rgb(255, 230, 0);
+}
+.reg-error-msg{
+    font-size: 18px;
+    color: white;
+    text-shadow: 1px 1px black;
+    background-color: rgba(255, 0, 0, 0.6);
+    border-radius: 10px;
 }
