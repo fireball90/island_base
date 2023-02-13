@@ -1,8 +1,38 @@
-import React from 'react';
+import React, { useState } from "react";
 import '../login/login.css';
 
+
 export function Login() {
-  return  <div className='d-flex justify-content-center align-items-center'>
+  const [data,setData] = useState({
+    username:"",
+    password:""
+  });
+  const {username,password} = data;
+  const changeHandler = event => {
+    setData({...data,[event.target.name]:[event.target.value]});
+  }
+  var errorMsgLogin = "";
+  const submitHandler = event => {
+      event.preventDefault();
+        fetch('https://localhost:7276/api/Auth/Login', {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data),
+          })
+          .then(response => response.json())
+          .then(data => {
+          console.log('Success:', data);
+          alert('Sikeres Belépés');
+          })
+          .catch((error) => {
+          console.error('Error:', error);
+          errorMsgLogin = "Hibás felhasználónév vagy jelszó!";
+          });        
+  };
+    return  <div className='d-flex justify-content-center align-items-center'>
             <div className='login-container justify-content-center d-flex align-items-center'>
               <div className='d-flex align-items-center flex-column'>
 
@@ -14,18 +44,17 @@ export function Login() {
                     <img className='login-img2' alt='BEJELENTKEZÉS' src='../images/bejelentkezes.png'></img>
                 </div>
 
-                  <form id="form" className="">
-                    <div className="justify-content-center  form-group row pb-3">
-                      <label className="col-form-label text-center login-label">NÉV</label>
-                      <div className="col-sm-10">
-                        <input type="text" name="username" className="form-control login-input" />
-                      </div>
+                  <form id="form" className="" onSubmit={submitHandler}>
+                    <div className="justify-content-center  form-group row pb-1">
+                      <label className="col-form-label text-center login-label">FELHASZNÁLÓNÉV</label>
+                      <input className="login-input" type="text" placeholder="Név" name="username" id="username" value={username} onChange={changeHandler}/>
                     </div>
-                    <div className="justify-content-center  form-group row pb-3">
+                    <div className="justify-content-center  form-group row pb-1">
                       <label className="col-form-label text-center login-label">JELSZÓ</label>
-                      <div className="col-sm-10">
-                        <input type="password" name="password" className="form-control login-input" />
-                      </div>
+                      <input className="login-input" type="password" placeholder="Jelszó" name="password" id="password" value={password} onChange={changeHandler}/>
+                    </div>
+                    <div>
+                      <span className="login-error-msg">{errorMsgLogin}</span>
                     </div>
                     <div className='d-flex justify-content-center'>
                       <button type="submit" className='btn btn-button1'>Belépés</button>

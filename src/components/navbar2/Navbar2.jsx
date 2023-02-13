@@ -27,7 +27,7 @@ const  Navigation2 = () => {
                             <img className='nav-img' alt='ISLANDERS' src='../images/islanders_logo.png'></img>
                     </div> */}
                 <div className="nav-img-menu">     
-                        <Link to="/myprofile"><img className="" alt="Saját profil" title='Saját profil' src='../images/ui/indian_ribbon.png'></img></Link>    
+                        <Link to="/myprofile"><img className="nav-profile" alt="Saját profil" title='Saját profil' src='../images/ui/indian_ribbon.png'></img></Link>    
                         <Link to="/management"><img className="menupont" alt="Menedzsment" title='Menedzsment' src='../images/ui/management.png'></img></Link>
                         <Link to="/management"><img className="menupont" alt="Építés" title='Építés' src='../images/ui/build.png'></img></Link>  
                         <Link to="/war"><img className="menupont" alt="Csata" title='Csata' src='../images/ui/war.png'></img></Link>

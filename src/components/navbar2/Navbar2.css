@@ -38,3 +38,39 @@ font-family: 'Rubik Dirt', cursive;
 .nav-item-component img{
     flex-direction: column;
 }
+.nav-profile{
+    width: 200px;
+}
+
+
+@media screen and (min-width: 2560px) {
+    .nav-img-menu{
+        width: 400px;
+        justify-content: space-between;
+    }
+    .menupont{
+        width: 200px;
+    }
+    .nav-container2 {
+        width: 400px;
+    }
+    .nav-profile{
+        width: 400px;
+    }
+}
+
+@media screen and (min-width: 3840px) {
+    .nav-img-menu{
+        width: 800px;
+        justify-content: space-between;
+    }
+    .menupont{
+        width: 400px;
+    }
+    .nav-container2 {
+        width: 800px;
+    }
+    .nav-profile{
+        width: 800px;
+    }
+}
