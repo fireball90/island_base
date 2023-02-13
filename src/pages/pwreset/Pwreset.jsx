@@ -1,7 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../pwreset/pwreset.css';
 
 export function Pwreset() {
+  const [email,setEmail] = useState('');
+  const handleChange = event => {
+      setEmail(event.target.value);
+  };
+  const submitHandler = event => {
+    event.preventDefault();
+      fetch('https://localhost:7276/api/Auth/SetTemporaryPassword', {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(email),
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log('Success:', data);
+        alert('Az emailt kiküldtük.');
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });        
+};
   return <div className='d-flex justify-content-center align-items-center'>
           <div className='pwreset-container justify-content-center d-flex align-items-center'>
             <div className='d-flex align-items-center flex-column'>
@@ -14,11 +37,11 @@ export function Pwreset() {
                   <img className='pwreset-img2' alt='PWRESET' src='../images/elfelejtett_jelszo.png'></img>
               </div>
 
-                <form id="form" className="">
+                <form id="form" className="" onSubmit={submitHandler}>
                   <div className="justify-content-center form-group row pb-3">
                     <label className="col-form-label text-center pwreset-label">REGISZTRÁLÁSNÁL HASZNÁLT EMAIL CÍM</label>
                     <div className="col-sm-8">
-                      <input type="email" name="email" className="form-control pwreset-input" />
+                      <input type="email" name="email" id="email" className="pwreset-input" onChange={handleChange} value={email}/>
                     </div>
                   </div>
                   <div className='d-flex justify-content-center'>
