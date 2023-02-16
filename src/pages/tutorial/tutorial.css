@@ -55,6 +55,12 @@
     color: azure;
 }
 
+.tutorial-close{
+    width: 75px;
+    position: relative;
+    float: right;
+}
+
 .tutorial-videos{
     font-size: xx-large;
     margin: 100px 40px 0px 90px;

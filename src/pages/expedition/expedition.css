@@ -1,0 +1,75 @@
+
+.expedition-all {
+    position:absolute;
+    z-index: 201;
+    backdrop-filter: blur(3px);
+    min-width: 1920px;  
+    max-width: 3840px;
+    min-height: 970px;
+    max-height: 2160px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.content-bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.expedition-container{ 
+    background-image:url("../../../public/images/ui/contentbg.png");
+    position: absolute;
+    height: 800px;
+    margin-left: 170px;
+    margin-top: 50px;
+    width: 1600px;
+    z-index: 303;
+    padding-top: 0;
+    color: azure;
+}
+
+.expedition-close{
+    width: 75px;
+    position: relative;
+    float: right;
+}
+
+.expedition-cards{
+    font-size: xx-large;
+    margin: 100px 40px 0px 90px;
+    box-sizing: border-box;
+}
+
+.card-body{    
+    padding: 2rem;
+    margin-top: 10px;    
+}
+
+.card-img-fluid{    
+    width: 8rem;
+    margin-top: 10px;
+}
+
+.card-title{
+    font-size: large; 
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+.card-name{
+    font-size: larger;
+    margin:0;
+}
+.card-text{
+    font-size: large;
+}
+
+.container-cards{
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
