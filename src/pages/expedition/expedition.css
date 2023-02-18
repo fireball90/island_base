@@ -41,31 +41,40 @@
 
 .expedition-cards{
     font-size: xx-large;
-    margin: 100px 40px 0px 90px;
-    box-sizing: border-box;
+    margin: 60px 40px 0px 90px;
+    box-sizing: border-box;    
 }
 
-.card-body{    
+.expedition{
+    margin: 0 0 1rem 0;
+    font-size: 150%;
+    font-weight: bold;
+    text-shadow: 5px 5px 5px rgb(149, 100, 8);
+}
+
+.edifficult-cards{
+    margin-top: 1rem;
+    background-color: rgba(139, 86, 17, 0.336);
+    padding: 40px 0px 30px 0px; 
+    border-radius: 20px;
+}
+
+.ecard-body{    
     padding: 2rem;
-    margin-top: 10px;    
+    margin-top: 1rem;
 }
 
-.card-img-fluid{    
-    width: 8rem;
-    margin-top: 10px;
+.ecard-img-fluid{    
+    width: 13rem;
 }
 
-.card-title{
-    font-size: large; 
+.ecard-title{
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 
-.card-name{
-    font-size: larger;
-    margin:0;
-}
-.card-text{
-    font-size: large;
+.ecard-text{
+    font-size: x-large;
+    margin-top: 2rem;
 }
 
 .container-cards{

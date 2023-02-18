@@ -88,9 +88,11 @@ function Tutorial() {
                                   alt="Balázs"
                                 ></img>
                                 <div className="card-body">
-                                  <h5 className="card-title">Fejlesztő</h5>
-                                  <h6 className="card-name">Mészáros Balázs</h6>
-                                  <p className="card-text">
+                                  <h5 className="tcard-title">Fejlesztő</h5>
+                                  <h6 className="tcard-name">
+                                    Mészáros Balázs
+                                  </h6>
+                                  <p className="tcard-text">
                                     meszarosb1@kkszki.hu
                                   </p>
                                 </div>
@@ -102,9 +104,11 @@ function Tutorial() {
                                   alt="Norbert"
                                 ></img>
                                 <div className="card-body">
-                                  <h5 className="card-title">Fejlesztő</h5>
-                                  <h6 className="card-name">Lekner Norbert</h6>
-                                  <p className="card-text">leknern@kkszki.hu</p>
+                                  <h5 className="tcard-title">Fejlesztő</h5>
+                                  <h6 className="tcard-name">Lekner Norbert</h6>
+                                  <p className="tcard-text">
+                                    leknern@kkszki.hu
+                                  </p>
                                 </div>
                               </div>
                               <div className="card-Edit">
@@ -114,9 +118,9 @@ function Tutorial() {
                                   alt="Edit"
                                 ></img>
                                 <div className="card-body">
-                                  <h5 className="card-title">Fejlesztő</h5>
-                                  <h6 className="card-name">Szigili Edit</h6>
-                                  <p className="card-text">
+                                  <h5 className="tcard-title">Fejlesztő</h5>
+                                  <h6 className="tcard-name">Szigili Edit</h6>
+                                  <p className="tcard-text">
                                     szigilie@kkszki.hu
                                   </p>
                                 </div>

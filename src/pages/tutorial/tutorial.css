@@ -70,10 +70,15 @@
 .tutorial{
     margin: 0 0 1rem 0;
     font-size: 150%;
+    font-weight: bold;
+    text-shadow: 5px 5px 5px rgb(149, 100, 8);
 }
 
 .videos{
     margin: 20px;
+    background-color: rgba(139, 86, 17, 0.336);
+    padding: 40px; 
+    border-radius: 20px;          
 }
 
 .makers-cards{
@@ -82,8 +87,8 @@
     max-width: 400px;
     max-height: 700px;
     box-sizing: border-box;
-    margin-top: 3rem;
-    padding-top: 3rem;
+    margin-top: 2rem;
+    padding-top: 36px;
 }
 
 .card-body{    
@@ -93,19 +98,19 @@
 
 .card-img-fluid{    
     width: 8rem;
-    margin-top: 10px;
+    margin-top: 6px;
 }
 
-.card-title{
+.tcard-title{
     font-size: large; 
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 
-.card-name{
+.tcard-name{
     font-size: larger;
     margin:0;
 }
-.card-text{
+.tcard-text{
     font-size: large;
 }
 
