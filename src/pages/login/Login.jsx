@@ -25,6 +25,7 @@ export function Login() {
           .then(response => response.json())
           .then(data => {
           console.log('Success:', data);
+          //cookie elmentése belépett státusszal
           alert('Sikeres Belépés');
           })
           .catch((error) => {

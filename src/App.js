@@ -16,7 +16,7 @@ import Error from './pages/error/Error';
 import Sell from './pages/sell/Sell';
 
 function App() {
-  return (
+  return (//ide kell majd egy IF elágazás. Cookie-ből kiolvasni, hogy loggedIn statusz true / false. És annak megfelelően menüt megjeleníteni, vagy 404 errort
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigation2/>}>
