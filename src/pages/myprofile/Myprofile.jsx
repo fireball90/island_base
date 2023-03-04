@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Myprofile() {
   return (
-    <div className="myprofile-all">
+    <div className="bacground-all">
       <div className="d-flex align-items-center justify-content-center">
         <div className="content-mybg">
           <div className="myprofile-container">
@@ -16,54 +16,71 @@ function Myprofile() {
                 src="../images/ui/close.png"
               ></img>
             </Link>
-            <div className="container-fluid">
-              <div
-                className="d-flex justify-content-center "
-                style={{ height: "700px" }}
-              >
-                <div className="col-12 d-flex justify-content-center">
-                  <div className="myprofile-data flex-column">
-                    <div className="myprofile d-flex justify-content-center">
-                      <img
-                        className="myprofile-indian"
-                        alt="Indian"
-                        title="Indian"
-                        src="../images/ui/indian_ribbon.png"
-                      ></img>
-                    </div>
-                    <div className="Profile d-flex justify-content-center">
-                      <form id="myprofile-form" className="row">
-                        <div className="User justify-content-center">
-                          <label className="col-sm-12 col-form-label text-center">
-                            Felhasználónév:
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Username"
-                            aria-label="Username"
-                          ></input>
-                        </div>
 
-                        <p>Email cím: </p>
-                        <p>Jelszó módósítása:</p>
-                        <p>Új jelszó:</p>
-                        <p>Új jelszó ismétlése:</p>
-                        <div className="modifies d-flex justify-content-center">
-                          <Link to="/management">
-                            <button className="myprofile-btn">Módosít</button>
-                          </Link>
-                        </div>
-                      </form>
+            <div className="d-flex justify-content-center">
+              <div className="myprofile-data flex-column">
+                <div className="myprofile d-flex justify-content-center">
+                  <img
+                    className="myprofile-island"
+                    alt="Indian"
+                    title="Indian"
+                    src="../images/ui/indian_ribbon.png"
+                  ></img>
+                </div>
+                <div className="Profile d-flex justify-content-center">
+                  <form id="myprofile-form" className="row">
+                    <div className="User justify-content-center">
+                      <label className="col-sm-12 col-form-label text-center">
+                        Felhasználónév:
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Username"
+                        aria-label="Username"
+                      ></input>
+                      <label className="col-sm-12 col-form-label text-center">
+                        Email cím:
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Email"
+                        aria-label="Email"
+                      ></input>
+                      <p>Jelszó módósítása:</p>
+                      <label className="col-sm-12 col-form-label text-center">
+                        Új jelszó:
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="new-password"
+                        aria-label="new-password"
+                      ></input>
+                      <label className="col-sm-12 col-form-label text-center">
+                        Új jelszó ismétlése:
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="repeat-new-password"
+                        aria-label="repeat-new-password"
+                      ></input>
                     </div>
-                  </div>
+                    <div className="modifies d-flex justify-content-center">
+                      <Link to="/management">
+                        <button className="modifies-btn">Módosít</button>
+                      </Link>
+                    </div>
+                  </form>
                 </div>
               </div>
-              <div className="back d-flex justify-content-center">
-                <Link to="/management">
-                  <button className="market-btn">Vissza</button>
-                </Link>
-              </div>
+            </div>
+            <div className="back d-flex justify-content-center">
+              <Link to="/management">
+                <button className="market-btn">Vissza</button>
+              </Link>
             </div>
           </div>
         </div>

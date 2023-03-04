@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 function Tutorial() {
   return (
-    <div className="tutorial-all">
+    <div className="bacground-all">
       <div className="d-flex align-items-center justify-content-center">
         <div className="content-tbg">
           <div className="d-flex justify-content-center flex-column">
             <div className="upIsland d-flex justify-content-center">
-{/*               <img
+              {/*               <img
                 className="europian-island"
                 alt="Európai sziget"
                 src="../assets/europian_island.png"
@@ -22,7 +22,7 @@ function Tutorial() {
               ></img> */}
             </div>
             <div className="upIsland d-flex justify-content-center">
-{/*               <img
+              {/*               <img
                 className="japanese-island"
                 alt="Japán sziget"
                 src="../assets/japanese_island.png"
@@ -62,16 +62,26 @@ function Tutorial() {
                             <div className="information d-flex justify-content-center">
                               <p>
                                 Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Quisque lacus eros, interdum
-                                vel quam in, vulputate cursus lacus. Nullam
-                                fermentum elit magna, ut mollis ante porttitor
-                                eget. Integer aliquet efficitur fermentum. Morbi
-                                fermentum euismod ex. Cras id malesuada urna.
-                                Nunc fringilla dignissim metus, efficitur
-                                bibendum metus varius eget. Curabitur rutrum
-                                eros ac dui tincidunt, in egestas ex iaculis.
-                                Aliquam blandit eros a vehicula cursus. In dolor
-                                ante, mollis a porta eu, dapibus vitae justo.
+                                adipiscing elit. Quisque rutrum magna eleifend,
+                                porta urna id, posuere tortor. Sed feugiat
+                                auctor arcu eu condimentum. Etiam aliquet elit
+                                lectus, eu pulvinar lectus ullamcorper a. Duis
+                                laoreet tristique sem id tristique. In hac
+                                habitasse platea dictumst. Duis tempor ante
+                                facilisis sodales mollis. Nam vitae semper
+                                magna, nec mollis ipsum. Nullam non metus dui.
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Nulla blandit mauris sapien, ac
+                                malesuada tellus maximus eu. Suspendisse quis
+                                feugiat est, vel vulputate erat. Phasellus
+                                semper, nunc nec euismod euismod, arcu sapien
+                                convallis turpis, in fringilla magna ipsum quis
+                                lacus. Curabitur non commodo enim. Pellentesque
+                                metus diam, volutpat sit amet enim non, auctor
+                                laoreet enim. Nunc tincidunt bibendum congue.
+                                Proin bibendum dui at massa imperdiet semper.
+                                Curabitur odio odio, pharetra id arcu ac,
+                                malesuada tincidunt lorem.
                               </p>
                             </div>
                           </div>

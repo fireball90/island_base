@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export function Expedition() {
   return (
-    <div className="expedition-all">
+    <div className="bacground-all">
       <div className="d-flex align-items-center justify-content-center">
         <div className="content-ebg">
           <div className="expedition-container">
