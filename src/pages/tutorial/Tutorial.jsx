@@ -9,7 +9,7 @@ function Tutorial() {
         <div className="content-bg">
           <div className="d-flex justify-content-center flex-column">
             <div className="upIsland d-flex justify-content-center">
-              <img
+{/*               <img
                 className="europian-island"
                 alt="Európai sziget"
                 class="img-fluid"
@@ -21,10 +21,10 @@ function Tutorial() {
                 alt="Viking sziget"
                 class="img-fluid"
                 src="../assets/viking_island.png"
-              ></img>
+              ></img> */}
             </div>
             <div className="upIsland d-flex justify-content-center">
-              <img
+{/*               <img
                 className="japanese-island"
                 alt="Japán sziget"
                 class="img-fluid"
@@ -35,7 +35,7 @@ function Tutorial() {
                 alt="Indiai sziget"
                 class="img-fluid"
                 src="../assets/indian-island.png"
-              ></img>
+              ></img> */}
             </div>
           </div>
         </div>
