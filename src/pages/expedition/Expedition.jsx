@@ -6,11 +6,11 @@ export function Expedition() {
   return (
     <div className="expedition-all">
       <div className="d-flex align-items-center justify-content-center">
-        <div className="content-bg">
+        <div className="content-ebg">
           <div className="expedition-container">
             <Link to="/management">
               <img
-                className="expedition-close"
+                className="x-close"
                 alt="Bezárás"
                 title="Bezárás"
                 src="../images/ui/close.png"
@@ -24,7 +24,7 @@ export function Expedition() {
                 <div className="col-12 d-flex justify-content-center">
                   <div className="expedition-cards flex-column">
                     <div className="expedition d-flex justify-content-center">
-                      <p>Expedition</p>
+                      <p>Expedició</p>
                     </div>
                     <div className="edifficult-cards align-items-center d-flex justify-content-center">
                       <div className="container-card d-flex justify-content-center">
@@ -33,9 +33,12 @@ export function Expedition() {
                             src="../images/difficulty/easy.png"
                             className="ecard-img-fluid"
                             alt="Easy"
+                            title="Könnyű"
                           ></img>
                           <div className="ecard-body">
-                            <h2 className="ecard-title">EASY</h2>
+                            <Link to="/management">
+                              <button className="expedition-btn">KÖNNYŰ</button>
+                            </Link>
                             <p className="ecard-text">
                               Kevés alapanyag, xp és arany, de több esély a
                               sikeres expedícióra.
@@ -47,9 +50,12 @@ export function Expedition() {
                             src="../images/difficulty/medium.png"
                             className="ecard-img-fluid"
                             alt="Medium"
+                            title="Normál"
                           ></img>
                           <div className="ecard-body">
-                            <h2 className="ecard-title">MEDIUM</h2>
+                            <Link to="/management">
+                              <button className="expedition-btn">NORMÁL</button>
+                            </Link>
                             <p className="ecard-text">
                               Közepes mennyiségű alapanyag, xp és arany, de
                               kevesebb esély a sikeres expedícióra.
@@ -61,9 +67,12 @@ export function Expedition() {
                             src="../images/difficulty/hard.png"
                             className="ecard-img-fluid"
                             alt="Hard"
+                            title="Nehéz"
                           ></img>
                           <div className="ecard-body">
-                            <h2 className="ecard-title">HARD</h2>
+                            <Link to="/management">
+                              <button className="expedition-btn">NEHÉZ</button>
+                            </Link>
                             <p className="ecard-text">
                               Sok alapanyag, xp és arany, de alacsony esély a
                               sikeres expedícióra.
@@ -75,6 +84,11 @@ export function Expedition() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="back d-flex justify-content-center">
+              <Link to="/management">
+                <button className="market-btn">Vissza</button>
+              </Link>
             </div>
           </div>
         </div>

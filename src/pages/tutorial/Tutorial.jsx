@@ -6,20 +6,18 @@ function Tutorial() {
   return (
     <div className="tutorial-all">
       <div className="d-flex align-items-center justify-content-center">
-        <div className="content-bg">
+        <div className="content-tbg">
           <div className="d-flex justify-content-center flex-column">
             <div className="upIsland d-flex justify-content-center">
               <img
                 className="europian-island"
                 alt="Európai sziget"
-                class="img-fluid"
                 src="../assets/europian_island.png"
               ></img>
 
               <img
                 className="viking-island"
                 alt="Viking sziget"
-                class="img-fluid"
                 src="../assets/viking_island.png"
               ></img>
             </div>
@@ -27,23 +25,21 @@ function Tutorial() {
               <img
                 className="japanese-island"
                 alt="Japán sziget"
-                class="img-fluid"
                 src="../assets/japanese_island.png"
               ></img>
               <img
                 className="indian-island"
                 alt="Indiai sziget"
-                class="img-fluid"
                 src="../assets/indian-island.png"
               ></img>
             </div>
           </div>
         </div>
-        <div className="content-ms">
+        <div className="content-tms">
           <div className="tutorial-container">
             <Link to="/management">
               <img
-                className="tutorial-close"
+                className="x-close"
                 alt="Bezárás"
                 title="Bezárás"
                 src="../images/ui/close.png"
@@ -59,11 +55,11 @@ function Tutorial() {
                     <div clasNames="justify-content-md-center">
                       <div className="col-12 text-center">
                         <div className="d-flex justify-content-center">
-                          <div className="tutorial-videos flex-column">
+                          <div className="tutorial-inform flex-column">
                             <div className="tutorial d-flex justify-content-center">
-                              <p>Tutorial</p>
+                              <p>Útmutató</p>
                             </div>
-                            <div className="videos d-flex justify-content-center">
+                            <div className="information d-flex justify-content-center">
                               <p>
                                 Lorem ipsum dolor sit amet, consectetur
                                 adipiscing elit. Quisque lacus eros, interdum
@@ -86,6 +82,7 @@ function Tutorial() {
                                   src="../images/makers/MészárosBalázs.jpg"
                                   className="card-img-fluid"
                                   alt="Balázs"
+                                  title="Mészáros Balázs"
                                 ></img>
                                 <div className="card-body">
                                   <h5 className="tcard-title">Fejlesztő</h5>
@@ -102,6 +99,7 @@ function Tutorial() {
                                   src="../images/makers/LeknerNorbert.jpg"
                                   className="card-img-fluid"
                                   alt="Norbert"
+                                  title="Lekner Norbert"
                                 ></img>
                                 <div className="card-body">
                                   <h5 className="tcard-title">Fejlesztő</h5>
@@ -116,6 +114,7 @@ function Tutorial() {
                                   src="../images/makers/SzigiliEdit.jpg"
                                   className="card-img-fluid"
                                   alt="Edit"
+                                  title="Szigili Edit"
                                 ></img>
                                 <div className="card-body">
                                   <h5 className="tcard-title">Fejlesztő</h5>
@@ -133,6 +132,11 @@ function Tutorial() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="back d-flex justify-content-center">
+              <Link to="/management">
+                <button className="market-btn">Vissza</button>
+              </Link>
             </div>
           </div>
         </div>

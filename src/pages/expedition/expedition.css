@@ -1,16 +1,16 @@
 
 .expedition-all {
     position:absolute;
+    top: 0;
+    left: 0;
     z-index: 201;
     backdrop-filter: blur(3px);
-    min-width: 1920px;  
-    max-width: 3840px;
-    min-height: 970px;
-    max-height: 2160px;
+    min-width: 100%;  
+    min-height: 100%;
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.content-bg{
+.content-ebg{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -26,17 +26,11 @@
     position: absolute;
     height: 800px;
     margin-left: 170px;
-    margin-top: 50px;
-    width: 1600px;
+    margin-top: 70px;
+    max-width: 1600px;
     z-index: 303;
     padding-top: 0;
     color: azure;
-}
-
-.expedition-close{
-    width: 75px;
-    position: relative;
-    float: right;
 }
 
 .expedition-cards{
@@ -68,10 +62,6 @@
     width: 13rem;
 }
 
-.ecard-title{
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
-}
-
 .ecard-text{
     font-size: x-large;
     margin-top: 2rem;
@@ -81,4 +71,15 @@
     display: flex;
     padding: 0;
     margin: 0;
+}
+
+.expedition-btn{
+    background-image: url("../../../public/images/ui/btn_bg_2.png");
+    width: 200px;
+    height: 75px;
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+    color: aliceblue;
+    font-size: x-large;
+    padding: 0 6;
 }
