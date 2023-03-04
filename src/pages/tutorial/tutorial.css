@@ -1,13 +1,13 @@
 
 .tutorial-all {
-    position:absolute;
-    top: 0;
-    left: 0;
-    z-index: 201;
-    backdrop-filter: blur(3px);
-    min-width: 100%;  
-    min-height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-image:url("../../../public/images/ui/contentbg2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    height: 100vh;
+    width: 100%; 
+    z-index: 300;
+    overflow: auto;
 }
 
 .content-tbg{
@@ -49,14 +49,7 @@
 }
 
 .tutorial-container{ 
-    background-image:url("../../../public/images/ui/contentbg.png");
-    position: absolute;
-    height: 800px;
-    margin-left: 170px;
-    margin-top: 70px;
-    width: 1600px;
-    z-index: 303;
-    padding-top: 0;
+    padding-top: 20px;
     color: azure;
 }
 
