@@ -1,79 +1,117 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useContext } from "react";
+import { useEffect } from "react";
+import { Cookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../App";
+
 import '../login/login.css';
 
+export default function Login() {
+  const cookie = new Cookies()
+  const userToken = cookie.get('token')
 
-export function Login() {
-  const [data,setData] = useState({
-    username:"",
-    password:""
-  });
-  const {username,password} = data;
-  const changeHandler = event => {
-    setData({...data,[event.target.name]:[event.target.value]});
+  const navigate = useNavigate()
+
+  const { setIsLogined, setUser } = useContext(UserContext)
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+
+  function decodeToken(token) {
+    if (token == undefined) return undefined
+
+    const tokenBody = token.split('.')[1]
+    const decodedTokenBody = JSON.parse(window.atob(tokenBody))
+
+    return { ...decodedTokenBody, exp: new Date(decodedTokenBody.exp * 1000) }
   }
-  var errorMsgLogin = "";
-  const submitHandler = event => {
-      event.preventDefault();
-        fetch('https://localhost:7276/api/Auth/Login', {
-          method: 'POST',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data),
-          })
-          .then(response => response.json())
-          .then(data => {
-          console.log('Success:', data);
-          //cookie elmentése belépett státusszal
-          alert('Sikeres Belépés');
-          })
-          .catch((error) => {
-          console.error('Error:', error);
-          errorMsgLogin = "Hibás felhasználónév vagy jelszó!";
-          });        
-  };
-    return  <div className='d-flex justify-content-center align-items-center'>
-            <div className='login-container justify-content-center d-flex align-items-center'>
-              <div className='d-flex align-items-center flex-column'>
 
-                <div className=''>
-                    <img className='login-img' alt='ISLANDERS' src='../images/islanders_logo.png'></img>
-                </div>
+  function usernameChangeHandler(event) {
+    setUsername(event.target.value)
+  }
 
-                <div className=''>
-                    <img className='login-img2' alt='BEJELENTKEZÉS' src='../images/bejelentkezes.png'></img>
-                </div>
+  function passwordChangeHandler(event) {
+    setPassword(event.target.value)
+  }
 
-                  <form id="form" className="" onSubmit={submitHandler}>
-                    <div className="justify-content-center  form-group row pb-1">
-                      <label className="col-form-label text-center login-label">FELHASZNÁLÓNÉV</label>
-                      <input className="login-input" type="text" placeholder="Név" name="username" id="username" value={username} onChange={changeHandler}/>
-                    </div>
-                    <div className="justify-content-center  form-group row pb-1">
-                      <label className="col-form-label text-center login-label">JELSZÓ</label>
-                      <input className="login-input" type="password" placeholder="Jelszó" name="password" id="password" value={password} onChange={changeHandler}/>
-                    </div>
-                    <div>
-                      <span className="login-error-msg">{errorMsgLogin}</span>
-                    </div>
-                    <div className='d-flex justify-content-center'>
-                      <button type="submit" className='btn btn-button1'>Belépés</button>
-                    </div>
-                  </form>
+  function submit(event) {
+    event.preventDefault();
 
-                <div className='d-flex justify-content-center'>
-                    <p className='ml-auto login-link'><a href='/register'>Még nem regisztrált? Kattintson ide!</a></p>
-                </div>
+    axios.post('https://localhost:7276/api/Auth/Login', {
+      username: username,
+      password: password
+    })
+      .then(response => response.data)
+      .then(token => {
+        cookie.set('token', token, { path: '/' })
+        userToken = token
+      })
+      .catch(error => {
+        setErrorMessage('Hibás felhasználónév, vagy jelszó!')
+      })
+  }
 
-                <div className='d-flex justify-content-center'>
-                  <p className='ml-auto login-link'><a href='/pwreset'>Elfelejtette a jelszavát?</a></p>
-                </div>
-                
-              </div>
+  useEffect(() => {
+    if (userToken != undefined) {
+      const decodedToken = decodeToken(userToken)
+      const now = new Date()
+
+      if (decodedToken.exp >= now) {
+        setUser(decodedToken.Username, decodedToken.Email)
+        setIsLogined(true)
+
+        navigate('select-island')
+      }
+    }
+  }, [userToken])
+
+  return (
+    <div className='d-flex justify-content-center align-items-center'>
+      <div className='login-container justify-content-center d-flex align-items-center'>
+        <div className='d-flex align-items-center flex-column'>
+
+          <div className=''>
+            <img className='login-img' alt='ISLANDERS' src='../images/islanders_logo.png'></img>
+          </div>
+
+          <div className=''>
+            <img className='login-img2' alt='BEJELENTKEZÉS' src='../images/bejelentkezes.png'></img>
+          </div>
+
+          <form id="form" className="" onSubmit={submit}>
+            <div className="justify-content-center  form-group row pb-1">
+              <label className="col-form-label text-center login-label">FELHASZNÁLÓNÉV</label>
+              <input className="login-input" type="text" placeholder="Név" value={username} onChange={usernameChangeHandler} />
             </div>
-          </div>    
+            <div className="justify-content-center  form-group row pb-1">
+              <label className="col-form-label text-center login-label">JELSZÓ</label>
+              <input className="login-input" type="password" placeholder="Jelszó" value={password} onChange={passwordChangeHandler} />
+            </div>
+            {
+              errorMessage ? (
+                <div>
+                  <span className="login-error-msg">{ errorMessage }</span>
+                </div>
+              ) : (
+                null
+              )
+            }
+            <div className='d-flex justify-content-center'>
+              <button type="submit" className='btn btn-button1'>Belépés</button>
+            </div>
+          </form>
+
+          <div className='d-flex justify-content-center'>
+            <p className='ml-auto login-link'><a href='/register'>Még nem regisztrált? Kattintson ide!</a></p>
+          </div>
+
+          <div className='d-flex justify-content-center'>
+            <p className='ml-auto login-link'><a href='/pwreset'>Elfelejtette a jelszavát?</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
-
-
-export default Login;

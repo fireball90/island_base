@@ -302,9 +302,7 @@ export default class IslandManagement extends Component {
   }
 
   startUpdateItemTimer(building) {
-    console.log(building.buildDate)
     let start = this.calculateStartTimeInMiliseconds(building.buildDate, building.productionInterval)
-    console.log(start)
     let timer 
     let interval 
 

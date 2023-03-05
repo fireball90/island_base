@@ -5,6 +5,25 @@ font-family: 'Permanent Marker', cursive;
 font-family: 'Press Start 2P', cursive;
 font-family: 'Rubik Dirt', cursive;
 */
+
+.loading-screen {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../../public/images/ui/contentbg2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-screen span {
+    color: white;
+    font-size: 1.4rem;
+}
+
 .login-container {
     margin-top: 10px;
     width: 500px;

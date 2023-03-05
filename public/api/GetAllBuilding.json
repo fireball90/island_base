@@ -1,0 +1,23 @@
+[
+    {
+        "name": "LumberYard",
+        "xCoordinate": 1,
+        "yCoordinate": 1,
+        "level": 1,
+        "maxLevel": 0,
+        "description": "0",
+        "spritePath": "",
+        "coinsForUpdate": 0,
+        "ironsForUpdate": 0,
+        "stonesForUpdate": 0,
+        "woodsForUpdate": 0,
+        "productionInterval": 1000,
+        "producedCoins": 0,
+        "producedIrons": 0,
+        "producedStones": 0,
+        "producedWoods": 0,
+        "experienceReward": 0,
+        "buildDate": "2023-03-04T16:01:26.421924",
+        "lastCollectDate": "2023-03-04T16:01:26.422024"
+    }
+]

@@ -10,12 +10,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <>
-    <App />
-  </>
-  // <React.StrictMode>  
-    
-  // </React.StrictMode>
+  <App />
 );
 
 reportWebVitals();
