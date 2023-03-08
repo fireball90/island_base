@@ -2,14 +2,14 @@
 import { Link } from "react-router-dom";
 import style from './DefaultPage.module.css'
 
-export default function ({ title, navigations }) {
+export default function ({ title, navigations, children }) {
     return (
         <div className={style.blur}>
             <div className={style.container}>
                 <div className={style.popup}>
                     <div className={style.header}>
                         <div className={style.title}>
-                            <h2>Hello World</h2>
+                            <h2>{ title }</h2>
                         </div>
                         <div className={style.navigation}>
                             {
@@ -23,7 +23,7 @@ export default function ({ title, navigations }) {
                         </Link>
                     </div>
                     <div className={style.body}>
-
+                        { children }
                     </div>
                 </div>
             </div>
