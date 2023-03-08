@@ -8,6 +8,7 @@ export default function Register() {
   const [modalShow, setModalShow] = React.useState(false);
   const { register, handleSubmit, watch, formState: { errors } } = useForm()
   const password = useRef({});
+  var logError ="";
   password.current = watch("password", "");
 
   const onSubmit = data => {
@@ -26,6 +27,7 @@ export default function Register() {
       })
       .catch((error) => {
         console.error('Error:', error);
+        logError = "A jelszónak tartalmaznia kell egy nagybetűt!";
       });
   };
 
@@ -64,9 +66,10 @@ export default function Register() {
           </div>
           <div className="justify-content-center form-group row pb-1">
             <label className="col-form-label text-center register-label">JELSZÓ</label>
-            <input className="register-input" name="password" type="password" placeholder="Jelszó" id='password' {...register("password", { required: true, max: 40, min: 8, maxLength: 40, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/i })} />
-            {errors.password?.type === "pattern" && <span className='reg-error-msg'>A jelszó tartalmazzon egy kisbetűt, egy nagybetűt, egy számot és egy speciális karaktert.</span>}
+            <input className="register-input" name="password" type="password" placeholder="Jelszó" id='password' {...register("password", { required: true, max: 40, min: 8, maxLength: 40, pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i })} />
+            {errors.password?.type === "pattern" && <span className='reg-error-msg'>A jelszó tartalmazzon egy kisbetűt, egy nagybetűt és egy számot.</span>}
             {errors.password?.type === "maxLength" && <span className='reg-error-msg'>A jelszónak 8 - 40 karakter hosszúnak kell lennie.</span>}
+            {errors.password && <span className='reg-error-msg'>{logError}</span>}
           </div>
           <div className="justify-content-center form-group row pb-1">
             <label className="col-form-label text-center register-label">JELSZÓ ELLENŐRZÉSE</label>
