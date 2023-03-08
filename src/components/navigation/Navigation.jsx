@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Navigation.css';
 import { Outlet, Link } from "react-router-dom";
+import { PlayerContext, UserContext } from '../../App';
 
 
 
 const Navigation = () => {
-
+    const { isLogined } = useContext(UserContext);
+    const { player } = useContext(PlayerContext)
 
     return (
         <>
@@ -13,18 +15,19 @@ const Navigation = () => {
                 <div className='nav-item-component'>
                     <div>
                         <img alt='Érme' title='Érme' src='../images/ui/coin_ui_2.png'></img>
-                  
+                        { player.coins }
                     </div>
                     <div>
                         <img alt='Kő' title='Kő' src='../images/ui/stone_ui_2.png'></img>
-             
+                        { player.stones }
                     </div>
                     <div>
                         <img alt='Vas' title='Vas' src='../images/ui/steel_ui_2.png'></img>
+                        { player.irons }
                    </div>
                     <div>
                         <img alt='Fa' title='Fa' src='../images/ui/wood_ui_2.png'></img>
-          
+                        { player.woods }
                     </div>
                 </div>
                 <nav className="nav-container2">

@@ -95,7 +95,11 @@ export default class App extends Component {
         setIsLogined: this.setIsLogined,
         setUser: this.setUser
       }}>
-        <PlayerContext.Provider>
+        <PlayerContext.Provider value={{
+          player: this.state.player,
+          
+          setPlayer: this.setPlayer
+        }}>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Navigation />}>
