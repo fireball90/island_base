@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './Navigation.css';
 import { Outlet, Link } from "react-router-dom";
-import { ApplicationContext } from '../../App'
 
 
 
