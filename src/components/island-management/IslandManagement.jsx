@@ -40,7 +40,7 @@ export default class IslandManagement extends Component {
     this.updateItemStartTimers = new Map()
     this.updateItemIntervals = new Map()
   }
-    
+
   async fetchInitFile() {
     const response = await fetch('/init.json');
 
@@ -54,27 +54,27 @@ export default class IslandManagement extends Component {
   }
 
   processInitFile(initFile) {
-    const availableBuildingAreas = initFile.availableBuildingAreas?.map(b => 
+    const availableBuildingAreas = initFile.availableBuildingAreas?.map(b =>
       new BuildingAreaModel(
-        b.coordX, 
+        b.coordX,
         b.coordY
-      )  
+      )
     )
 
-    const builtBuildings = initFile.builtBuildings?.map(b => 
+    const builtBuildings = initFile.builtBuildings?.map(b =>
       new BuiltBuildingModel(
-        b.coordX, 
-        b.coordY, 
-        b.level, 
-        b.maxLevel, 
-        b.name, 
+        b.coordX,
+        b.coordY,
+        b.level,
+        b.maxLevel,
+        b.name,
         new Date(b.buildDate),
-        b.description, 
-        b.imagePath, 
-        b.coinsForUpdate, 
-        b.ironsForUpdate, 
-        b.stonesForUpdate, 
-        b.woodsForUpdate, 
+        b.description,
+        b.imagePath,
+        b.coinsForUpdate,
+        b.ironsForUpdate,
+        b.stonesForUpdate,
+        b.woodsForUpdate,
         b.productionInterval,
         new Date(b.lastCollectTime),
         b.produceCoinCount,
@@ -89,14 +89,14 @@ export default class IslandManagement extends Component {
       )
     )
 
-    const unbuiltBuildings = initFile.unbuiltBuildings?.map(b => 
+    const unbuiltBuildings = initFile.unbuiltBuildings?.map(b =>
       new UnbuiltBuildingModel(
         b.name,
         b.coinsForBuild,
         b.ironsForBuild,
         b.stonesForBuild,
         b.woodsForBuild
-      )  
+      )
     )
 
     this.setState(state => ({
@@ -121,12 +121,12 @@ export default class IslandManagement extends Component {
       sprites: initFile.sprites,
       islandImagePath: initFile.islandImagePath
     }), () => {
-      for(let building of this.state.builtBuildings) {
+      for (let building of this.state.builtBuildings) {
         this.startUpdateItemTimer(building)
       }
     })
   }
-  
+
   selectWaitToBuild = (name) => {
     this.setState(state => ({
       ...state,
@@ -134,7 +134,7 @@ export default class IslandManagement extends Component {
     }))
   }
 
-  cancelWaitToBuild = () =>  {
+  cancelWaitToBuild = () => {
     this.setState(state => ({
       ...state,
       waitToBuild: null
@@ -142,14 +142,14 @@ export default class IslandManagement extends Component {
   }
 
   buildBuilding = (chosenCoordX, chosenCoordY) => {
-    if(this.state.waitToBuild != null) {  
+    if (this.state.waitToBuild != null) {
       const chosenBuilding = this.state.unbuiltBuildings.find(u => u.name == this.state.waitToBuild)
-      
+
       const buildDate = new Date()
       buildDate.setMinutes(buildDate.getMinutes() + 2)
 
       // Ez majd backendről fog jönni
-      const newBuiltBuilding = new BuiltBuildingModel (
+      const newBuiltBuilding = new BuiltBuildingModel(
         chosenCoordX,
         chosenCoordY,
         1,
@@ -174,7 +174,7 @@ export default class IslandManagement extends Component {
         0,
         this.addMilisecondsToDate(this.calculateStartTimeInMiliseconds(buildDate, 180000))
       )
-      
+
       this.startUpdateItemTimer(newBuiltBuilding)
 
       this.setState(state => ({
@@ -259,7 +259,7 @@ export default class IslandManagement extends Component {
 
     let time
 
-    if (elapsedTimeSinceBuild > 0){
+    if (elapsedTimeSinceBuild > 0) {
       time = productionInterval - (elapsedTimeSinceBuild % productionInterval)
     } else {
       time = Math.abs(elapsedTimeSinceBuild) + productionInterval
@@ -303,16 +303,16 @@ export default class IslandManagement extends Component {
 
   startUpdateItemTimer(building) {
     let start = this.calculateStartTimeInMiliseconds(building.buildDate, building.productionInterval)
-    let timer 
-    let interval 
+    let timer
+    let interval
 
     timer = setTimeout(() => {
-      this.handleProducedItemUpdate(building) 
+      this.handleProducedItemUpdate(building)
 
       interval = setInterval(() => {
         this.handleProducedItemUpdate(building)
       }, building.productionInterval)
-    }, start) 
+    }, start)
 
     this.updateItemStartTimers.set(building.name, timer)
     this.updateItemIntervals.set(building.name, interval)
@@ -333,7 +333,7 @@ export default class IslandManagement extends Component {
       this.updateItemIntervals.delete(building.name)
     } else {
       console.log('error interval')
-    } 
+    }
   }
 
   clearUpdateItemStartTimers() {
@@ -349,22 +349,22 @@ export default class IslandManagement extends Component {
   }
 
   collectProducedItems = (building) => {
-    
+
     // Elküldeni a szervernek a frissítás dátumát
 
     const buildingAfterCollect = new BuiltBuildingModel(
-      building.coordX, 
-      building.coordY, 
-      building.level, 
-      building.maxLevel, 
-      building.name, 
+      building.coordX,
+      building.coordY,
+      building.level,
+      building.maxLevel,
+      building.name,
       building.buildDate,
-      building.description, 
-      building.imagePath, 
-      building.coinsForUpdate, 
-      building.ironsForUpdate, 
-      building.stonesForUpdate, 
-      building.woodsForUpdate, 
+      building.description,
+      building.imagePath,
+      building.coinsForUpdate,
+      building.ironsForUpdate,
+      building.stonesForUpdate,
+      building.woodsForUpdate,
       building.productionInterval,
       new Date(),
       building.produceCoinCount,
@@ -405,13 +405,13 @@ export default class IslandManagement extends Component {
     let waitToBuildNotification;
 
     if (this.state.waitToBuild) {
-      waitToBuildNotification = <BuildingNotification name={this.state.waitToBuild} cancelWaitToBuild={this.cancelWaitToBuild}/>
+      waitToBuildNotification = <BuildingNotification name={this.state.waitToBuild} cancelWaitToBuild={this.cancelWaitToBuild} />
     }
 
     return (
       <div className={style.container}>
-        { waitToBuildNotification }
-        <PlayerStatistic 
+        {waitToBuildNotification}
+        <PlayerStatistic
           items={this.state.items}
           unbuiltBuildings={this.state.unbuiltBuildings}
           selectWaitToBuild={this.selectWaitToBuild}

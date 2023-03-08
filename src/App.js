@@ -103,9 +103,9 @@ export default class App extends Component {
                 <Route
                   path="war"
                   element={
-                    <ProtectedRoute guards={
-                      [new Guard(this.state.isLogined, '/'),]
-                    }>
+                    <ProtectedRoute guards={[
+                      new Guard(this.state.isLogined, '/'),
+                    ]}>
                       <War />
                     </ProtectedRoute>
                   } />
@@ -204,7 +204,6 @@ function ProtectedRoute({ children, guards }) {
     if (!guard.condition) {
       return <Navigate to={guard.redirect}></Navigate>
     }
-
   }
 
   return children

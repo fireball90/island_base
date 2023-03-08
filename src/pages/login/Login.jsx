@@ -48,7 +48,7 @@ export default function Login() {
         cookie.set('token', token, { path: '/' })
         userToken = token
       })
-      .catch(error => {
+      .catch(() => {
         setErrorMessage('Hibás felhasználónév, vagy jelszó!')
       })
   }
