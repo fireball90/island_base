@@ -14,6 +14,7 @@ export default function SelectIsland() {
 
     const [selectedIsland, setSelectedIsland] = useState(null)
     const [creatingPending, setCreatingPending] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     const cookie = new Cookies()
     const navigate = useNavigate()
@@ -56,11 +57,13 @@ export default function SelectIsland() {
             }
         }).catch(() => {
             alert('Nem sikerült kapcsolódni a szerverhez')
+        }).finally(() => {
+            setIsLoading(false)
         })
 
     }, [])
 
-    return (
+    return isLoading ? null : (
         <DefaultPage
             title={'Válassz szigetet'}
             navigations={[

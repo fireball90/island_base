@@ -2,14 +2,14 @@
 import { Link } from "react-router-dom";
 import style from './DefaultPage.module.css'
 
-export default function ({ title, navigations, children }) {
+export default function ({ title, navigations, close, children }) {
     return (
         <div className={style.blur}>
             <div className={style.container}>
                 <div className={style.popup}>
                     <div className={style.header}>
                         <div className={style.title}>
-                            <h2>{ title }</h2>
+                            <h2>{title}</h2>
                         </div>
                         <div className={style.navigation}>
                             {
@@ -18,12 +18,17 @@ export default function ({ title, navigations, children }) {
                                 ))
                             }
                         </div>
-                        <Link to="/management">
-                            <div className={style.close}></div>
-                        </Link>
+                        {
+                            close ? (
+                                <Link to="/management">
+                                    <div className={style.close}></div>
+                                </Link>
+                            ) :
+                                null
+                        }
                     </div>
                     <div className={style.body}>
-                        { children }
+                        {children}
                     </div>
                 </div>
             </div>

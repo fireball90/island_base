@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Frijole&family=Permanent+Marker&family=Press+Start+2P&family=Rubik+Dirt&display=swap');
+
+/*
+font-family: 'Frijole', cursive;
+font-family: 'Permanent Marker', cursive;
+font-family: 'Press Start 2P', cursive;
+font-family: 'Rubik Dirt', cursive;
+*/
+
+.layout {
+    background-color: green;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.hudTop {
+    display: flex;
+    gap: 1vw;
+}
+
+.items {
+    background-color: yellow;
+    width: 12vw;
+    position: relative;
+}
+
+.itemsText {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: calc(100% / 3 * 2);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.items h4 {
+    margin-top: 5px;
+    color: white;
+}
+
+.items img {
+    width: 100%;
+    height: auto;
+}
+
+
+
+@media screen and (max-width: 992px) {
+
+}
+
+@media screen and (max-width: 768px) {
+
+}
+
+@media screen and (max-width: 576px) {
+
+}

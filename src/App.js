@@ -12,9 +12,9 @@ import { createContext, Component } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Error from './pages/error/Error';
 import Sell from './pages/sell/Sell';
-import Navigation from './components/navigation/Navigation';
 import SelectIsland from './pages/select-island/SelectIsland';
 import Guard from './models/Guard';
+import Hud from './components/hud/Hud';
 
 export const UserContext = createContext()
 export const PlayerContext = createContext()
@@ -102,7 +102,7 @@ export default class App extends Component {
         }}>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Navigation />}>
+              <Route path="/" element={<Hud />}>
                 <Route index element={<Login />} />
                 <Route
                   path="war"
