@@ -32,7 +32,7 @@ export default function SelectIsland() {
             }
         }).then(response => {
             setPlayer(response.data)
-            navigate('/management')
+            navigate('/island')
         }).catch(() => {
             alert('Nem sikerült kapcsolódni a szerverhez')
         })
@@ -53,7 +53,7 @@ export default function SelectIsland() {
         }).then(response => {
             if (response.status != 404) {
                 setPlayer(response.data)
-                navigate('/management')
+                navigate('/island')
             }
         }).catch(() => {
             alert('Nem sikerült kapcsolódni a szerverhez')

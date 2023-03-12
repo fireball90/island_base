@@ -1,0 +1,10 @@
+.profile {
+    position: relative;
+}
+
+.profile h4 {
+    color: white;
+    position: absolute;
+    top: 2.2rem;
+    right: 2.4rem;
+}

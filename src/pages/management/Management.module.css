@@ -1,7 +1,23 @@
-* {
-    box-sizing: border-box;
-}
 .container {
-    height: 100vh;
-    width: 100vw;
+    background-color: green;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buildings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-width: calc(100% / 3 * 2);
+    background-color: aqua;
+    overflow-x: auto;
+}
+
+.building {
+    width: 220px;
+    height: 220px;
+    background-color: yellow;
 }

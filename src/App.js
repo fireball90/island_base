@@ -2,7 +2,7 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Pwreset from './pages/pwreset/Pwreset';
 import Expedition from './pages/expedition/Expedition';
-import Management from './pages/management/Management';
+import Island from './pages/island/island';
 import Market from './pages/market/Market';
 import Myprofile from './pages/myprofile/Myprofile';
 import Notifications from './pages/notifications/Notifications';
@@ -15,6 +15,7 @@ import Sell from './pages/sell/Sell';
 import SelectIsland from './pages/select-island/SelectIsland';
 import Guard from './models/Guard';
 import Hud from './components/hud/Hud';
+import Management from './pages/management/Management';
 
 export const UserContext = createContext()
 export const PlayerContext = createContext()
@@ -105,6 +106,15 @@ export default class App extends Component {
               <Route path="/" element={<Hud />}>
                 <Route index element={<Login />} />
                 <Route
+                  path="management"
+                  element={
+                    <ProtectedRoute guards={[
+                      new Guard(this.state.isLogined, '/'),
+                    ]}>
+                      <Management />
+                    </ProtectedRoute>
+                  } />
+                <Route
                   path="war"
                   element={
                     <ProtectedRoute guards={[
@@ -114,12 +124,12 @@ export default class App extends Component {
                     </ProtectedRoute>
                   } />
                 <Route
-                  path='management'
+                  path='island'
                   element={
                     <ProtectedRoute guards={[
                       new Guard(this.state.isLogined, '/'),
                     ]}>
-                      <Management />
+                      <Island />
                     </ProtectedRoute>
                   } />
                 <Route

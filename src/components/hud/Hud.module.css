@@ -8,7 +8,6 @@ font-family: 'Rubik Dirt', cursive;
 */
 
 .layout {
-    background-color: green;
     width: 100vw;
     height: 100vh;
     position: relative;
@@ -16,12 +15,16 @@ font-family: 'Rubik Dirt', cursive;
 
 .hudTop {
     display: flex;
-    gap: 1vw;
+    justify-content: center;
+    gap: 1rem;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    width: 100%;
 }
 
 .items {
-    background-color: yellow;
-    width: 12vw;
+    width: 200px;
     position: relative;
 }
 
@@ -46,16 +49,27 @@ font-family: 'Rubik Dirt', cursive;
     height: auto;
 }
 
-
-
-@media screen and (max-width: 992px) {
-
+.hudLeft {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 300;
 }
 
-@media screen and (max-width: 768px) {
-
+nav {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-@media screen and (max-width: 576px) {
+nav img{
+    width: 100px;
+}
 
+nav button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
 }

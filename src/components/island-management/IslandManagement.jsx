@@ -411,13 +411,13 @@ export default class IslandManagement extends Component {
     return (
       <div className={style.container}>
         {waitToBuildNotification}
-        <PlayerStatistic
+        {/* <PlayerStatistic
           items={this.state.items}
           unbuiltBuildings={this.state.unbuiltBuildings}
           selectWaitToBuild={this.selectWaitToBuild}
           waitToBuild={this.state.waitToBuild}
           experiencePoints={this.state.stats.experiencePoints}
-        />
+        /> */}
         <GameMap
           isInitReady={this.state.isInitReady}
           buildBuilding={this.buildBuilding}

@@ -19,8 +19,8 @@ export default function ({ title, navigations, close, children }) {
                             }
                         </div>
                         {
-                            close ? (
-                                <Link to="/management">
+                            close != false ? (
+                                <Link to="/island">
                                     <div className={style.close}></div>
                                 </Link>
                             ) :

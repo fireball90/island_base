@@ -36,14 +36,10 @@ export default class PlayerStatistic extends Component {
                                 <img  src="../images/icons/coin.png" alt='coin'></img>Coin
                                 <Badge pill className="ms-2">{this.props.items.coins}</Badge>
                             </div>
-                            <ProgressBar 
-                                now={ Math.round(progressPercent) } 
-                                label={`${experiencePointsFromCurrentLevel} XP`} 
-                                className="rounded-0 mt-3 mb-1"
-                            />
+
                             <div className="d-flex justify-content-center">
                                 <span>
-                                    { nextLevelExperiencePoints - this.props.experiencePoints } XP a szintlépésig
+                       
                                 </span>
                             </div>
                         </div>

@@ -1,14 +1,34 @@
-import React from 'react';
-import IslandManagement from '../../components/island-management/IslandManagement';
+import DefaultPage from "../../components/default-page/DefaultPage";
 import style from './Management.module.css'
 
-
-
 export default function Management() {
-  return (
-      <div className={style.container}>
-        <IslandManagement/>
-      </div>
-    ) 
-}
+    return (
+        <DefaultPage
+            title={'Sziget menedzselés'}
+            navigations={[]}
+        >
+            <div className={style.container}>
+                <div className={style.abilityPoints}>
+                    Képességpontok
+                </div>
+                <div className={style.buildings}>
+                    <div className={style.building}>
 
+                    </div>
+                    <div className={style.building}>
+
+                    </div>
+                    <div className={style.building}>
+
+                    </div>
+                    <div className={style.building}>
+
+                    </div>
+                    <div className={style.building}>
+
+                    </div>
+                </div>
+            </div>
+        </DefaultPage>
+    )
+}

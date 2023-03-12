@@ -5,6 +5,8 @@ import { Button } from 'react-bootstrap';
 import { Cookies } from 'react-cookie';
 
 import style from './Hud.module.css';
+import ExperienceBar from '../experience-bar/ExperienceBar';
+import ProfileImage from '../profile-image/ProfileImage';
 
 
 export default function Hud() {
@@ -23,7 +25,7 @@ export default function Hud() {
         navigate('')
     }
 
-    return (
+    return isLogined ? (
         <div className={style.layout}>
             <div className={style.hudTop}>
                 <div className={style.items}>
@@ -51,36 +53,39 @@ export default function Hud() {
                     </div>
                 </div>
             </div>
-            <nav>
-                <Link to="/myprofile">
-                    <img className="profile" alt="Saját profil" title='Saját profil' src='../images/ui/indian_ribbon.png'></img>
-                </Link>
-                <Link to="/management">
-                    <img alt="Menedzsment" title='Menedzsment' src='../images/ui/management.png'></img>
-                </Link>
-                <Link to="/management">
-                    <img alt="Építés" title='Építés' src='../images/ui/build.png'></img>
-                </Link>
-                <Link to="/war">
-                    <img alt="Csata" title='Csata' src='../images/ui/war.png'></img>
-                </Link>
-                <Link to="/expedition">
-                    <img alt="Expedíció" title='Expedíció' src='../images/ui/expedition.png'></img>
-                </Link>
-                <Link to="/market">
-                    <img alt="Piac" title='Piac' src='../images/ui/market.png'></img>
-                </Link>
-                <Link to="/tutorial">
-                    <img alt="Útmutató" title='Útmutató' src='../images/ui/tutorial.png'></img>
-                </Link>
-                <Link to="/notifications">
-                    <img alt="Értesítések" title='Értesítések' src='../images/ui/notification.png'></img>
-                </Link>
-                <button onClick={() => handleLogout()}>
-                    <img alt="Kijelentkezés" title='Kijelentkezés' src='../images/ui/logout.png'></img>
-                </button>
-            </nav>
-            {/* <Outlet /> */}
+            <div className={style.hudLeft}>
+                <div className={style.playerInformation}>
+                    <ProfileImage />
+                    <ExperienceBar experiencePoints={player.experience} />
+                </div>
+                <nav>
+                    <Link to="/management">
+                        <img alt="Menedzsment" title='Menedzsment' src='../images/ui/management.png'></img>
+                    </Link>
+                    <Link to="/management">
+                        <img alt="Építés" title='Építés' src='../images/ui/build.png'></img>
+                    </Link>
+                    <Link to="/war">
+                        <img alt="Csata" title='Csata' src='../images/ui/war.png'></img>
+                    </Link>
+                    <Link to="/expedition">
+                        <img alt="Expedíció" title='Expedíció' src='../images/ui/expedition.png'></img>
+                    </Link>
+                    <Link to="/market">
+                        <img alt="Piac" title='Piac' src='../images/ui/market.png'></img>
+                    </Link>
+                    <Link to="/tutorial">
+                        <img alt="Útmutató" title='Útmutató' src='../images/ui/tutorial.png'></img>
+                    </Link>
+                    <Link to="/notifications">
+                        <img alt="Értesítések" title='Értesítések' src='../images/ui/notification.png'></img>
+                    </Link>
+                    <button onClick={() => handleLogout()}>
+                        <img alt="Kijelentkezés" title='Kijelentkezés' src='../images/ui/logout.png'></img>
+                    </button>
+                </nav>
+            </div>
+            <Outlet />
         </div>
-    )
+    ) : <Outlet />
 }
