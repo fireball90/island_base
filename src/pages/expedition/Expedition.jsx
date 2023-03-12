@@ -1,31 +1,25 @@
 import React from "react";
 import "../expedition/expedition.css";
 import { Link } from "react-router-dom";
+import { useState } from 'react';
+import DefaultPage from "../../components/default-page/DefaultPage";
+import LoadingScreen from "../../components/loading-screen/LoadingScreen";
+import { Button } from 'react-bootstrap';
 
 export function Expedition() {
-  return (
-    <div className="bacground-all">
-      <div className="d-flex align-items-center justify-content-center">
-        <div className="content-ebg">
-          <div className="expedition-container">
-            <Link to="/management">
-              <img
-                className="x-close"
-                alt="Bezárás"
-                title="Bezárás"
-                src="../images/ui/close.png"
-              ></img>
-            </Link>
+    const [isLoading, setIsLoading] = useState(false)
+    return isLoading ? (
+      <LoadingScreen loadingMessage={'Itt hamarosan elérhető lesz a sziget választás...'} />
+    ) :
+      (
+        <DefaultPage
+          navigations={[
+  
+          ]}
+          title="Expedíció"
+        >
             <div className="container-fluid">
-              <div
-                className="d-flex justify-content-center"
-                style={{ height: "700px" }}
-              >
-                <div className="col-12 d-flex justify-content-center">
-                  <div className="expedition-cards flex-column">
-                    <div className="expedition d-flex justify-content-center">
-                      <p>Expedició</p>
-                    </div>
+                <div className="d-flex justify-content-center align-items-center ">
                     <div className="edifficult-cards align-items-center d-flex justify-content-center">
                       <div className="container-card d-flex justify-content-center">
                         <div className="card-Easy text-center">
@@ -83,17 +77,7 @@ export function Expedition() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="back d-flex justify-content-center">
-              <Link to="/management">
-                <button className="market-btn">Vissza</button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </DefaultPage>
   );
 }
 

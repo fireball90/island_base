@@ -51,21 +51,12 @@
 }
 
 .information{
-    margin: 30px 20px;
     background-color: rgba(139, 86, 17, 0.336);
     padding: 30px; 
-    border-radius: 20px;          
+    border-radius: 20px;  
+    color: aliceblue;        
 }
 
-.makers-cards{
-    display: flex;
-    align-content: center;
-    max-width: 400px;
-    max-height: 700px;
-    box-sizing: border-box;
-    margin-top: 7rem;
-    padding-top: 36px;
-}
 
 .card-body{    
     padding: 2rem;
@@ -79,7 +70,7 @@
 
 .tcard-title{
     font-size: large; 
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .tcard-name{
