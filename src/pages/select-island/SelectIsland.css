@@ -15,7 +15,7 @@
     padding: 1rem;
 }
 
-.island-select-container {
+.island-select-form{
     display: flex;
     flex-direction: column;
     height: 100%;

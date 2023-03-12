@@ -1,13 +1,27 @@
 import React, { useContext } from 'react';
 import './Navigation.css';
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { PlayerContext, UserContext } from '../../App';
+import { Button } from 'react-bootstrap';
+import { Cookies } from 'react-cookie';
 
 
 
 const Navigation = () => {
-    const { isLogined } = useContext(UserContext);
+    const { isLogined, setIsLogined, setUser } = useContext(UserContext);
     const { player } = useContext(PlayerContext)
+
+    const navigate = useNavigate()
+    const cookie = new Cookies()
+
+    function handleLogout() {
+        cookie.remove('token')
+
+        setIsLogined(false)
+        setUser('', '')
+
+        navigate('')
+    }
 
     return (
         <>
@@ -30,7 +44,7 @@ const Navigation = () => {
                         { player.woods }
                     </div>
                 </div>
-                <nav className="nav-container2">
+                <nav className="nav-container">
                     <div className="nav-img-menu">     
                             <Link to="/myprofile"><img className="nav-profile" alt="Saját profil" title='Saját profil' src='../images/ui/indian_ribbon.png'></img></Link>    
                             <Link to="/management"><img className="menupont" alt="Menedzsment" title='Menedzsment' src='../images/ui/management.png'></img></Link>
@@ -40,7 +54,7 @@ const Navigation = () => {
                             <Link to="/market"><img className="menupont" alt="Piac" title='Piac' src='../images/ui/market.png'></img></Link>
                             <Link to="/tutorial"><img className="menupont" alt="Útmutató" title='Útmutató' src='../images/ui/tutorial.png'></img></Link>
                             <Link to="/notifications"><img className="menupont" alt="Értesítések" title='Értesítések' src='../images/ui/notification.png'></img></Link>
-                            <Link to="/login"><img className="menupont" alt="Kijelentkezés" title='Kijelentkezés' src='../images/ui/logout.png'></img></Link>                           
+                            <button onClick={() => handleLogout()}><img className="menupont" alt="Kijelentkezés" title='Kijelentkezés' src='../images/ui/logout.png'></img></button>                           
                     </div>
                 </nav>
             </div>

@@ -12,13 +12,21 @@ font-family: 'Rubik Dirt', cursive;
     display: flex;
     justify-content: space-between;
 }
-.nav-container2 {
+.nav-container {
     width: 200px;
     height: 700px;
     z-index: 200;
     position: fixed;
     display: flex;
 }
+
+.nav-img-menu button {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
 .nav-img-menu{
     width: 200px;
     justify-content: space-between;
