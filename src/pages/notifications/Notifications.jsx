@@ -15,29 +15,21 @@ export function Notifications() {
     (
         <DefaultPage 
             navigations={[
-                <Button className="not-btn" ><Link to="/management">Vissza</Link></Button>
+                
             ]}
             title="Értesítések"
         >
                 <div className="container-fluid">
-                    <div className='d-flex justify-content-center align-items-center' style={{ height: "700px" }}>
+                    <div className='' style={{ height: "100%" }}>
 
                         <div className='col-12 align-items-center d-flex justify-content-center' >
                             <div className='container'>
-
-                                <div className='row justify-content-md-center'>
-                                    <div className='col-12 text-center'>
-                                        <h3>Értesítések</h3>
-                                    </div>
-                                </div>
-
                                 <div className='row'>
-                                    <div className='not-listings-container'>
                                         <div className='not-list-container container'>
-                                            <div className='row d-flex align-items-center justify-content-center' style={{ height: "250px" }}>
+                                            <div className='row d-flex align-items-center justify-content-center' style={{ height: "200px" }}>
 
                                                 <div className='col-3 text-center'>
-                                                    <h3>Nyert csata</h3>
+                                                    <h4>Nyert csata</h4>
                                                 </div>
                                                 <div className='col-3 text-center'>
                                                     <p><img src="../images/icons/wood.png" alt="wood"></img>Fa - 56 db</p>
@@ -55,7 +47,7 @@ export function Notifications() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                  
                                 </div>
                             </div>
                         </div>

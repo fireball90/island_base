@@ -1,32 +1,18 @@
-.not-listings-container{
-    height: 600px;
+/* .not-listings-container{
+    height: 60dvh;
     background-color: rgba(139, 86, 17, 0.336);
     padding:20px; 
     margin-bottom:10px;      
     border-radius: 20px;
-}
-.not-all {
-    background-image:url("../../../public/images/ui/contentbg2.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: absolute;
-    height: 100vh;
-    width: 100%; 
-    z-index: 300;    
-    overflow: auto;
-}
-.not-container{
-    padding-top: 20px;
-    color: azure;
-    overflow: auto;
-}
+}  */
 .not-list-container{
     width: 95%;
     background-color: rgba(0, 0, 0, 0.501);
-    height: 250px;
+    height: 200px;
     margin: 10px;
     color: aliceblue;
     border-radius: 10px;
+
 }
 .not-list-container img{
     image-rendering: pixelated;
