@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Spinner } from "react-bootstrap";
-import Tile from "../../island-management/tile/Tile"
+import Tile from "../../management-island/tile/Tile";
 import { EnemyIsland } from "../enemy-island/EnemyIsland";
 
 

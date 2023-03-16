@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, OverlayTrigger } from "react-bootstrap";
 import { Badge } from 'react-bootstrap';
 import { GameMath } from '../../../game-math/GameMath';
-import MovablePopover from "../../island-management/movable-popover/MovablePopover"
+import MovablePopover from '../../management-island/movable-popover/MovablePopover';
 
 import style from "./EnemyIsland.module.css"
 

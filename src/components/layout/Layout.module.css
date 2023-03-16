@@ -14,14 +14,8 @@
     height: 100vh;
     padding: 4rem 2rem 0 2rem;
     position: absolute;
-    top: 100%;
+    top: 0;
     left: 0;
-    animation: up 0.8s forwards;
-}
-
-@keyframes up {
-    from {top: 100%;}
-    to {top: 0;}
 }
 
 .popup {

@@ -1,23 +1,29 @@
 .container {
-    background-color: green;
     height: 100%;
     width: 100%;
     display: flex;
+    gap: 1rem;
     flex-direction: row;
     justify-content: space-between;
 }
 
 .buildings {
+    gap: 1rem;
+    align-content: flex-start;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
     max-width: calc(100% / 3 * 2);
-    background-color: aqua;
     overflow-x: auto;
 }
 
-.building {
-    width: 220px;
-    height: 220px;
-    background-color: yellow;
+.abilityPoints {
+    align-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-grow: 1;
 }

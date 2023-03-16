@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import "../myprofile/myprofile.css";
 import { Link } from "react-router-dom";
+import { HudContext } from "../../App";
 
-function Myprofile() {
+export default function Myprofile() {
+  const { setIsHudDisplayed } = useContext(HudContext);
+
+  useEffect(() => {
+    setIsHudDisplayed(true);
+  }, []);
+  
   return (
     <div className="bacground-all">
       <div className="d-flex align-items-center justify-content-center">
@@ -88,5 +95,3 @@ function Myprofile() {
     </div>
   );
 }
-
-export default Myprofile;
