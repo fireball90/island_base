@@ -10,17 +10,6 @@
     box-sizing: border-box;
 }
 
-.upIsland{ 
-    align-items: center;
-    width: 100%;
-    height: 50%;
-    filter: blur(3px);
-} 
-
-.upIsland img {
-    max-height: 50vh;
-}
-
 .content-tms{ 
     z-index: 302;
     height: 100vh;
@@ -57,9 +46,17 @@
     color: aliceblue;        
 }
 
+.information p{
+    font-size: 130%;
+}
 
-.card-body{    
-    padding: 2rem;
+.makers{
+    padding-top: 2rem;
+    margin: 2rem;
+}
+
+.tcard-body{    
+    padding: 2rem 6rem 0 6rem;
     margin-top: 10px;    
 }
 
