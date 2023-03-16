@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { HudContext } from "../../App";
 
 export default function Register() {
-  const { setIsHudDiplayed } = useContext(HudContext);
+  const { setIsHudDisplayed } = useContext(HudContext);
 
   const [modalShow, setModalShow] = React.useState(false);
   const {
@@ -39,7 +39,7 @@ export default function Register() {
   };
 
   useEffect(() => {
-    setIsHudDiplayed(false);
+    setIsHudDisplayed(false);
   }, []);
 
   return (
