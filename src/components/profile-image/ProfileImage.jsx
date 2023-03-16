@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { PlayerContext } from "../../App";
 import { Link } from "react-router-dom";
+import PlayerContext from "../../contexts/PlayerContext";
 import { GameMath } from "../../game-math/GameMath";
 
 import style from './ProfileImage.module.css'

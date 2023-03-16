@@ -3,7 +3,7 @@ import "../market/market.css";
 import { Link } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import { Button } from "react-bootstrap";
-import { HudContext } from "../../App";
+import HudContext from "../../contexts/HudContext";
 
 export default function Market() {
   const { setIsHudDisplayed } = useContext(HudContext);

@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef } from "react";
 import "../register/register.css";
 import { useForm } from "react-hook-form";
 import Modal from "react-bootstrap/Modal";
-import { HudContext } from "../../App";
+import HudContext from "../../contexts/HudContext";
 
 export default function Register() {
-  const { setIsHudDiplayed } = useContext(HudContext);
+  const { setIsHudDisplayed } = useContext(HudContext);
 
   const [modalShow, setModalShow] = React.useState(false);
   const {
@@ -39,7 +39,7 @@ export default function Register() {
   };
 
   useEffect(() => {
-    setIsHudDiplayed(false);
+    setIsHudDisplayed(false);
   }, []);
 
   return (

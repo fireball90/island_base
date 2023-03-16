@@ -8,19 +8,18 @@ import Myprofile from "./pages/myprofile/Myprofile";
 import Notifications from "./pages/notifications/Notifications";
 import Tutorial from "./pages/tutorial/Tutorial";
 import War from "./pages/war/War";
-import { createContext, Component } from "react";
+import { Component } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Error from "./pages/error/Error";
 import Sell from "./pages/sell/Sell";
 import SelectIsland from "./pages/select-island/SelectIsland";
 import Guard from "./models/Guard";
 import Hud from "./components/hud/Hud";
+import IslandContext from "./contexts/IslandContext";
+import PlayerContext from "./contexts/PlayerContext";
+import UserContext from "./contexts/UserContext";
+import HudContext from "./contexts/HudContext";
 import Management from "./pages/management/Management";
-
-export const UserContext = createContext();
-export const PlayerContext = createContext();
-export const HudContext = createContext();
-export const IslandContext = createContext();
 
 export default class App extends Component {
   constructor(props) {
@@ -178,6 +177,7 @@ export default class App extends Component {
               setIsIslandSelected: this.setIsIslandSelected,
             }}
           >
+            
             <IslandContext.Provider
               value={{
                 isIslandInitialized: this.state.isIslandInitialized,

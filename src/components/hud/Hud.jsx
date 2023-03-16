@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { HudContext, PlayerContext, UserContext } from "../../App";
 import { Cookies } from "react-cookie";
 
 import style from "./Hud.module.css";
 import ExperienceBar from "../experience-bar/ExperienceBar";
 import ProfileImage from "../profile-image/ProfileImage";
+import HudContext from "../../contexts/HudContext";
+import UserContext from "../../contexts/UserContext";
+import PlayerContext from "../../contexts/PlayerContext";
 
 export default function Hud() {
   const { setUserLoggedOut } = useContext(UserContext);

@@ -4,9 +4,10 @@ import Card from "react-bootstrap/Card";
 
 import "./SelectIsland.css";
 import axios from "axios";
-import { HudContext, PlayerContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
+import HudContext from "../../contexts/HudContext";
+import PlayerContext from "../../contexts/PlayerContext";
 
 export default function SelectIsland() {
   const { setIsHudDisplayed } = useContext(HudContext);

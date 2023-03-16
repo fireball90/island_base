@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import "../tutorial/tutorial.css";
-import { HudContext } from "../../App";
+import HudContext from "../../contexts/HudContext";
 import Layout from "../../components/layout/Layout";
 
 export default function Tutorial() {

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { HudContext } from "../../App";
 import IslandsPVP from "../../components/islands-pvp/IslandsPVP";
+import HudContext from "../../contexts/HudContext";
 import style from "./War.module.css";
 
 export default function War() {

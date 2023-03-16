@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import "../notifications/notifications.css";
-import { HudContext } from "../../App";
 import Layout from "../../components/layout/Layout";
+import HudContext from "../../contexts/HudContext";
 
 export default function Notifications() {
   const { setIsHudDisplayed } = useContext(HudContext);

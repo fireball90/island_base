@@ -2,9 +2,9 @@ import Layout from "../../components/layout/Layout";
 import ManagementUnbuiltBuildings from "../../components/management-unbuilt-buildings/ManagementUnbuiltBuildings";
 import ManagementAbilities from "../../components/management-abilities/ManagementAbilities";
 import { useContext, useEffect } from "react";
-import { HudContext } from "../../App";
 
 import style from "./Management.module.css";
+import HudContext from "../../contexts/HudContext";
 
 
 export default function Management() {

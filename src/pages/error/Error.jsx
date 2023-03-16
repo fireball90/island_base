@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { HudContext } from "../../App";
+import HudContext from "../../contexts/HudContext";
 import "../error/error.css";
 
 export default function Error() {

@@ -1,10 +1,8 @@
 import { useContext } from "react"
 import { Button } from "react-bootstrap"
-import { PlayerContext } from "../../App"
+import PlayerContext from "../../contexts/PlayerContext"
 
 export default function ManagementAbilities() {
-    const { player } = useContext(PlayerContext)
-    
     return (
         <div>
             <div className="text-center">

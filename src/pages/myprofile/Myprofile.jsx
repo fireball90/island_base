@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import "../myprofile/myprofile.css";
 import { Link } from "react-router-dom";
-import { HudContext } from "../../App";
+import HudContext from "../../contexts/HudContext";
 
 export default function Myprofile() {
   const { setIsHudDisplayed } = useContext(HudContext);

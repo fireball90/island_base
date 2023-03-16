@@ -4,7 +4,9 @@ import { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { HudContext, PlayerContext, UserContext } from "../../App";
+import HudContext from "../../contexts/HudContext";
+import PlayerContext from "../../contexts/PlayerContext";
+import UserContext from "../../contexts/UserContext";
 
 import "../login/login.css";
 

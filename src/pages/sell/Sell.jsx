@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import "../sell/sell.css";
 import { Link } from "react-router-dom";
-import { HudContext } from "../../App";
 import Layout from "../../components/layout/Layout";
+import HudContext from "../../contexts/HudContext";
 
 export default function Sell() {
   const { setIsHudDisplayed } = useContext(HudContext);

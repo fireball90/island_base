@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { HudContext } from "../../App";
+import HudContext from "../../contexts/HudContext";
+
 import "../pwreset/pwreset.css";
 
 export default function Pwreset() {
