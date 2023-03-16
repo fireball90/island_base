@@ -8,11 +8,10 @@ import UpdateBuildingDialog from "./update-building-dialog/UpdateBuildingDialog"
 
 import style from "./ManagementIsland.module.css";
 import axios from "axios";
-import { IslandContext } from "../../App.js";
 
 export default class ManagementIsland extends Component {
-  static contextType = IslandContext;
-  
+  // static contextType = IslandContext;
+
   constructor() {
     super();
 
