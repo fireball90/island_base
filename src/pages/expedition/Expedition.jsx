@@ -25,7 +25,7 @@ export default function Expedition() {
                   title="Könnyű"
                 ></img>
                 <div className="ecard-body">
-                  <Link to="/management">
+                  <Link to="/island">
                     <button className="expedition-btn">KÖNNYŰ</button>
                   </Link>
                   <p className="ecard-text">
@@ -42,7 +42,7 @@ export default function Expedition() {
                   title="Normál"
                 ></img>
                 <div className="ecard-body">
-                  <Link to="/management">
+                  <Link to="/island">
                     <button className="expedition-btn">NORMÁL</button>
                   </Link>
                   <p className="ecard-text">
@@ -59,7 +59,7 @@ export default function Expedition() {
                   title="Nehéz"
                 ></img>
                 <div className="ecard-body">
-                  <Link to="/management">
+                  <Link to="/island">
                     <button className="expedition-btn">NEHÉZ</button>
                   </Link>
                   <p className="ecard-text">

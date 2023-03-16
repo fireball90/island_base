@@ -1,14 +1,42 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../notifications/notifications.css";
 import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
+import axios from "axios";
 
 export default function Notifications() {
   const { setIsHudDisplayed } = useContext(HudContext);
+  const [notifications,setNotification] = useState([]);
 
   useEffect(() => {
     setIsHudDisplayed(true);
+    
+    axios
+    .get("https://localhost:7276/api/Notification/GetAllNotification")
+    .then((response) => {
+      const allNotification = response.data;
+
+      setNotification(allNotification)
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+
+    });
   }, []);
+
+  function deleteNotification(id){
+    console.log(id);
+    axios
+    .delete(`https://localhost:7276/api/Notification/DeleteNotification?id=${id}`)
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+    });
+  }
+
 
   return (
     <Layout navigations={[]} title="Értesítések">
@@ -17,45 +45,55 @@ export default function Notifications() {
           <div className="col-12 align-items-center d-flex justify-content-center">
             <div className="container">
               <div className="row">
-                <div className="not-list-container container">
+              {notifications.map((notification)=>(
+                <div className="not-list-container container" key={notification.id}>
                   <div
                     className="row d-flex align-items-center justify-content-center"
                     style={{ height: "200px" }}
-                  >
+                  >               
                     <div className="col-3 text-center">
-                      <h4>Nyert csata</h4>
+                      <h4>{notification.title}</h4>
                     </div>
                     <div className="col-3 text-center">
                       <p>
                         <img src="../images/icons/wood.png" alt="wood"></img>Fa
-                        - 56 db
+                        - {notification.woods} db
                       </p>
                       <p>
                         <img src="../images/icons/stone.png" alt="stone"></img>
-                        Kő - 55 db
+                        Kő - {notification.stones} db
                       </p>
                       <p>
                         <img src="../images/icons/steel.png" alt="steel"></img>
-                        Vas- 25 db
+                        Vas- {notification.irons} db
                       </p>
                       <p>
                         <img src="../images/icons/coin.png" alt="coin"></img>
-                        Coin - 523 db
+                        Coin - {notification.coins} db
                       </p>
                       <p>
                         <img src="../images/icons/coin.png" alt="xp"></img>XP -
-                        677 pont
+                        {notification.experience} pont
                       </p>
                     </div>
                     <div className="col-3 text-center">
                       <h4>Időpont:</h4>
-                      <p>2023 - 01 - 22</p>
+                      <p>{notification.createDate}</p>
                     </div>
                     <div className="col-3 text-center">
-                      <button className="not-btn2">Törlés</button>
+                      <button className="not-btn2" onSubmit={(event) => 
+                      event.preventDefault(),
+                      axios
+                      .delete(`https://localhost:7276/api/Notification/DeleteNotification?id=${notification.id}`)
+                      .catch((error) => {
+                        console.log(error);
+                      })
+                      
+                      }>Törlés</button>
                     </div>
                   </div>
                 </div>
+              ))}
               </div>
             </div>
           </div>
