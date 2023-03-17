@@ -34,6 +34,7 @@ export default function Notifications() {
       console.log(error);
     })
     .finally(() => {
+      window.location.reload(false)
     });
   }
 
@@ -81,15 +82,7 @@ export default function Notifications() {
                       <p>{notification.createDate}</p>
                     </div>
                     <div className="col-3 text-center">
-                      <button className="not-btn2" onSubmit={(event) => 
-                      event.preventDefault(),
-                      axios
-                      .delete(`https://localhost:7276/api/Notification/DeleteNotification?id=${notification.id}`)
-                      .catch((error) => {
-                        console.log(error);
-                      })
-                      
-                      }>Törlés</button>
+                      <button className="not-btn2" onClick={() => deleteNotification(notification.id)}>Törlés</button>
                     </div>
                   </div>
                 </div>
