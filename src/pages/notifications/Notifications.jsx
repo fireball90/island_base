@@ -34,7 +34,7 @@ export default function Notifications() {
       console.log(error);
     })
     .finally(() => {
-      window.location.reload(false)
+      //window.location.reload(false)
     });
   }
 
