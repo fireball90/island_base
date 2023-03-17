@@ -14,6 +14,18 @@ export default function Market() {
 
   useEffect(() => {
     setIsHudDisplayed(true);
+    axios
+    .get("https://localhost:7276/api/Exchange/GetAllExchange")
+    .then((response) => {
+      const allExchange = response.data;
+
+      setExchange(allExchange)
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+    });
   }, []);
 
   function allChange(){
