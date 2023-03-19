@@ -284,6 +284,10 @@ export default class GameField extends Component {
         onMouseDown={() => this.mouseDown$.next()}
         onMouseUp={() => this.mouseUp$.next()}
         onWheel={(event) => this.wheel$.next(event)}
+
+        onTouchMove={(event) => this.mouseMove$.next(event)}
+        onTouchStart={() => () => this.mouseDown$.next()}
+        onTouchEnd={() => this.mouseUp$.next()}
       >
         <div
           className={style.background}
