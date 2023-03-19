@@ -20,6 +20,7 @@ import PlayerContext from "./contexts/PlayerContext";
 import UserContext from "./contexts/UserContext";
 import HudContext from "./contexts/HudContext";
 import Management from "./pages/management/Management";
+import Test from "./pages/test/Test";
 
 export default class App extends Component {
   constructor(props) {
@@ -197,6 +198,12 @@ export default class App extends Component {
                 <Routes>
                   <Route path="/" element={<Hud />}>
                     <Route index element={<Login />} />
+                    <Route
+                      path="test"
+                      element={
+                        <Test />
+                      }
+                    />
                     <Route
                       path="management"
                       element={

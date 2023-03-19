@@ -1,0 +1,23 @@
+.camera {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: aquamarine;
+}
+
+.background {
+    z-index: 0;
+    position: absolute;
+    background-image: url('../../../public/images/water_last_2.gif');
+    background-repeat: repeat;
+    image-rendering: pixelated;
+}
+
+.gameMap {
+    z-index: 1;
+    position: absolute;
+    background-image: url('../../../public/assets/europian_island.png');
+    background-size: cover;
+    image-rendering: pixelated;
+}   

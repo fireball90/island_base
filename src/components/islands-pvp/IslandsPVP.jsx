@@ -69,18 +69,18 @@ export default class IslandsPVP extends Component {
         let blockBattleDialogIsShow = false
         let blockBattleMessage = ""
 
-        if (GameMath.CalculateLevel(pvpInitFile.player.experiencePoints) < 5) {
-            battleAvailable = false
-            blockBattleDialogIsShow = true
-            blockBattleMessage = "Nem érted el az 5. szintet, ezért nem elérhető még a csata neked." 
-        } else if (!pvpInitFile.player.battleAvailableDate != null && (new Date(pvpInitFile.player.battleAvailableDate) > new Date())) {
+        // if (GameMath.CalculateLevel(pvpInitFile.player.experiencePoints) < 5) {
+        //     battleAvailable = false
+        //     blockBattleDialogIsShow = true
+        //     blockBattleMessage = "Nem érted el az 5. szintet, ezért nem elérhető még a csata neked." 
+        // } else if (!pvpInitFile.player.battleAvailableDate != null && (new Date(pvpInitFile.player.battleAvailableDate) > new Date())) {
 
-            battleAvailable = false
-            blockBattleDialogIsShow = true
-            blockBattleMessage = "Csata zárolva. Nem indíthatsz közvetlenül csatát az előző után."
+        //     battleAvailable = false
+        //     blockBattleDialogIsShow = true
+        //     blockBattleMessage = "Csata zárolva. Nem indíthatsz közvetlenül csatát az előző után."
 
-            this.startBlockBattleTimer(new Date(pvpInitFile.player.battleAvailableDate))
-        }
+        //     this.startBlockBattleTimer(new Date(pvpInitFile.player.battleAvailableDate))
+        // }
 
         this.setState(state => ({
             ...state,
@@ -351,7 +351,7 @@ export default class IslandsPVP extends Component {
 
                     openPVPConfirmDialog={this.openPVPConfirmDialog}
                 />
-                <PartPlayerStatistic
+                {/* <PartPlayerStatistic
                     experiencePoints={this.state.player.experiencePoints}
                     availableTalentPoints={this.state.player.availableTalentPoints}
                     strength={this.state.player.strength}
@@ -369,7 +369,7 @@ export default class IslandsPVP extends Component {
                     increaseEditedIntelligencePoints={this.increaseEditedIntelligencePoints}
                     saveEditedTalentPoints={this.saveEditedTalentPoints}
                     dropEditedTalentPoints={this.dropEditedTalentPoints}
-                />
+                /> */}
                 <BlockMessage
                     show={this.state.isInitReady && this.state.blockBattleDialogIsShow}
                     title={"A csata nem elérhető"}

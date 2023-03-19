@@ -65,7 +65,7 @@ export default class PVPMap extends Component {
         }
     }
 
-    resize(scale, mouseX, mouseY) {
+    calculateCameraDistance(scale, mouseX, mouseY) {
         const cameraWidth = window.innerWidth
         const cameraHeight = window.innerHeight
         const cameraX = 0
@@ -115,11 +115,11 @@ export default class PVPMap extends Component {
         }
     }
 
-    handlePreventDrag(event) {
+    preventDragHandler(event) {
         event.preventDefault()
     }
 
-    handleMouseMove(event) {
+    mouseMoveHandler(event) {
         if (this.state.isLeftButtonHolded) {
             const cameraWidth = window.innerWidth
             const cameraHeight = window.innerHeight
@@ -168,32 +168,32 @@ export default class PVPMap extends Component {
         }
     }
 
-    handleMouseLeave() {
+    mouseLeaveHandler() {
         this.setState(state => ({
             ...state,
             isLeftButtonHolded: false
         }))
     }
 
-    handleMouseDown() {
+    mouseDownHandler() {
         this.setState(state => ({
             ...state,
             isLeftButtonHolded: true
         }))
     }
 
-    handleMouseUp() {
+    mouseUpHandler() {
         this.setState(state => ({
             ...state,
             isLeftButtonHolded: false
         }))
     }
 
-    handleWheel(event) {
+    wheelHandler(event) {
         if (event.deltaY > 0) {
-            this.resize(0.8, event.pageX, event.pageY)
+            this.calculateCameraDistance(0.8, event.pageX, event.pageY)
         } else {
-            this.resize(1.25, event.pageX, event.pageY)
+            this.calculateCameraDistance(1.25, event.pageX, event.pageY)
         }
     }
 
@@ -213,15 +213,15 @@ export default class PVPMap extends Component {
         ) : (
             <div 
                 className={style.camera}
-                    onMouseMove={ e => this.handleMouseMove(e) }
-                    onMouseLeave={ () => this.handleMouseLeave() }
-                    onMouseDown={ () => this.handleMouseDown() }
-                    onMouseUp={ () => this.handleMouseUp() }
-                    onWheel={ e => this.handleWheel(e) }
+                    onMouseMove={ e => this.mouseMoveHandler(e) }
+                    onMouseLeave={ () => this.mouseLeaveHandler() }
+                    onMouseDown={ () => this.mouseDownHandler() }
+                    onMouseUp={ () => this.mouseUpHandler() }
+                    onWheel={ e => this.wheelHandler(e) }
                 >
                 <div 
                     className={style.water}
-                    onDragStart={event => this.handlePreventDrag(event)}
+                    onDragStart={event => this.preventDragHandler(event)}
                     style={{
                         width: this.state.waterWidth,
                         height: this.state.waterHeight,
@@ -231,7 +231,7 @@ export default class PVPMap extends Component {
                 </div>
                 <div 
                     className={style.arena}
-                    onDragStart={event => this.handlePreventDrag(event)}
+                    onDragStart={event => this.preventDragHandler(event)}
                     style={{
                         width: this.state.arenaWidth,
                         height: this.state.arenaHeight,

@@ -4,7 +4,7 @@ import BuildingNotification from "./building-notification/BuildingNotification.j
 import { BuiltBuildingModel } from "../../models/BuiltBuildingModel";
 import { UnbuiltBuildingModel } from "../../models/UnbuiltBuildingModel";
 import { BuildingAreaModel } from "../../models/BuildingAreaModel.js";
-import UpdateBuildingDialog from "./update-building-dialog/UpdateBuildingDialog"
+import UpdateBuildingDialog from "./update-building-dialog/UpdateBuildingDialog";
 
 import style from "./ManagementIsland.module.css";
 import axios from "axios";
@@ -448,11 +448,9 @@ export default class ManagementIsland extends Component {
     const requests = urls.map((url) => axios.get(url));
 
     Promise.all(requests)
-      .then((responses) => {
-        console.log(responses);
-      })
-      .catch((error) => {
-        console.log(error);
+      .then((responses) => {})
+      .catch(() => {
+        alert("Nem sikerült kapcsolódni a szervrhez!");
       });
   }
 

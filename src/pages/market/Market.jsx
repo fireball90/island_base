@@ -134,7 +134,7 @@ export default function Market() {
                         <p>{exchange.replacementAmount} db</p>
                       </div>
                       <div className="col-3 text-center">
-                        {count==0 ? (
+                        {count===0 ? (
                             <button className="btn btn-warning" onClick={() => takeExchange(exchange.id)}>Csere</button>
                         ) : (
                             <button className="btn btn-danger" onClick={() => deleteExchange(exchange.id)}>Törlés</button>
