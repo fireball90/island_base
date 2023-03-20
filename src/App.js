@@ -21,6 +21,7 @@ import UserContext from "./contexts/UserContext";
 import HudContext from "./contexts/HudContext";
 import Management from "./pages/management/Management";
 import Test from "./pages/test/Test";
+import IslandsPVP from "./components/islands-pvp/IslandsPVP";
 
 export default class App extends Component {
   constructor(props) {

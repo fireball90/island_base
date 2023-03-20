@@ -7,7 +7,6 @@ import { BuildingAreaModel } from "../../models/BuildingAreaModel.js";
 import UpdateBuildingDialog from "./update-building-dialog/UpdateBuildingDialog";
 
 import style from "./ManagementIsland.module.css";
-import axios from "axios";
 import IslandContext from "../../contexts/IslandContext.js";
 
 export default class ManagementIsland extends Component {
