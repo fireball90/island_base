@@ -134,19 +134,13 @@ export default class App extends Component {
     this.setIsland = (island) => {
       this.setState((state) => ({
         ...state,
+        isIslandInitialized: true,
         island: {
           spritePath: island.spritePath,
           buildingAreas: island.buildingAreas,
           npcRoutes: island.npcRoutes,
           npcSprites: island.npcSprites,
         },
-      }));
-    };
-
-    this.setIsIslandInitialized = (isIslandInitialized) => {
-      this.setState((state) => ({
-        ...state,
-        isIslandInitialized: isIslandInitialized,
       }));
     };
   }
@@ -178,7 +172,6 @@ export default class App extends Component {
               setIsIslandSelected: this.setIsIslandSelected,
             }}
           >
-            
             <IslandContext.Provider
               value={{
                 isIslandInitialized: this.state.isIslandInitialized,
@@ -187,23 +180,16 @@ export default class App extends Component {
                 unbuiltBuildings: this.state.unbuiltBuildings,
                 island: this.state.island,
 
-                setIsIslandInitialized: this.setIsIslandInitialized,
                 setPlayer: this.setPlayer,
                 setBuildings: this.setBuildings,
                 setUnbuiltBuildings: this.setUnbuiltBuildings,
-                setIsland: this.setIsland
+                setIsland: this.setIsland,
               }}
             >
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<Hud />}>
                     <Route index element={<Login />} />
-                    <Route
-                      path="test"
-                      element={
-                        <Test />
-                      }
-                    />
                     <Route
                       path="management"
                       element={
@@ -230,7 +216,7 @@ export default class App extends Component {
                         <ProtectedRoute
                           guards={[new Guard(this.state.isLogined, "/")]}
                         >
-                          <Island />
+                          <Test />
                         </ProtectedRoute>
                       }
                     />

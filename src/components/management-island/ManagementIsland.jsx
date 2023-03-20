@@ -439,19 +439,6 @@ export default class ManagementIsland extends Component {
 
   componentDidMount() {
     this.fetchInitFile();
-
-    const urls = [
-      "https://localhost:7276/api/Building/GetAllBuilding",
-      "https://localhost:7276/api/Island/GetIsland",
-    ];
-
-    const requests = urls.map((url) => axios.get(url));
-
-    Promise.all(requests)
-      .then((responses) => {})
-      .catch(() => {
-        alert("Nem sikerült kapcsolódni a szervrhez!");
-      });
   }
 
   componentWillUnmount() {

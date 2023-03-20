@@ -97,7 +97,7 @@ export default function Login() {
 
     const token = cookie.get("token");
 
-    if (token == undefined) return;
+    if (token === undefined) return;
 
     const decodedToken = decodeToken(token);
     const now = new Date();

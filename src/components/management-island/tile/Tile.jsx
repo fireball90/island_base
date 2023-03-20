@@ -1,14 +1,26 @@
-export default function Tile(props) {
-    return (
-        <div 
-            style={{
-                width: props.width, 
-                height: props.height, 
-                position: 'absolute',
-                top: props.top,
-                left: props.left
-            }}>
-            { props.children }
-        </div>
-    )
+import GameFieldContext from "../../../contexts/GameFieldContext";
+import { useEffect, useContext } from "react";
+
+import './Tile.css'
+
+export default function Tile({ xCoordinate, yCoordinate, scale, children }) {
+  const { zoom, tileSize } = useContext(GameFieldContext);
+
+useEffect(() => {
+
+}, [zoom])
+
+  return (
+    <div
+      className="tile"
+      style={{
+        width: tileSize * scale,
+        height: tileSize * scale,
+        top: xCoordinate * tileSize * scale,
+        left: yCoordinate * tileSize * scale,
+      }}
+    >
+      {children}
+    </div>
+  );
 }

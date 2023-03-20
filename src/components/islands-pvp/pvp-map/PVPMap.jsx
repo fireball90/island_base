@@ -3,7 +3,6 @@ import { Spinner } from "react-bootstrap";
 import Tile from "../../management-island/tile/Tile";
 import { EnemyIsland } from "../enemy-island/EnemyIsland";
 
-
 import style from "./PVPMap.module.css"
 
 export default class PVPMap extends Component {

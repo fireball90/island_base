@@ -17,7 +17,6 @@
 .gameMap {
     z-index: 1;
     position: absolute;
-    background-image: url('../../../public/assets/europian_island.png');
     background-size: cover;
     image-rendering: pixelated;
 }   

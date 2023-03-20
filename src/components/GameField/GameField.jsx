@@ -3,6 +3,7 @@ import { Subject } from "rxjs";
 import { fromEvent } from "rxjs/internal/observable/fromEvent";
 import { startWith } from "rxjs/internal/operators/startWith";
 import { takeUntil } from "rxjs/internal/operators/takeUntil";
+import GameFieldContext from "../../contexts/GameFieldContext"
 
 import style from "./GameField.module.css";
 
@@ -27,8 +28,6 @@ export default class GameField extends Component {
         left: 0,
       },
     };
-
-    this.props.children.forEach(child => child.forEach(item => console.log(item)))
 
     this.mouseMove$ = new Subject();
     this.mouseLeave$ = new Subject();
@@ -277,32 +276,42 @@ export default class GameField extends Component {
 
   render() {
     return this.isAspectRatioSupported() ? (
-      <div
-        className={style.camera}
-        onMouseMove={(event) => this.mouseMove$.next(event)}
-        onMouseLeave={() => this.mouseLeave$.next()}
-        onMouseDown={() => this.mouseDown$.next()}
-        onMouseUp={() => this.mouseUp$.next()}
-        onWheel={(event) => this.wheel$.next(event)}
-
-        onTouchMove={(event) => this.mouseMove$.next(event)}
-        onTouchStart={() => () => this.mouseDown$.next()}
-        onTouchEnd={() => this.mouseUp$.next()}
-      >
+      <GameFieldContext.Provider value={{
+        zoom: this.state.zoom,
+        tileSize: this.state.tileSize
+      }}>
         <div
-          className={style.background}
-          onDragStart={(event) => event.preventDefault()}
-          style={{
-            ...this.state.backgroundSizeAndPosition,
-            backgroundSize: this.state.tileSize,
-          }}
-        ></div>
-        <div
-          className={style.gameMap}
-          onDragStart={(event) => event.preventDefault()}
-          style={this.state.mapSizeAndPosition}
-        ></div>
-      </div>
+          className={style.camera}
+          onMouseMove={(event) => this.mouseMove$.next(event)}
+          onMouseLeave={() => this.mouseLeave$.next()}
+          onMouseDown={() => this.mouseDown$.next()}
+          onMouseUp={() => this.mouseUp$.next()}
+          onWheel={(event) => this.wheel$.next(event)}
+        >
+          <div
+            className={style.background}
+            onDragStart={(event) => event.preventDefault()}
+            style={{
+              ...this.state.backgroundSizeAndPosition,
+              backgroundSize: this.state.tileSize,
+            }}
+          ></div>
+          <div
+            className={style.gameMap}
+            onDragStart={(event) => event.preventDefault()}
+            style={{
+              ...this.state.mapSizeAndPosition,
+              backgroundImage: `url(${this.props.mapSpritePath})`
+            }}
+          >
+            {
+              this.props.staticObjects.map((objects) => (
+                objects.map((object) => (object))
+              ))
+            }
+          </div>
+        </div>
+      </GameFieldContext.Provider>
     ) : (
       <div>Ez a képernyő típus nem támogatott.</div>
     );
