@@ -110,7 +110,7 @@ export default function Sell() {
             </form>
           </div>
           <div className="why-tho d-flex justify-content-center align-items-center">
-            <Link to="/market">
+            <Link className="pb-3" to="/market">
               <button className="market-btn">Mégse</button>
             </Link>
           </div>

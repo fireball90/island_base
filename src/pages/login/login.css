@@ -50,6 +50,8 @@ font-family: 'Rubik Dirt', cursive;
     text-shadow: 1px 1px rgb(179, 9, 88);
     font-family: 'Frijole', cursive;
     margin-top: 5px;
+    background-color: transparent;
+    border: 0 rgba(255, 255, 255, 0);
 }
 .btn-button1:hover{
     transform: scale(1.15,1.15);

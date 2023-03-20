@@ -24,7 +24,7 @@ export default function Error() {
           <div className="d-flex justify-content-center">
             <p className="ml-auto error-link">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="/login">
+              <a href="/">
                 A keresett oldal nem található.
                 <br /> Kérjük kattintson ide a bejelentkezéshez!
               </a>

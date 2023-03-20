@@ -1,24 +1,4 @@
-.market-listings-container{
-    height: 600px;
-    background-color: rgba(139, 86, 17, 0.336);
-    padding:20px; 
-    margin-bottom:10px;      
-    border-radius: 20px;
-}
-.market-all {
-    background-image:url("../../../public/images/ui/contentbg2.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: absolute;
-    height: 100vh;
-    width: 100%; 
-    z-index: 300;
-    overflow: auto;
-}
-.market-container{
-    padding-top: 20px;
-    color: azure;
-}
+
 .listing-container{
     width: 95%;
     background-color: rgba(0, 0, 0, 0.501);
@@ -30,15 +10,30 @@
 .listing-container img{
     image-rendering: pixelated;
 }
-.market-close{
-    width: 75px;
-    position: relative;
-    float: right;
-    z-index: 301;
-}
+
 .market-btn{
     background-image: url("../../../public/images/ui/btn_bg_1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 200px;
+    height: 70px;
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+    color: aliceblue;
+}
+
+.market-delete-btn{
+    background-image: url("../../../public/images/ui/btn_bg_delete.png");
+    width: 130px;
+    height: 70px;
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+    color: aliceblue;
+}
+
+.market-update-btn{
+    background-image: url("../../../public/images/ui/btn_bg_update.png");
+    width: 130px;
     height: 70px;
     border: none;
     background-color: rgba(240, 248, 255, 0);
