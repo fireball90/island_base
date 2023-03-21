@@ -42,7 +42,6 @@ export default function Notifications() {
   return (
     <Layout navigations={[]} title="Értesítések">
       <div className="container-fluid">
-        <div className="" style={{ height: "100%", width: "100%" }}>
           <div className="col-12 align-items-center d-flex justify-content-center">
             <div className="container">
               <div className="row">
@@ -50,7 +49,7 @@ export default function Notifications() {
                 <div className="not-list-container container" key={notification.id}>
                   <div
                     className="row d-flex align-items-center justify-content-center"
-                    style={{ height: "200px" }}
+                    style={{ height: "120px" }}
                   >               
                     <div className="col-3 text-center">
                       <h4>{notification.title}</h4>
@@ -82,12 +81,11 @@ export default function Notifications() {
                       <p>{notification.createDate}</p>
                     </div>
                     <div className="col-3 text-center">
-                      <button className="not-btn2" onClick={() => deleteNotification(notification.id)}>Törlés</button>
+                      <button className="not-delete-btn" onClick={() => deleteNotification(notification.id)}>Törlés</button>
                     </div>
                   </div>
                 </div>
               ))}
-              </div>
             </div>
           </div>
         </div>

@@ -16,8 +16,8 @@ useEffect(() => {
       style={{
         width: tileSize * scale,
         height: tileSize * scale,
-        top: xCoordinate * tileSize * scale,
-        left: yCoordinate * tileSize * scale,
+        top: yCoordinate * tileSize * scale,
+        left: xCoordinate * tileSize * scale,
       }}
     >
       {children}
