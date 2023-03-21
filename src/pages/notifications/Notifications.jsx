@@ -12,7 +12,7 @@ export default function Notifications() {
     setIsHudDisplayed(true);
     
     axios
-    .get("https://localhost:7276/api/Notification/GetAllNotification")
+    .get("https://localhost:7276/api/Notification/GetAllNotifications")
     .then((response) => {
       const allNotification = response.data;
 

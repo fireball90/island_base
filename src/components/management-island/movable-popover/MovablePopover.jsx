@@ -5,7 +5,7 @@ const MovablePopover = React.forwardRef(
     ({ popper, children, show: _, ...props }, ref) => {
       useEffect(() => {
         popper.scheduleUpdate();
-      }, [props.zoom, props.building, popper]);
+      }, [props.zoom, popper]);
   
       return (
         <Popover ref={ref} body {...props} className="rounded-0 border-0">

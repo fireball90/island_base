@@ -1,6 +1,5 @@
 .tile {
     position: absolute;
-    background-color: aqua;
 }
 
 .tile * {

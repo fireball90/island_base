@@ -1,164 +1,204 @@
+import axios from "axios";
 import React, { Component } from "react";
-import { OverlayTrigger, Button } from "react-bootstrap";
+import { OverlayTrigger } from "react-bootstrap";
+import { Subject, takeUntil, takeWhile, tap, timer } from "rxjs";
+import GameFieldContext from "../../../contexts/GameFieldContext";
 import MovablePopover from "../movable-popover/MovablePopover";
 
 import "./Building.css";
 
 export default class Building extends Component {
-  interval;
+  static contextType = GameFieldContext;
 
-//   constructor(props) {
-//     super(props);
+  constructor(props) {
+    super(props);
 
-//     this.ref = React.createRef();
+    console.log(this.props.building);
 
-//     this.state = {
-//       remainingTime: null,
-//     };
+    this.state = {
+      isUnderConstruction: false,
+      producedCoins: this.calculateProducedItemsSinceLastCollection(
+        this.props.building.producedCoins
+      ),
+      producedIrons: this.calculateProducedItemsSinceLastCollection(
+        this.props.building.producedIrons
+      ),
+      producedStones: this.calculateProducedItemsSinceLastCollection(
+        this.props.building.producedStones
+      ),
+      producedWoods: this.calculateProducedItemsSinceLastCollection(
+        this.props.building.producedWoods
+      ),
+      timeLeftToBuildingCompletion: 0,
+      isCollectPending: false,
+    };
 
-//     this.interval = null;
-//     this.ref = React.createRef();
-//   }
+    this.construction$ = timer(0, 1000);
+    this.production$ = timer(
+      this.calculateFirstProductionDate(),
+      this.props.building.productionInterval
+    );
+    this.componentDestroyed$ = new Subject();
+    this.ref = React.createRef();
+  }
 
-//   handleClick() {
-//     this.props.collectProducedItems(this.props.building);
-//   }
+  calculateProducedItemsSinceLastCollection(item) {
+    const elapsedTimeFromLastCollection =
+      new Date() - new Date(this.props.building.lastCollectDate);
+    return (
+      item *
+      parseInt(
+        elapsedTimeFromLastCollection / this.props.building.productionInterval
+      )
+    );
+  }
 
-//   checkAlreadyBuilded() {
-//     const today = new Date();
+  calculateFirstProductionDate() {
+    const now = new Date();
+    const nextProductionDate = new Date(this.props.building.buildDate);
+    while (nextProductionDate < now) {
+      nextProductionDate.setTime(
+        nextProductionDate.getTime() + this.props.building.productionInterval
+      );
+    }
 
-//     return this.props.building.buildDate > today ? false : true;
-//   }
+    return nextProductionDate;
+  }
 
-//   startReaminingTimeTimer() {
-//     this.handleTimeChange();
+  hasResourceProduction() {
+    return (
+      this.state.producedCoins +
+        this.state.producedIrons +
+        this.state.producedStones +
+        this.state.producedWoods >
+      0
+    );
+  }
 
-//     this.interval = setInterval(() => this.handleTimeChange(), 1000);
-//   }
+  collectItems() {
+    axios
+      .post(
+        `https://localhost:7276/api/Building/CollectItems?type=${this.props.building.buildingType}`
+      )
+      .then((response) => {
+        console.log(response);
 
-//   handleTimeChange() {
-//     const today = new Date();
-//     const time = this.props.building.buildDate - today;
+        this.setState((state) => ({
+          ...state,
+          producedCoins: 0,
+          producedIrons: 0,
+          producedStones: 0,
+          producedWoods: 0,
+        }));
 
-//     if (time > 0) {
-//       this.setState((state) => ({
-//         ...state,
-//         remainingTime: new Date(time),
-//       }));
-//     } else {
-//       this.setState((state) => ({
-//         ...state,
-//         remainingTime: null,
-//       }));
+        this.props.setCollectedItemsToPlayer({});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-//       this.clearRemainingTime();
-//     }
-//   }
+  componentDidMount() {
+    this.production$.pipe(takeUntil(this.componentDestroyed$)).subscribe(() => {
+      this.setState((state) => ({
+        ...state,
+        producedCoins: state.producedCoins + this.props.building.producedCoins,
+        producedIrons: state.producedIrons + this.props.building.producedIrons,
+        producedStones:
+          state.producedStones + this.props.building.producedStones,
+        producedWoods: state.producedWoods + this.props.building.producedWoods,
+      }));
+    });
 
-//   clearRemainingTime() {
-//     clearInterval(this.interval);
-//   }
+    this.construction$
+      .pipe(
+        takeUntil(this.componentDestroyed$),
+        tap(() => {
+          const now = new Date();
+          if (now < new Date(this.props.building.buildDate)) {
+            this.setState((state) => ({
+              ...state,
+              timeLeftToBuildingCompletion: 0,
+            }));
+          }
+        }),
+        takeWhile(() => {
+          const now = new Date();
+          return now < new Date(this.props.building.buildDate);
+        })
+      )
+      .subscribe(() => {
+        const now = new Date();
+        const buildDate = new Date(this.props.building.buildDate);
 
-//   componentDidMount() {
-//     if (!this.checkAlreadyBuilded()) {
-//       this.startReaminingTimeTimer();
-//     }
-//   }
+        this.setState((state) => ({
+          ...state,
+          timeLeftToBuildingCompletion: buildDate.getTime() - now.getTime(),
+        }));
+      });
+  }
 
-//   componentDidUpdate() {
-//     if (!this.checkAlreadyBuilded() && !this.state.remainingTime) {
-//       this.startReaminingTimeTimer();
-//     }
-//   }
+  timestampToFormattedDate() {
+    const time = new Date(this.state.timeLeftToBuildingCompletion);
 
-//   componentWillUnmount() {
-//     this.clearRemainingTime();
-//   }
+    return `${
+      time.getHours() - 1
+    }h ${time.getMinutes()}m ${time.getSeconds()}s`;
+  }
+
+  componentWillUnmount() {
+    this.componentDestroyed$.next();
+    this.componentDestroyed$.complete();
+  }
 
   render() {
-    // const itemsPopupIsDisplayed = (
-    //     this.props.building.alreadyProducedCoin +
-    //     this.props.building.alreadyProducedIrons +
-    //     this.props.building.alreadyProducedStones +
-    //     this.props.building.alreadyProducedWoods > 0)
-
-    // return this.state.remainingTime != null ?
-    //     (
-    //         <div className="w-100 h-100 bg-white" ref={this.ref}>
-    //             <OverlayTrigger
-    //                 show={true}
-    //                 container={this.ref}
-    //                 trigger={null}
-    //                 overlay={
-    //                     <MovablePopover>
-    //                         <div className="text-center">
-    //                             <i className="bi bi-clock fs-1"></i>
-    //                             <div className="fw-bold timer">{this.state.remainingTime.getHours() - 1}h {this.state.remainingTime.getMinutes()}m {this.state.remainingTime.getSeconds()}s</div>
-    //                         </div>
-    //                     </MovablePopover>
-    //                 }>
-    //                 <div></div>
-    //             </OverlayTrigger>
-    //         </div>
-    //     ) :
-    //     (
-
-    //         <div className="w-100 h-100">
-    //             <div className="overlay-container" ref={this.ref}></div>
-    //             <OverlayTrigger
-    //                 show={itemsPopupIsDisplayed}
-    //                 container={this.ref}
-    //                 trigger={null}
-    //                 overlay={
-    //                     <MovablePopover
-    //                         zoom={this.props.zoom}
-    //                         building={this.props.building}
-    //                     >
-    //                         <div className="d-flex flex-column justify-content-center">
-    //                             <ul className="list-unstyled">
-    //                                 {
-    //                                     this.props.building.alreadyProducedCoin > 0 ?
-    //                                         <li>{this.props.building.alreadyProducedCoin} termelt érme</li> :
-    //                                         null
-    //                                 }
-    //                                 {
-    //                                     this.props.building.alreadyProducedIrons > 0 ?
-    //                                         <li>{this.props.building.alreadyProducedIrons} termelt vas</li> :
-    //                                         null
-    //                                 }
-    //                                 {
-    //                                     this.props.building.alreadyProducedStones > 0 ?
-    //                                         <li>{this.props.building.alreadyProducedStones} termelt kő</li> :
-    //                                         null
-    //                                 }
-    //                                 {
-    //                                     this.props.building.alreadyProducedWoods > 0 ?
-    //                                         <li>{this.props.building.alreadyProducedWoods} termelt fa</li> :
-    //                                         null
-    //                                 }
-    //                             </ul>
-    //                             <div className='text-center'>
-    //                                 <Button
-    //                                     onClick={() => this.handleClick()}
-    //                                     variant="primary">
-    //                                     <i className="bi bi-cart-check-fill"></i>
-    //                                 </Button>
-    //                             </div>
-    //                         </div>
-    //                     </MovablePopover>
-    //                 }
-    //             >
-    //                 <div
-    //                     onClick={() => this.props.selectBuildingToUpdate(this.props.building)}
-    //                     className="w-100 h-100 sprite-image"
-    //                     style={{
-    //                         backgroundImage: `url(${this.props.building.imagePath})`
-    //                     }}>
-    //                 </div>
-    //             </OverlayTrigger>
-    //         </div>
-    //     )
-
-    return <div>Hello World From Building!</div>;
+    return !this.state.timeLeftToBuildingCompletion ? (
+      <div
+        className="building-sprite"
+        style={{ backgroundImage: `url(${this.props.building.spritePath})` }}
+        ref={this.ref}
+      >
+        <OverlayTrigger
+          show={this.hasResourceProduction()}
+          container={this.ref}
+          trigger={null}
+          overlay={
+            <MovablePopover zoom={this.context.zoom}>
+              <div>{this.state.producedCoins}</div>
+              <div>{this.state.producedIrons}</div>
+              <div>{this.state.producedStones}</div>
+              <div>{this.state.producedWoods}</div>
+              <button
+                onClick={() => this.collectItems()}
+                disabled={this.state.isCollectPending}
+              >
+                Collect
+              </button>
+            </MovablePopover>
+          }
+        >
+          <div></div>
+        </OverlayTrigger>
+      </div>
+    ) : (
+      <div
+        className="building-sprite"
+        style={{ backgroundImage: "url(/assets/sprites/working.png)" }}
+        ref={this.ref}
+      >
+        <OverlayTrigger
+          show={this.hasResourceProduction()}
+          container={this.ref}
+          trigger={null}
+          overlay={
+            <MovablePopover zoom={this.context.zoom}>
+              {this.timestampToFormattedDate()}
+            </MovablePopover>
+          }
+        >
+          <div></div>
+        </OverlayTrigger>
+      </div>
+    );
   }
 }
