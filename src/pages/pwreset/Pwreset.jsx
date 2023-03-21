@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import HudContext from "../../contexts/HudContext";
-
+import axios from "axios";
 import "../pwreset/pwreset.css";
+import Modal from "react-bootstrap/Modal";
 
 export default function Pwreset() {
   const { setIsHudDisplayed } = useContext(HudContext);
-  
+  const [ errorMessage, setErrorMessage ] = useState(null);
   const [email, setEmail] = useState("");
+  const [modalShow, setModalShow] = React.useState(false);
   
   const handleChange = (event) => {
     setEmail(event.target.value);
@@ -14,22 +16,21 @@ export default function Pwreset() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    fetch("https://localhost:7276/api/Auth/SetTemporaryPassword", {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(email),
+
+    if (email == "") {
+      setErrorMessage('Adjon meg egy email címet!');
+      return;
+    }
+
+    axios.put("https://localhost:7276/api/Auth/SetTemporaryPassword", {
+      email: email
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        alert("Az emailt kiküldtük.");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    .then(() => {
+      setModalShow(true);
+    })
+    .catch(() => {
+      setErrorMessage('Nem sikerült kapcsolódni a szerverhez.')
+    })
   };
 
   useEffect(() => {
@@ -47,6 +48,11 @@ export default function Pwreset() {
               src="../images/islanders_logo.png"
             ></img>
           </div>
+
+          <MyVerticallyCenteredModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
 
           <div className="">
             <img
@@ -72,8 +78,9 @@ export default function Pwreset() {
                 />
               </div>
             </div>
+            <div className="fs-6 text-danger text-center bg-warning">{ errorMessage }</div>
             <div className="d-flex justify-content-center">
-              <button type="submit" className="btn btn-button-reset">
+              <button type="submit" className="btn-button-reset">
                 Küldés
               </button>
             </div>
@@ -81,11 +88,39 @@ export default function Pwreset() {
 
           <div className="">
             <p className="ml-auto pwreset-link">
-              <a href="/login">Visszatérés a bejelentkezéshez</a>
+              <a href="/">Visszatérés a bejelentkezéshez</a>
             </p>
           </div>
         </div>
       </div>
     </div>
+  );
+}
+function MyVerticallyCenteredModal(props) {
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <div className="successful-register-modal">
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Sikeres email küldés
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Az email címére küldtünk egy új jelszót, amellyel be tud lépni az oldalra. Majd kérjük változtassa azt meg a saját profil menüpontban!
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <button onClick={props.onHide} className="modal-register-btn">
+            Bezárás
+          </button>
+        </Modal.Footer>
+      </div>
+    </Modal>
   );
 }

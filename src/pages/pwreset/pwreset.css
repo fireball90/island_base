@@ -30,9 +30,11 @@ font-family: 'Rubik Dirt', cursive;
     background-repeat: no-repeat;
     background-size: cover;
     color: aliceblue;
-    text-shadow: 1px 1px rgb(255, 255, 255);
+    text-shadow: 1px 1px rgb(0, 0, 0);
     font-family: 'Permanent Marker', cursive;
     margin-top: 5px;
+    background-color: transparent;
+    border:rgba(0, 0, 0, 0);
 }
 .btn-button-reset:hover{
     transform: scale(1.15,1.15);

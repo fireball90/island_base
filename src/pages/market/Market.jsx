@@ -87,23 +87,17 @@ export default function Market() {
   return (
     <Layout
       navigations={[
-        <Button className="market-btn" onClick={() => allChange()}>Összes hirdetés</Button>,
-        <Button className="market-btn" onClick={() => ownChange()}>Saját hirdetés</Button>,
-        <Button className="market-btn">
-          <Link to="/sell">Hirdetés feladása</Link>
-        </Button>,
+        <button className="market-btn" onClick={() => allChange()}>Összes hirdetés</button>,
+        <button className="market-btn" onClick={() => ownChange()}>Saját hirdetés</button>,
+        <Link to='/sell'><button className="market-btn">Hirdetés feladása</button></Link>,
       ]}
       title="Jelenlegi piaci hirdetések"
     >
       <div className="container-fluid">
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: "700px" }}
-        >
+        <div className="" style={{ height: "100%", width: "100%" }}>
           <div className="col-12 align-items-center d-flex justify-content-center">
             <div className="container">
               <div className="row">
-                <div className="market-listings-container">
                 {exchange.map((exchange)=>(
                   <div className="listing-container container" key={exchange.id}>
                     <div
@@ -113,7 +107,7 @@ export default function Market() {
                       <div className="col-3 text-center">
                         <p>
                           <img src="../images/icons/wood.png" alt="wood"></img>
-                          {exchange.item}
+                          <span> {exchange.item}</span>
                         </p>
                         <p>{exchange.amount} db</p>
                       </div>
@@ -129,21 +123,20 @@ export default function Market() {
                             src="../images/icons/steel.png"
                             alt="steel"
                           ></img>
-                          {exchange.replacementItem}
+                          <span> {exchange.replacementItem}</span>
                         </p>
                         <p>{exchange.replacementAmount} db</p>
                       </div>
                       <div className="col-3 text-center">
                         {count===0 ? (
-                            <button className="btn btn-warning" onClick={() => takeExchange(exchange.id)}>Csere</button>
+                            <button className="market-update-btn" onClick={() => takeExchange(exchange.id)}>Csere</button>
                         ) : (
-                            <button className="btn btn-danger" onClick={() => deleteExchange(exchange.id)}>Törlés</button>
+                            <button className="market-delete-btn" onClick={() => deleteExchange(exchange.id)}>Törlés</button>
                         )}
                       </div>
                     </div>
                   </div>
                  ))}
-                </div>
               </div>
             </div>
           </div>
