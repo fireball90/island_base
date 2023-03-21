@@ -9,85 +9,96 @@ import axios from "axios";
 import { forkJoin, from } from "rxjs";
 import HudContext from "../../contexts/HudContext";
 
-export default function Test() {
+export default function TestPage() {
   const { setIsHudDisplayed } = useContext(HudContext);
-
+  
   useEffect(() => {
     setIsHudDisplayed(true);
   }, []);
 
-  return <div>Hello</div>
+  return (
+    <Test></Test>
+  )
 }
 
-// export default class Test extends Component {
-//   static contextType = IslandContext;
+class Test extends Component {
+  static contextType = IslandContext;
 
-//   constructor() {
-//     super();
+  constructor() {
+    super();
 
-//     this.state = {
-//       buildings: [],
-//       buildableLocations: [],
-//     };
+    this.state = {
+      buildings: [],
+      buildableLocations: [],
+    };
 
-//     this.buildBuilding = () => {};
+    this.buildBuilding = () => {};
 
-//     this.upgradeBuilding = () => {};
-//   }
+    this.upgradeBuilding = () => {};
 
-//   componentDidMount() {
-//     const urls = [
-//       "https://localhost:7276/api/Building/GetAllBuilding",
-//       "https://localhost:7276/api/Island/GetIsland",
-//     ];
-//     const requests$ = urls.map((url) => from(axios.get(url)));
+    this.setCollectedItemsToPlayer = (collectedItems) => {
+      
+    };
+  }
 
-//     forkJoin(requests$).subscribe({
-//       next: (response) => {
-//         const buildings = response[0].data;
-//         const island = response[1].data;
+  componentDidMount() {
+    const urls = [
+      "https://localhost:7276/api/Building/GetAllBuildings",
+      "https://localhost:7276/api/Island/GetIsland",
+    ];
+    const requests$ = urls.map((url) => from(axios.get(url)));
 
-//         this.context.setBuildings(buildings)
-//         this.context.setIsland(island)
-//       },
-//       error: () => alert("Nem sikerült lekérdezni az adatokat!"),
-//     });
-//   }
+    forkJoin(requests$).subscribe({
+      next: (response) => {
+        const buildings = response[0].data;
+        const island = response[1].data;
 
-//   render() {
-//     return this.context.isIslandInitialized ? (
-//       <div className={style.container}>
-//         <GameField
-//           mapTilesWide={50}
-//           mapTilesHigh={30}
-//           backgroundTilesWide={80}
-//           backgroundTilesHigh={60}
-//           mapSpritePath={this.context.island.spritePath}
-//           staticObjects={[
-//             this.context.buildings.map((building, index) => (
-//               <Tile
-//                 key={index}
-//                 xCoordinate={building.xCoordinate}
-//                 yCoordinate={building.yCoordinate}
-//                 scale={2}
-//               >
-//                 <Building />
-//               </Tile>
-//             )),
-//             this.state.buildableLocations.map((buildableLocation, index) => (
-//               <Tile
-//                 key={index}
-//                 xCoordinate={buildableLocation.xCoordinate}
-//                 yCoordinate={buildableLocation.yCoordinate}
-//                 scale={2}
-//               >
-//                 <BuildableLocation />
-//               </Tile>
-//             )),
-//           ]}
-//           animations={[]}
-//         />
-//       </div>
-//     ) : <div>betöltés...</div>;
-//   }
-// }
+        this.context.setBuildings(buildings);
+        this.context.setIsland(island);
+      },
+      error: () => alert("Nem sikerült lekérdezni az adatokat!"),
+    });
+  }
+
+  render() {
+    return this.context.isIslandInitialized ? (
+      <div className={style.container}>
+        <GameField
+          mapTilesWide={50}
+          mapTilesHigh={30}
+          backgroundTilesWide={80}
+          backgroundTilesHigh={60}
+          mapSpritePath={this.context.island.spritePath}
+          staticObjects={[
+            this.context.buildings.map((building, index) => (
+              <Tile
+                key={index}
+                xCoordinate={building.xCoordinate}
+                yCoordinate={building.yCoordinate}
+                scale={2}
+              >
+                <Building
+                  building={building}
+                  setCollectedItemsToPlayer={this.setCollectedItemsToPlayer}
+                />
+              </Tile>
+            )),
+            this.state.buildableLocations.map((buildableLocation, index) => (
+              <Tile
+                key={index}
+                xCoordinate={buildableLocation.xCoordinate}
+                yCoordinate={buildableLocation.yCoordinate}
+                scale={2}
+              >
+                <BuildableLocation />
+              </Tile>
+            )),
+          ]}
+          animations={[]}
+        />
+      </div>
+    ) : (
+      <div>betöltés...</div>
+    );
+  }
+}

@@ -22,6 +22,7 @@ import HudContext from "./contexts/HudContext";
 import Management from "./pages/management/Management";
 import Test from "./pages/test/Test";
 import IslandsPVP from "./components/islands-pvp/IslandsPVP";
+import TestPage from "./pages/test/Test";
 
 export default class App extends Component {
   constructor(props) {
@@ -217,7 +218,7 @@ export default class App extends Component {
                         <ProtectedRoute
                           guards={[new Guard(this.state.isLogined, "/")]}
                         >
-                          <Test />
+                          <TestPage />
                         </ProtectedRoute>
                       }
                     />

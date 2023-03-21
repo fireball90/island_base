@@ -26,7 +26,7 @@ export default function Market() {
   useEffect(() => {
     setIsHudDisplayed(true);
     axios
-    .get("https://localhost:7276/api/Exchange/GetAllExchange")
+    .get("https://localhost:7276/api/Exchange/GetAllExchanges")
     .then((response) => {
       const allExchange = response.data;
 
@@ -41,7 +41,7 @@ export default function Market() {
 
   function allChange(){
     axios
-    .get("https://localhost:7276/api/Exchange/GetAllExchange")
+    .get("https://localhost:7276/api/Exchange/GetAllExchanges")
     .then((response) => {
       const allExchange = response.data;
 
@@ -57,7 +57,7 @@ export default function Market() {
 
   function ownChange(){
     axios
-    .get("https://localhost:7276/api/Exchange/GetAllMyExchange")
+    .get("https://localhost:7276/api/Exchange/GetAllMyExchanges")
     .then((response) => {
       const allExchange = response.data;
 
