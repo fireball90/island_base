@@ -17,8 +17,22 @@
     justify-content: center;
     padding: 1rem;
 }
-
+.text *{
+    color: black;
+    font-weight: 600;
+}
 .experienceBar span {
     color: white;
     font-size: 12px;
+}
+
+@media only screen and (max-height: 480px) {
+    .experienceBar span {
+        display: none;
+    }
+    .experienceContent {
+        padding: 0.6rem;
+    }
+    
+
 }

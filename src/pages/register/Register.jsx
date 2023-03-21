@@ -13,19 +13,20 @@ export default function Register() {
   password.current = watch("password", "");
 
   const onSubmit = data => {
-      axios.post("https://localhost:7276/api/Auth/Registration", {
+      console.log(data)
+      axios.post("https://localhost:7276/api/Auth/Registration", 
         data
+      )
+      .then(() => {
+        setModalShow(true);
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
           setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
         } else {
-          setErrorMessage("Hibás adatok!");
+          setErrorMessage("A jelszó tartalmazzon egy kisbetűt, egy nagybetűt és egy számot!");
         }
       })
-      .finally(() => {
-        setModalShow(true);
-      });
   };
 
 
@@ -51,25 +52,25 @@ export default function Register() {
           <div className="justify-content-center form-group row pb-1">
             <label className="col-form-label text-center register-label">FELHASZNÁLÓ NÉV</label>
             <input className="register-input" type="text" placeholder="Név" id='username' {...register("username", { required: true, max: 30, min: 5, maxLength: 30, pattern: /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]+$/i })} />
-              {errors.username?.type === "required" && <span className='reg-error-msg'>Kérjük adjon meg egy felhasználónevet.</span>}
-              {errors.username?.type === "min" && <span className='reg-error-msg'>5 és 30 karakter közti hosszúságú nevet adjon meg</span>}
-              {errors.username?.type === "maxLength" && <span className='reg-error-msg'>5 és 30 karakter közti hosszúságú nevet adjon meg.</span>}
-              {errors.username?.type === "pattern" && <span className='reg-error-msg'>Kérjük csak az angol ABC betűit és számokat használjon.</span>}
+              {errors.username?.type === "required" && <span className='reg-error-msg text-center'>Kérjük adjon meg egy felhasználónevet.</span>}
+              {errors.username?.type === "min" && <span className='reg-error-msg text-center'>5 és 30 karakter közti hosszúságú nevet adjon meg</span>}
+              {errors.username?.type === "maxLength" && <span className='reg-error-msg text-center'>5 és 30 karakter közti hosszúságú nevet adjon meg.</span>}
+              {errors.username?.type === "pattern" && <span className='reg-error-msg text-center'>Kérjük csak az angol ABC betűit és számokat használjon.</span>}
           </div>
 
           <div className="justify-content-center form-group row pb-1">
             <label className="col-form-label text-center register-label">E-MAIL CÍM</label>
             <input className="register-input" type="text" placeholder="Email cím" id='email' {...register("email", { required: true, pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/i })} />
-              {errors.email?.type === "required" && <span className='reg-error-msg'>Kérem adjon meg egy email címet.</span>}
-              {errors.email?.type === "pattern" && <span className='reg-error-msg'>Kérem adjon meg egy helyes email címet. Pl: name@email.com</span>}
+              {errors.email?.type === "required" && <span className='reg-error-msg text-center'>Kérem adjon meg egy email címet.</span>}
+              {errors.email?.type === "pattern" && <span className='reg-error-msg text-center'>Kérem adjon meg egy helyes email címet. Pl: name@email.com</span>}
           </div>
 
           <div className="justify-content-center form-group row pb-1">
             <label className="col-form-label text-center register-label">JELSZÓ</label>
             <input className="register-input" name="password" type="password" placeholder="Jelszó" id='password' {...register("password", { required: true, max: 40, min: 8, maxLength: 40, pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,40}$/i })} />
-              {errors.password?.type === "pattern" && <span className='reg-error-msg'>A jelszónak 8 - 40 karakter hosszúnak kell lennie.</span>}
-              {errors.password?.type === "pattern" && <span className='reg-error-msg'>A jelszó tartalmazzon egy kisbetűt, egy nagybetűt és egy számot.</span>}
-              {errors.password?.type === "maxLength" && <span className='reg-error-msg'>A jelszónak 8 - 40 karakter hosszúnak kell lennie.</span>}
+              {errors.password?.type === "pattern" && <span className='reg-error-msg text-center'>A jelszónak 8 - 40 karakter hosszúnak kell lennie.</span>}
+              {errors.password?.type === "pattern" && <span className='reg-error-msg text-center'>A jelszó tartalmazzon egy kisbetűt, egy nagybetűt és egy számot.</span>}
+              {errors.password?.type === "maxLength" && <span className='reg-error-msg text-center'>A jelszónak 8 - 40 karakter hosszúnak kell lennie.</span>}
           </div>
 
           <div className="justify-content-center form-group row pb-1">
@@ -78,11 +79,11 @@ export default function Register() {
               validate: value =>
                 value === password.current
             })} />
-             {errors.confirmPassword && <span className='reg-error-msg'>Nem egyezik a fent megadott jelszóval!</span>}
+             {errors.confirmPassword && <span className='reg-error-msg text-center'>Nem egyezik a fent megadott jelszóval!</span>}
           </div>
 
-          <div>
-            <span className="login-error-msg text-center">{errorMessage}</span>
+          <div className="text-center">
+            <span className="login-error-msg ">{errorMessage}</span>
           </div>
 
           <div className='d-flex justify-content-center'>
@@ -91,7 +92,7 @@ export default function Register() {
         </form>
 
         <div className='d-flex justify-content-center'>
-          <p className='ml-auto register-link'><a href='/login'>Már regisztrált? Lépjen be!</a></p>
+          <p className='ml-auto register-link'><a href='/'>Már regisztrált? Lépjen be!</a></p>
         </div>
 
       </div>

@@ -8,3 +8,17 @@
     top: 2.2rem;
     right: 2.4rem;
 }
+
+@media only screen and (max-height: 480px) {
+    .profile img{
+        width: 110px;
+    }
+    .profile h4 {
+        color: white;
+        position: absolute;
+        top: 1rem;
+        right: 1.2rem;
+        font-size: 14px;
+    }
+
+}

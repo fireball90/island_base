@@ -20,7 +20,6 @@
 
 .popup {
     background-image: url('../../../public/images/ui/contentbg2.png');
-    background-color: aqua;
     background-position: center;
     background-size: cover;
     display: flex;
@@ -78,4 +77,22 @@ h2 {
     margin: 1rem 1rem 0 1rem;
     border-top-right-radius: 1rem;
     border-top-left-radius: 1rem;
+}
+
+
+@media only screen and (max-height: 480px) {
+    .container {
+        padding: 2rem 1rem 0 1rem;
+    }
+    .title{
+        padding: 0.5rem;
+    }
+    .title h3{
+        font-size: 20px;
+        color: aliceblue;
+    }
+    .close {
+        width: 3rem;
+        height: 3rem;
+    }
 }

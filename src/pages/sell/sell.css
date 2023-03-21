@@ -8,7 +8,14 @@
     color: aliceblue;
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
 }
 .sell-all{
     color: aliceblue;
+}
+@media only screen and (max-height: 480px) {
+    .sell-btn{
+        width: 160px;
+        height: 60px;
+    }
 }

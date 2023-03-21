@@ -18,6 +18,7 @@ export default function ExperienceBar({ experiencePoints }) {
                     now={Math.round(progressPercent)}
                     label={`${experiencePointsFromCurrentLevel} XP`}
                     variant="danger"
+                    className={style.text}
                 />
                 <span>
                     {nextLevelExperiencePoints - experiencePoints} XP a szintlépésig

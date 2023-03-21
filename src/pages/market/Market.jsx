@@ -10,7 +10,18 @@ export default function Market() {
   const { setIsHudDisplayed } = useContext(HudContext);
   const [exchange,setExchange] = useState([]);
   const [count,setCount] = useState(0);
-
+  const iconPaths  = [
+    "../images/icons/coin.png",
+    "../images/icons/wood.png",
+    "../images/icons/stone.png",
+    "../images/icons/steel.png"
+  ]
+  const iconNames = [
+    "Érme",
+    "Fa",
+    "Kő",
+    "Vas"
+  ]
 
   useEffect(() => {
     setIsHudDisplayed(true);
@@ -75,7 +86,7 @@ export default function Market() {
   function takeExchange(id){
     console.log(id);
     axios
-    .delete(`https://localhost:7276/api/Exchange/BuyExchange?id=${id}`)
+    .put(`https://localhost:7276/api/Exchange/BuyExchange?id=${id}`)
     .catch((error) => {
       console.log(error);
     })
@@ -102,17 +113,18 @@ export default function Market() {
                   <div className="listing-container container" key={exchange.id}>
                     <div
                       className="row d-flex align-items-center justify-content-center"
-                      style={{ height: "100px" }}
+                      style={{ height: "70px" }}
                     >
                       <div className="col-3 text-center">
                         <p>
-                          <img src="../images/icons/wood.png" alt="wood"></img>
-                          <span> {exchange.item}</span>
+                          <img src={iconPaths[exchange.item]} alt="wood"></img>
+                          <span> {iconNames[exchange.item]}</span>
+                          <p>{exchange.amount} db</p>
                         </p>
-                        <p>{exchange.amount} db</p>
                       </div>
                       <div className="col-3 text-center">
                         <img
+                          className="trade-img"
                           src="../images/tradeoffer.png"
                           alt="Trade-offer"
                         ></img>
@@ -120,12 +132,12 @@ export default function Market() {
                       <div className="col-3 text-center">
                         <p>
                           <img
-                            src="../images/icons/steel.png"
+                            src={iconPaths[exchange.replacementItem]}
                             alt="steel"
                           ></img>
-                          <span> {exchange.replacementItem}</span>
-                        </p>
-                        <p>{exchange.replacementAmount} db</p>
+                          <span> {iconNames[exchange.replacementItem]}</span>
+                          <p>{exchange.replacementAmount} db</p>
+                        </p> 
                       </div>
                       <div className="col-3 text-center">
                         {count===0 ? (
