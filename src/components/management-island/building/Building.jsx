@@ -13,8 +13,6 @@ export default class Building extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props.building);
-
     this.state = {
       isUnderConstruction: false,
       producedCoins: this.calculateProducedItemsSinceLastCollection(
@@ -91,10 +89,10 @@ export default class Building extends Component {
           producedWoods: 0,
         }));
 
-        this.props.setCollectedItemsToPlayer({});
+        this.props.setCollectedItemsToPlayer(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        alert('Nem sikerült kapcsolódni a szerverhez!');
       });
   }
 

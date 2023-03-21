@@ -3,12 +3,25 @@ import BuildableLocation from "../../components/management-island/buildable-loca
 import Building from "../../components/management-island/building/Building";
 import Tile from "../../components/management-island/tile/Tile";
 import style from "./Test.module.css";
-import React, { Component } from "react";
+import React, { Component, useContext, useEffect } from "react";
 import IslandContext from "../../contexts/IslandContext";
 import axios from "axios";
 import { forkJoin, from } from "rxjs";
+import HudContext from "../../contexts/HudContext";
 
-export default class Test extends Component {
+export default function TestPage() {
+  const { setIsHudDisplayed } = useContext(HudContext);
+  
+  useEffect(() => {
+    setIsHudDisplayed(true);
+  }, []);
+
+  return (
+    <Test></Test>
+  )
+}
+
+class Test extends Component {
   static contextType = IslandContext;
 
   constructor() {
@@ -24,7 +37,7 @@ export default class Test extends Component {
     this.upgradeBuilding = () => {};
 
     this.setCollectedItemsToPlayer = (collectedItems) => {
-      console.log(collectedItems);
+      
     };
   }
 
