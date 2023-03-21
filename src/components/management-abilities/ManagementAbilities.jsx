@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { Button } from "react-bootstrap"
 import PlayerContext from "../../contexts/PlayerContext"
+import style from "./ManagementAbilities.module.css";
 
 export default function ManagementAbilities() {
     return (
@@ -14,30 +15,30 @@ export default function ManagementAbilities() {
                     <span>Erő</span>
                     <span className="fs-5">10</span>
                     <div>
-                        <Button>+</Button>
-                        <Button>?</Button>
+                        <button className={style.btnBg}><img alt="Plusz" title="Plusz" src="../images/ui/plusz_btn_inactive.png" ></img></button>
+                        <button className={style.btnBg}><img alt="Kérdés" title="Kérdés" src="../images/ui/kerdojel_btn.png" ></img></button>
                     </div>
                 </div>
                 <div className="d-flex flex-column text-center text-white p-2">
                     <span>Ügyesség</span>
                     <span className="fs-5">10</span>
                     <div>
-                        <Button>+</Button>
-                        <Button>?</Button>
+                        <button className={style.btnBg}><img alt="Plusz" title="Plusz" src="../images/ui/plusz_btn_inactive.png" ></img></button>
+                        <button className={style.btnBg}><img alt="Kérdés" title="Kérdés" src="../images/ui/kerdojel_btn.png" ></img></button>
                     </div>
                 </div>
                 <div className="d-flex flex-column text-center text-white p-2">
                     <span>Intelligencia</span>
                     <span className="fs-5">10</span>
                     <div>
-                        <Button>+</Button>
-                        <Button>?</Button>
+                        <button className={style.btnBg}><img alt="Plusz" title="Plusz" src="../images/ui/plusz_btn_inactive.png" ></img></button>
+                        <button className={style.btnBg}><img alt="Kérdés" title="Kérdés" src="../images/ui/kerdojel_btn.png" ></img></button>
                     </div>
                 </div>
             </div>
             <div className="d-flex justify-content-center gap-2">
-                <Button>Mentés</Button>
-                <Button>Visszavonás</Button>
+                <button className={style.btnBase}>Mentés</button>
+                <button className={style.btnBase}>Visszavonás</button>
             </div>
         </div>
     )

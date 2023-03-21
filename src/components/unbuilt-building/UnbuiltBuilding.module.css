@@ -2,10 +2,37 @@
     position: relative;
     width: 100%;
     height: auto;
-    max-width: 10rem;
-    height: auto;
+    max-width: 210px;
+    height: 260px;
+    background-image: url('../../../public/images/ui/build_card_2_shadow.png');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .building img {
     image-rendering: pixelated;
+    width: 100px;
+    padding-top: 1rem;
+}
+
+.building h4{
+    padding-top: 10px;
+}
+
+@media only screen and (max-height: 480px) {
+    .building {
+        width: 100%;
+        height: auto;
+        max-width: 160px;
+        height: 200px;
+    }   
+    .building img {
+        width: 80px;
+        padding-top: 0.2rem;
+    }
+    .building h4{
+        padding-top: 10px;
+        font-size: 16px;
+    }
+
 }

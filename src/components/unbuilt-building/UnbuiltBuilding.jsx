@@ -14,14 +14,16 @@ export default function UnbuiltBuilding({
 
     return (
         <div className={style.building}>
-            <Card className='border-0 rounded-0'>
-                <CardHeader className='text-center'>
-                    {building.name}
+            <Card className='border-0 rounded-0 bg-transparent'>
+                <CardHeader className='text-center text-white'>
+                    <h4>{building.name}</h4>
                 </CardHeader>
-                <Card.Img variant='top' src={building.spritePath}></Card.Img>
+                <div className='d-flex justify-content-center align-items-center'>
+                    <Card.Img variant='top' src={building.spritePath}></Card.Img>
+                </div>
                 <Card.Body>
                     <ButtonGroup aria-label="Basic example" className='d-flex justify-content-center'>
-                        <Button>
+                        <Button variant="warning">
                             Megépít
                         </Button>
                         <OverlayTrigger
@@ -35,9 +37,9 @@ export default function UnbuiltBuilding({
                                     </Popover.Body>
                                 </Popover>
                             }>
-                            <Button variant="outline-primary" size="sm">
+                            <Button variant="outline-warning" size="sm">
                                 <i className="bi bi-question-lg"></i>
-                            </Button>
+                            </Button> 
                         </OverlayTrigger>
                     </ButtonGroup>
                 </Card.Body>
