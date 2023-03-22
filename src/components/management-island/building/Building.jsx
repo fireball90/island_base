@@ -7,6 +7,7 @@ import MovablePopover from "../movable-popover/MovablePopover";
 
 import "./Building.css";
 
+
 export default class Building extends Component {
   static contextType = GameFieldContext;
 
@@ -43,11 +44,12 @@ export default class Building extends Component {
   calculateProducedItemsSinceLastCollection(item) {
     const elapsedTimeFromLastCollection =
       new Date() - new Date(this.props.building.lastCollectDate);
-    return (
+
+    return this.calculateProducedItem(
       item *
-      parseInt(
-        elapsedTimeFromLastCollection / this.props.building.productionInterval
-      )
+        parseInt(
+          elapsedTimeFromLastCollection / this.props.building.productionInterval
+        )
     );
   }
 
@@ -79,8 +81,6 @@ export default class Building extends Component {
         `https://localhost:7276/api/Building/CollectItems?type=${this.props.building.buildingType}`
       )
       .then((response) => {
-        console.log(response);
-
         this.setState((state) => ({
           ...state,
           producedCoins: 0,
@@ -91,8 +91,8 @@ export default class Building extends Component {
 
         this.props.setCollectedItemsToPlayer(response.data);
       })
-      .catch((error) => {
-        alert('Nem sikerült kapcsolódni a szerverhez!');
+      .catch(() => {
+        alert("Nem sikerült kapcsolódni a szerverhez!");
       });
   }
 
@@ -100,11 +100,18 @@ export default class Building extends Component {
     this.production$.pipe(takeUntil(this.componentDestroyed$)).subscribe(() => {
       this.setState((state) => ({
         ...state,
-        producedCoins: state.producedCoins + this.props.building.producedCoins,
-        producedIrons: state.producedIrons + this.props.building.producedIrons,
-        producedStones:
-          state.producedStones + this.props.building.producedStones,
-        producedWoods: state.producedWoods + this.props.building.producedWoods,
+        producedCoins: this.calculateProducedItem(
+          state.producedCoins + this.props.building.producedCoins
+        ),
+        producedIrons: this.calculateProducedItem(
+          state.producedIrons + this.props.building.producedIrons
+        ),
+        producedStones: this.calculateProducedItem(
+          state.producedStones + this.props.building.producedStones
+        ),
+        producedWoods: this.calculateProducedItem(
+          state.producedWoods + this.props.building.producedWoods
+        ),
       }));
     });
 
@@ -136,6 +143,12 @@ export default class Building extends Component {
       });
   }
 
+  calculateProducedItem(amount) {
+    return amount > this.props.building.maximumProductionCount
+      ? this.props.building.maximumProductionCount
+      : amount;
+  }
+
   timestampToFormattedDate() {
     const time = new Date(this.state.timeLeftToBuildingCompletion);
 
@@ -162,10 +175,10 @@ export default class Building extends Component {
           trigger={null}
           overlay={
             <MovablePopover zoom={this.context.zoom}>
-              <div>{this.state.producedCoins}</div>
-              <div>{this.state.producedIrons}</div>
-              <div>{this.state.producedStones}</div>
-              <div>{this.state.producedWoods}</div>
+              <div>Érmék {this.state.producedCoins}</div>
+              <div>Vas {this.state.producedIrons}</div>
+              <div>Kő {this.state.producedStones}</div>
+              <div>Fa {this.state.producedWoods}</div>
               <button
                 onClick={() => this.collectItems()}
                 disabled={this.state.isCollectPending}
@@ -175,7 +188,10 @@ export default class Building extends Component {
             </MovablePopover>
           }
         >
-          <div></div>
+          <div
+            className="w-100 h-100"
+            onClick={() => this.props.openBuildingModal(this.props.building)}
+          ></div>
         </OverlayTrigger>
       </div>
     ) : (

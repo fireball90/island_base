@@ -1,12 +1,12 @@
 import { ProgressBar } from "react-bootstrap"
-import { GameMath } from "../../game-math/GameMath"
+import { GameHelper } from "../../game-helper/GameHelper"
 
 import style from './ExperienceBar.module.css'
 
 export default function ExperienceBar({ experiencePoints }) {
-    const level = GameMath.CalculateLevel(experiencePoints)
-    const currentLevelExperiencePoints = GameMath.CalculateXP(level)
-    const nextLevelExperiencePoints = GameMath.CalculateXP(level + 1)
+    const level = GameHelper.CalculateLevel(experiencePoints)
+    const currentLevelExperiencePoints = GameHelper.CalculateXP(level)
+    const nextLevelExperiencePoints = GameHelper.CalculateXP(level + 1)
     const experiencePointsFromCurrentLevel = experiencePoints - currentLevelExperiencePoints
     const progressPercent = experiencePointsFromCurrentLevel / (nextLevelExperiencePoints - currentLevelExperiencePoints) * 100
 

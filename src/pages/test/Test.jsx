@@ -5,20 +5,17 @@ import Tile from "../../components/management-island/tile/Tile";
 import style from "./Test.module.css";
 import React, { Component, useContext, useEffect } from "react";
 import IslandContext from "../../contexts/IslandContext";
-import axios from "axios";
-import { forkJoin, from } from "rxjs";
 import HudContext from "../../contexts/HudContext";
+import BuildingModal from "../../components/building-modal/BuildingModal";
 
 export default function TestPage() {
   const { setIsHudDisplayed } = useContext(HudContext);
-  
+
   useEffect(() => {
     setIsHudDisplayed(true);
   }, []);
 
-  return (
-    <Test></Test>
-  )
+  return <Test></Test>;
 }
 
 class Test extends Component {
@@ -30,34 +27,34 @@ class Test extends Component {
     this.state = {
       buildings: [],
       buildableLocations: [],
+      isModalShowed: false,
+      openedBuilding: null,
     };
 
-    this.buildBuilding = () => {};
+    this.openBuildingModal = (openedBuilding) => {
+      this.setState((state) => ({
+        ...state,
+        isModalShowed: true,
+        openedBuilding: openedBuilding,
+      }));
+    };
 
+    this.closeBuildingModal = () => {
+      this.setState((state) => ({
+        ...state,
+        isModalShowed: false,
+        openedBuilding: null,
+      }));
+    };
     this.upgradeBuilding = () => {};
 
-    this.setCollectedItemsToPlayer = (collectedItems) => {
-      
-    };
+    this.setCollectedItemsToPlayer = (collectedItems) => {};
   }
 
   componentDidMount() {
-    const urls = [
-      "https://localhost:7276/api/Building/GetAllBuildings",
-      "https://localhost:7276/api/Island/GetIsland",
-    ];
-    const requests$ = urls.map((url) => from(axios.get(url)));
-
-    forkJoin(requests$).subscribe({
-      next: (response) => {
-        const buildings = response[0].data;
-        const island = response[1].data;
-
-        this.context.setBuildings(buildings);
-        this.context.setIsland(island);
-      },
-      error: () => alert("Nem sikerült lekérdezni az adatokat!"),
-    });
+    if (!this.context.isIslandInitialized) {
+      this.context.initializeIslandFromHttp();
+    }
   }
 
   render() {
@@ -80,6 +77,7 @@ class Test extends Component {
                 <Building
                   building={building}
                   setCollectedItemsToPlayer={this.setCollectedItemsToPlayer}
+                  openBuildingModal={this.openBuildingModal}
                 />
               </Tile>
             )),
@@ -96,6 +94,12 @@ class Test extends Component {
           ]}
           animations={[]}
         />
+        {this.state.isModalShowed ? (
+          <BuildingModal
+            openedBuilding={this.state.openedBuilding}
+            closeBuildingModal={this.closeBuildingModal}
+          />
+        ) : null}
       </div>
     ) : (
       <div>betöltés...</div>

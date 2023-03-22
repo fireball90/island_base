@@ -4,10 +4,9 @@ import FloatAlert from "../float-alert/FloatAlert";
 import BattleReportDialog from "./battle-report-dialog/BattleReportDialog";
 import BlockMessage from "./block-message/BlockMessage";
 import style from './IslandsPVP.module.css'
-import PartPlayerStatistic from "./part-player-statistic/PartPlayerStatistic";
 import PVPConfirmDialog from "./pvp-confirm-dialog/PVPConfirmDialog";
 import PVPMap from "./pvp-map/PVPMap"
-import { GameMath } from "../../game-math/GameMath";
+import { GameHelper } from "../../game-helper/GameHelper";
 
 export default class IslandsPVP extends Component {
     constructor(props) {
@@ -142,7 +141,7 @@ export default class IslandsPVP extends Component {
             blockBattleDialogIsShow: true,
             blockBattleMessage: "Csata zárolva. Nem indíthatsz közvetlenül csatát az előző után.",
             player: {
-                experiencePoints: GameMath.LimitXP(state.player.experiencePoints + battleResult.loot.experiencePoints),
+                experiencePoints: GameHelper.LimitXP(state.player.experiencePoints + battleResult.loot.experiencePoints),
                 availableTalentPoints: state.player.availableTalentPoints,
                 strength: state.player.strength,
                 ability: state.player.ability,

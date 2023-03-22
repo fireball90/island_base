@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, OverlayTrigger } from "react-bootstrap";
 import { Badge } from 'react-bootstrap';
-import { GameMath } from '../../../game-math/GameMath';
+import { GameHelper } from '../../../game-helper/GameHelper';
 import MovablePopover from '../../management-island/movable-popover/MovablePopover';
 
 import style from "./EnemyIsland.module.css"
@@ -15,8 +15,8 @@ export class EnemyIsland extends Component {
     }
 
     render() {
-        const health = 100 + (GameMath.CalculateLevel(this.props.experiencePoints) * 10)
-        const level = GameMath.CalculateLevel(this.props.experiencePoints)
+        const health = 100 + (GameHelper.CalculateLevel(this.props.experiencePoints) * 10)
+        const level = GameHelper.CalculateLevel(this.props.experiencePoints)
 
         return (
             <div 

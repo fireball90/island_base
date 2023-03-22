@@ -20,9 +20,9 @@ import PlayerContext from "./contexts/PlayerContext";
 import UserContext from "./contexts/UserContext";
 import HudContext from "./contexts/HudContext";
 import Management from "./pages/management/Management";
-import Test from "./pages/test/Test";
-import IslandsPVP from "./components/islands-pvp/IslandsPVP";
 import TestPage from "./pages/test/Test";
+import axios from "axios";
+import { forkJoin, from } from "rxjs";
 
 export default class App extends Component {
   constructor(props) {
@@ -133,17 +133,38 @@ export default class App extends Component {
       }));
     };
 
-    this.setIsland = (island) => {
-      this.setState((state) => ({
-        ...state,
-        isIslandInitialized: true,
-        island: {
-          spritePath: island.spritePath,
-          buildingAreas: island.buildingAreas,
-          npcRoutes: island.npcRoutes,
-          npcSprites: island.npcSprites,
+    this.initializeIslandFromHttp = () => {
+      const urls = [
+        "https://localhost:7276/api/Island/GetIsland",
+        "https://localhost:7276/api/Building/GetAllBuildings",
+        "https://localhost:7276/api/Building/GetAllUnbuiltBuildings",
+      ];
+
+      const requests$ = urls.map((url) => from(axios.get(url)));
+
+      forkJoin(requests$).subscribe({
+        next: (response) => {
+          const island = response[0].data;
+          const buildings = response[1].data;
+          const unbuiltBuildings = response[2].data;
+
+          this.setState((state) => ({
+            ...state,
+            isIslandInitialized: true,
+            buildings: buildings,
+            unbuiltBuildings: unbuiltBuildings,
+            island: {
+              spritePath: island.spritePath,
+              buildingAreas: island.buildingAreas,
+              npcRoutes: island.npcRoutes,
+              npcSprites: island.npcSprites,
+            },
+          }));
         },
-      }));
+        error: (error) => {
+          console.log(error);
+        },
+      });
     };
   }
 
@@ -185,7 +206,7 @@ export default class App extends Component {
                 setPlayer: this.setPlayer,
                 setBuildings: this.setBuildings,
                 setUnbuiltBuildings: this.setUnbuiltBuildings,
-                setIsland: this.setIsland,
+                initializeIslandFromHttp: this.initializeIslandFromHttp,
               }}
             >
               <BrowserRouter>

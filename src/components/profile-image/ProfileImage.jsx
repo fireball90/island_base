@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import PlayerContext from "../../contexts/PlayerContext";
-import { GameMath } from "../../game-math/GameMath";
+import { GameHelper } from "../../game-helper/GameHelper";
 
 import style from './ProfileImage.module.css'
 
@@ -13,7 +13,7 @@ export default function ProfileImage() {
         'Viking': '../images/ui/viking_ribbon.png',
         'Japan': '../images/ui/japanese_ribbon.png'
     }
-    const level = GameMath.CalculateLevel(player.experience)
+    const level = GameHelper.CalculateLevel(player.experience)
 
     return (
         <div className={style.profile}>

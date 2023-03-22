@@ -1,4 +1,4 @@
-export class GameMath {
+export class GameHelper {
     static CalculateLevel(experiencePoints) {
         return Math.floor(0.1 * Math.sqrt(experiencePoints))
     }

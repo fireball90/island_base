@@ -12,7 +12,6 @@
 .water {
     z-index: 0;
     position: absolute;
-    background-image: url('../../../../public/assets/water.png');
     image-rendering: pixelated;
     background-repeat: no-repeat;
     background-size: cover;
