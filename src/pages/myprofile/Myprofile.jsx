@@ -15,39 +15,40 @@ export default function Myprofile() {
   const { setIsHudDisplayed } = useContext(HudContext);
   const { user, setUserLoggedOut } = useContext(UserContext);
 
-  const [ password, setPassword ] = useState('');
-  const [ confirmPassword, setConfirmPassword ] = useState('');
-  const [ errorMessage, setErrorMessage ] = useState(null);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   function passwordChangeHandler(event) {
-    setPassword(event.target.value)
+    setPassword(event.target.value);
   }
 
   function confirmPasswordChangeHandler(event) {
-    setConfirmPassword(event.target.value)
+    setConfirmPassword(event.target.value);
   }
 
   function submitHandler(event) {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      setErrorMessage('Nem egyeznek a megadott jelszavak!');
+      setErrorMessage("Nem egyeznek a megadott jelszavak!");
       return;
     }
 
-    axios.put("https://localhost:7276/api/Auth/ResetPassword", {
-      password: password,
-      confirmPassword: confirmPassword
-    })
-    .then(() => {
-      cookie.remove("token");
+    axios
+      .put("https://localhost:7276/api/Auth/ResetPassword", {
+        password: password,
+        confirmPassword: confirmPassword,
+      })
+      .then(() => {
+        cookie.remove("token");
 
-      setUserLoggedOut();
-      navigate("");
-    })
-    .catch(() => {
-      setErrorMessage('Nem sikerült kapcsolódni a szerverhez.')
-    })
+        setUserLoggedOut();
+        navigate("");
+      })
+      .catch(() => {
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+      });
   }
 
   useEffect(() => {
@@ -63,19 +64,18 @@ export default function Myprofile() {
         <div className="Profile d-flex justify-content-center">
           <form id="myprofile-form" className="row" onSubmit={submitHandler}>
             <div className="User justify-content-center">
-              <h1>{user.username}</h1>
+              <h2>{user.username}</h2>
               <h2>{user.email}</h2>
-              <div className="reset-password justify-content-center bg-bleur">
+              <div className="reset-password fs-3 justify-content-center bg-bleur">
                 <p>Jelszó módosítása:</p>
                 <label className="col-sm-12 col-form-label text-center">
                   Új jelszó:
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
                   placeholder="new-password"
                   aria-label="new-password"
-
                   value={password}
                   onChange={passwordChangeHandler}
                 ></input>
@@ -83,18 +83,19 @@ export default function Myprofile() {
                   Új jelszó ismétlése:
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
                   placeholder="repeat-new-password"
                   aria-label="repeat-new-password"
-
                   value={confirmPassword}
                   onChange={confirmPasswordChangeHandler}
                 ></input>
               </div>
               <div className="modifies d-flex justify-content-center">
-                <button className="modifies-btn" type="submit">Módosít</button>
-                <div className="fs-6 text-danger">{ errorMessage }</div>
+                <button className="modifies-btn" type="submit">
+                  Módosít
+                </button>
+                <div className="fs-6 text-danger">{errorMessage}</div>
               </div>
             </div>
           </form>

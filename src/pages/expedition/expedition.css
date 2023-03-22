@@ -1,49 +1,32 @@
 
-.expedition-container{ 
-    padding-top: 20px;
-    color: azure;
-}
-
-.expedition-cards{
-    font-size: xx-large;
-    margin: 60px 40px 0px 90px;
-    box-sizing: border-box;    
-}
-
 .expedition{
-    margin: 0 0 1rem 0;
-    font-size: 150%;
-    font-weight: bold;
-    text-shadow: 5px 5px 5px rgb(149, 100, 8);
-}
-
-.edifficult-cards{
     margin-top: 1rem;
     background-color: rgba(139, 86, 17, 0.336);
-    padding: 40px 0px 30px 0px; 
+    padding: 30px; 
     border-radius: 20px;
     color: aliceblue;
 }
 
-.ecard-body{    
-    padding: 2rem;
-    margin-top: 1rem;
+.expedition h2{
+    font-size: 150%;
+    text-align: center;
 }
 
-.ecard-img-fluid{    
-    width: 20rem;
+.edificult{
+    padding-top: 2rem;
+    justify-content: space-between;
+    text-align: center;
 }
 
 .ecard-text{
-    text-shadow: 3px 3px 3px rgb(6, 6, 6);
-    font-size: xx-large;
+    font-size: 140%;
     margin-top: 2rem;
+    max-width: max-content;
 }
 
-.container-cards{
-    display: flex;
-    padding: 0;
-    margin: 0;
+.ecard-img-fluid{
+  width: 10vw;
+  margin-bottom: 2rem;
 }
 
 .expedition-btn{
@@ -53,6 +36,6 @@
     border: none;
     background-color: rgba(240, 248, 255, 0);
     color: aliceblue;
-    font-size: x-large;
     padding: 0 6;
+    font-size: 120%;
 }

@@ -1,42 +1,40 @@
 
 .myprofile-data{
     width: 100%;
-    font-size: xx-large;
     box-sizing: border-box;    
 }
 
 .myprofile{
     margin: 0;
-    font-size: 120%;
     font-weight: bold;
-    text-shadow: 5px 5px 5px rgb(149, 100, 8);
 }
 
  .User{
     margin-bottom: 2rem;
  }
 
- .reset-password p{    
-    text-align: center;
-    margin: 5px 0 0 0;
- }
- 
  .modifies{
-    margin-top: 2rem;
+    margin-top: 1rem;
  }
 
- .User h1, h2{
-    text-shadow: 5px 5px 5px rgb(6, 6, 6);
+ .User h2{
     color: beige;
     text-align: center;
  }
 
  .reset-password{
-    text-shadow: 5px 5px 5px rgb(6, 6, 6);
-    padding: 2rem 3rem 3rem 3rem;
+    text-align: center;
     color: powderblue;
    }
    
+ .reset-password p{
+   margin: 1rem 0 0 0;
+ }  
+
+ .reset-password label{
+   font-size: 85%; 
+ }
+
 .modifies-btn{
     background-image: url("../../../public/images/ui/btn_bg_2.png");
     width: 200px;
