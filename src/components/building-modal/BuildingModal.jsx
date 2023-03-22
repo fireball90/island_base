@@ -3,16 +3,55 @@ import { useContext, useEffect, useState } from "react";
 import { Button, ListGroup, Modal } from "react-bootstrap";
 import { OverlayTrigger } from "react-bootstrap";
 import { Popover } from "react-bootstrap";
-import PlayerContext from "../../contexts/PlayerContext";
-import { GameHelper } from "../../game-helper/GameHelper";
+import IslandContext from "../../contexts/IslandContext";
 
 import "./BuildingModal.css";
 
 export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
-  const { player, setPlayer } = useContext(PlayerContext);
+  const { player, setPlayer, buildings, setBuildings } =
+    useContext(IslandContext);
 
   const [nextLevelOfBuilding, setNextLevelOfBuilding] = useState();
-  const [isUpgradable, setIsUpgradable] = useState(false);
+  const [isNextLevelAvailable, setIsNextLevelAvailable] = useState(false);
+
+  function upgradeBuilding() {
+    axios
+      .post(
+        `https://localhost:7276/api/Building/UpgradeBuilding?type=${openedBuilding.buildingType}`
+      )
+      .then((response) => {
+        const upgradedBuilding = response.data;
+
+        const buildingsWithoutOpened = buildings.filter(
+          (building) => building.id !== openedBuilding.id
+        );
+        buildingsWithoutOpened.push(upgradedBuilding);
+
+        setBuildings([...buildingsWithoutOpened]);
+        setPlayer({
+          ...player,
+          experience: player.experience + upgradedBuilding.experienceReward,
+          coins: player.coins - upgradedBuilding.coinsForBuild,
+          woods: player.woods - upgradedBuilding.woodsForBuild,
+          stones: player.stones - upgradedBuilding.stonesForBuild,
+          irons: player.irons - upgradedBuilding.ironsForBuild,
+        });
+
+        closeBuildingModal();
+      })
+      .catch(() => {
+        alert("Nem sikerült kapcsolódni a szerverhez.");
+      });
+  }
+
+  function checkEnoughRawMaterials() {
+    return (
+      player.coins >= nextLevelOfBuilding.coinsForBuild &&
+      player.irons >= nextLevelOfBuilding.ironsForBuild &&
+      player.stones >= nextLevelOfBuilding.stonesForBuild &&
+      player.woods >= nextLevelOfBuilding.woodsForBuild
+    );
+  }
 
   function notNullProducedItems() {
     const notNullProducedItems = [];
@@ -42,23 +81,21 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
   }
 
   useEffect(() => {
-    console.log(openedBuilding);
-
-    axios
-      .get(
-        `https://localhost:7276/api/Building/GetNextLevelOfBuilding?type=${openedBuilding.buildingType}`
-      )
-      .then((response) => {
-        setNextLevelOfBuilding(response.data);
-        setIsUpgradable(true);
-      })
-      .catch(() => {
-        alert(
-          "Nem sikerült lekérdezni a fejlesztéshez szükséges követelményeket."
-        );
-
-        setIsUpgradable(false);
-      });
+    if (openedBuilding.maxLevel > openedBuilding.level) {
+      axios
+        .get(
+          `https://localhost:7276/api/Building/GetNextLevelOfBuilding?type=${openedBuilding.buildingType}`
+        )
+        .then((response) => {
+          setNextLevelOfBuilding(response.data);
+          setIsNextLevelAvailable(true);
+        })
+        .catch((error) => {
+          if (error.code === "ERR_NETWORK") {
+            alert("Nem sikerült kapcsolódni a szerverhez.");
+          }
+        });
+    }
   }, []);
 
   return (
@@ -91,8 +128,7 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
             </ListGroup.Item>
           ))}
         </ListGroup>
-
-        {isUpgradable ? (
+        {isNextLevelAvailable && checkEnoughRawMaterials() ? (
           <div className="d-flex flex-column align-items-center unbuilt-building-card">
             <h6>Elérhető fejlesztés</h6>
             <div className="w-100 d-flex flex-row justify-content-center">
@@ -102,7 +138,9 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
                 src={nextLevelOfBuilding.spritePath}
               />
             </div>
-            <Button variant="warning">Fejlesztés</Button>
+            <Button variant="warning" onClick={upgradeBuilding}>
+              Fejlesztés
+            </Button>
             <OverlayTrigger
               trigger="focus"
               placement="top"

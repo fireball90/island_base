@@ -46,9 +46,10 @@ class Test extends Component {
         openedBuilding: null,
       }));
     };
-    this.upgradeBuilding = () => {};
 
-    this.setCollectedItemsToPlayer = (collectedItems) => {};
+    this.setCollectedItemsToPlayer = (collectedItems) => {
+      console.log(collectedItems)
+    };
   }
 
   componentDidMount() {
@@ -67,9 +68,9 @@ class Test extends Component {
           backgroundTilesHigh={60}
           mapSpritePath={this.context.island.spritePath}
           staticObjects={[
-            this.context.buildings.map((building, index) => (
+            this.context.buildings.map((building) => (
               <Tile
-                key={index}
+                key={`${building.id}${building.level}`}
                 xCoordinate={building.xCoordinate}
                 yCoordinate={building.yCoordinate}
                 scale={2}

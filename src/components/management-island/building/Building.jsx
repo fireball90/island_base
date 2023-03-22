@@ -7,7 +7,6 @@ import MovablePopover from "../movable-popover/MovablePopover";
 
 import "./Building.css";
 
-
 export default class Building extends Component {
   static contextType = GameFieldContext;
 
@@ -56,7 +55,7 @@ export default class Building extends Component {
   calculateFirstProductionDate() {
     const now = new Date();
     const nextProductionDate = new Date(this.props.building.buildDate);
-    while (nextProductionDate < now) {
+    while (nextProductionDate.getTime() < now.getTime()) {
       nextProductionDate.setTime(
         nextProductionDate.getTime() + this.props.building.productionInterval
       );
@@ -73,6 +72,37 @@ export default class Building extends Component {
         this.state.producedWoods >
       0
     );
+  }
+
+  notNullProducedItems() {
+    const notNullProducedItems = [];
+
+    if (this.state.producedCoins > 0) {
+      notNullProducedItems.push({
+        name: "Érmék",
+        quantity: this.state.producedCoins,
+      });
+    }
+    if (this.state.producedIrons) {
+      notNullProducedItems.push({
+        name: "Vas",
+        quantity: this.state.producedIrons,
+      });
+    }
+    if (this.state.producedStones) {
+      notNullProducedItems.push({
+        name: "Kő",
+        quantity: this.state.producedStones,
+      });
+    }
+    if (this.state.producedWoods) {
+      notNullProducedItems.push({
+        name: "Fa",
+        quantity: this.state.producedWoods,
+      });
+    }
+
+    return notNullProducedItems;
   }
 
   collectItems() {
@@ -98,6 +128,7 @@ export default class Building extends Component {
 
   componentDidMount() {
     this.production$.pipe(takeUntil(this.componentDestroyed$)).subscribe(() => {
+      console.log(new Date())
       this.setState((state) => ({
         ...state,
         producedCoins: this.calculateProducedItem(
@@ -120,7 +151,9 @@ export default class Building extends Component {
         takeUntil(this.componentDestroyed$),
         tap(() => {
           const now = new Date();
-          if (now < new Date(this.props.building.buildDate)) {
+          const buildDate = new Date(this.props.building.buildDate);
+
+          if (now.getTime() >= buildDate.getTime()) {
             this.setState((state) => ({
               ...state,
               timeLeftToBuildingCompletion: 0,
@@ -129,7 +162,8 @@ export default class Building extends Component {
         }),
         takeWhile(() => {
           const now = new Date();
-          return now < new Date(this.props.building.buildDate);
+          const buildDate = new Date(this.props.building.buildDate);
+          return now.getTime() < buildDate.getTime();
         })
       )
       .subscribe(() => {
@@ -151,7 +185,6 @@ export default class Building extends Component {
 
   timestampToFormattedDate() {
     const time = new Date(this.state.timeLeftToBuildingCompletion);
-
     return `${
       time.getHours() - 1
     }h ${time.getMinutes()}m ${time.getSeconds()}s`;
@@ -163,7 +196,7 @@ export default class Building extends Component {
   }
 
   render() {
-    return !this.state.timeLeftToBuildingCompletion ? (
+    return this.state.timeLeftToBuildingCompletion === 0 ? (
       <div
         className="building-sprite"
         style={{ backgroundImage: `url(${this.props.building.spritePath})` }}
@@ -175,10 +208,11 @@ export default class Building extends Component {
           trigger={null}
           overlay={
             <MovablePopover zoom={this.context.zoom}>
-              <div>Érmék {this.state.producedCoins}</div>
-              <div>Vas {this.state.producedIrons}</div>
-              <div>Kő {this.state.producedStones}</div>
-              <div>Fa {this.state.producedWoods}</div>
+              {this.notNullProducedItems().map((item, index) => (
+                <div key={index}>
+                  {item.name} {item.quantity}
+                </div>
+              ))}
               <button
                 onClick={() => this.collectItems()}
                 disabled={this.state.isCollectPending}
@@ -201,7 +235,7 @@ export default class Building extends Component {
         ref={this.ref}
       >
         <OverlayTrigger
-          show={this.hasResourceProduction()}
+          show={true}
           container={this.ref}
           trigger={null}
           overlay={
