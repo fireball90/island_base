@@ -1,8 +1,10 @@
 .bg-pop{
-    background-image: url('../../../../public/images/icon-background.png');
+/*     background-image: url('../../../../public/images/icon-background.png');
     background-color: transparent;
     background-repeat: repeat-x;
-    background-size: cover;
+    background-size: cover; */
+
+    background-color: brown;
 
     width: 100px;
     height: 140px;
