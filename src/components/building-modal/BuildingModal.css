@@ -39,3 +39,43 @@
     height: 4rem;
     image-rendering: pixelated;
 }
+
+.stat-container{
+    width: 10rem;
+    background-color: rgba(0, 0, 0, 0.418);
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: rgb(131, 70, 20);
+    border-style: dashed;
+    font-weight: 500;
+}
+
+
+.upgrade-build-btn{
+    background-image: url("../../../public/images/ui/btn_bg_update.png");
+    width: 130px;
+    height: 70px;
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+    color: aliceblue;
+    font-weight: 600;
+    text-shadow: 2px 2px black;
+}
+
+.build-question-btn{
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+    padding: 0px;
+    margin: 0px;
+}
+.build-question-btn img{
+    width: 55px;
+    height: 55px;
+}
+
+
+@media only screen and (max-height: 480px) {
+    .stat-container{
+        width: 7.5rem;
+    }
+}
