@@ -47,10 +47,7 @@ export default function Notifications() {
               <div className="row">
               {notifications.map((notification)=>(
                 <div className="not-list-container container" key={notification.id}>
-                  <div
-                    className="row d-flex align-items-center justify-content-center"
-                    style={{ height: "120px" }}
-                  >               
+                  <div className="row d-flex align-items-center justify-content-center not-height">               
                     <div className="col-3 text-center">
                       <h4>{notification.title}</h4>
                     </div>

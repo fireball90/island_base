@@ -22,26 +22,24 @@ export default function UnbuiltBuilding({
                     <Card.Img variant='top' src={building.spritePath}></Card.Img>
                 </div>
                 <Card.Body>
-                    <ButtonGroup aria-label="Basic example" className='d-flex justify-content-center'>
-                        <Button variant="warning">
-                            Megépít
-                        </Button>
-                        <OverlayTrigger
-                            trigger="focus"
-                            placement="top"
-                            overlay={
-                                <Popover id="popover-basic" className="rounded-0">
-                                    <Popover.Header as="h3" className="bg-body">Leírás</Popover.Header>
-                                    <Popover.Body className="d-flex flex-column bg-transparent">
-                                        {building.description}
-                                    </Popover.Body>
-                                </Popover>
-                            }>
-                            <Button variant="outline-warning" size="sm">
-                                <i className="bi bi-question-lg"></i>
-                            </Button> 
-                        </OverlayTrigger>
-                    </ButtonGroup>
+                    <div className="d-flex align-items-center justify-content-center text-center p-0 m-0">
+                        <div className={style.btnGroup}>
+                            <button className={style.btnBuilding}>Megépít</button>
+                            <OverlayTrigger
+                                trigger="focus"
+                                placement="top"
+                                overlay={
+                                    <Popover id="popover-basic" className="rounded-0">
+                                        <Popover.Header as="h3" className="bg-body">Leírás</Popover.Header>
+                                        <Popover.Body className="d-flex flex-column bg-transparent">
+                                            {building.description}
+                                        </Popover.Body>
+                                    </Popover>
+                                }>
+                                <button className={style.btnQuestionBuilding}><img alt="Leírás" title="Leírás" src="../images/ui/kerdojel_btn.png" ></img></button>
+                            </OverlayTrigger>
+                        </div>
+                    </div>
                 </Card.Body>
             </Card>
         </div>

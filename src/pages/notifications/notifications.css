@@ -20,6 +20,9 @@
     color: aliceblue;
     background-repeat: no-repeat;
 }
+.not-height{
+    height: 200px;
+}
 
 @media only screen and (max-height: 480px) {
     .not-delete-btn{
@@ -39,5 +42,8 @@
     }
     .not-list-container h4{
         font-size: 16px;
+    }
+    .not-height{
+        height: 120px;
     }
 }

@@ -14,59 +14,64 @@ export default function Expedition() {
   return (
     <Layout navigations={[]} title="Expedíció">
       <div className="container-fluid">
-        <div className="d-flex justify-content-center align-items-center ">
-          <div className="edifficult-cards align-items-center d-flex justify-content-center">
-            <div className="container-card d-flex justify-content-center">
-              <div className="card-Easy text-center">
-                <img
-                  src="../images/difficulty/easy.png"
-                  className="ecard-img-fluid"
-                  alt="Easy"
-                  title="Könnyű"
-                ></img>
-                <div className="ecard-body">
-                  <Link to="/island">
-                    <button className="expedition-btn">KÖNNYŰ</button>
-                  </Link>
-                  <p className="ecard-text">
-                    Kevés alapanyag, xp és arany, de több esély a sikeres
-                    expedícióra.
-                  </p>
-                </div>
+        <div className="expedition justify-content-center">
+          <h2>Válasszon az expedíciók erősségei közül</h2>
+          <div className="edificult d-flex justify-content-evenly">
+            <div>
+              <img
+                src="../images/difficulty/easy.png"
+                className="ecard-img-fluid"
+                alt="Easy"
+                title="Könnyű"
+              ></img>
+              <div className="ecard-body">
+                <Link to="/island">
+                  <button className="expedition-btn" title="KÖNNYŰ">
+                    KÖNNYŰ
+                  </button>
+                </Link>
+                <p className="ecard-text">
+                  Kevés alapanyag, xp és arany, de több esély a sikeres
+                  expedícióra.
+                </p>
               </div>
-              <div className="card-Medium text-center">
-                <img
-                  src="../images/difficulty/medium.png"
-                  className="ecard-img-fluid"
-                  alt="Medium"
-                  title="Normál"
-                ></img>
-                <div className="ecard-body">
-                  <Link to="/island">
-                    <button className="expedition-btn">NORMÁL</button>
-                  </Link>
-                  <p className="ecard-text">
-                    Közepes mennyiségű alapanyag, xp és arany, de kevesebb esély
-                    a sikeres expedícióra.
-                  </p>
-                </div>
+            </div>
+            <div>
+              <img
+                src="../images/difficulty/medium.png"
+                className="ecard-img-fluid"
+                alt="Medium"
+                title="Normál"
+              ></img>
+              <div className="ecard-body">
+                <Link to="/island">
+                  <button className="expedition-btn" title="NORMÁL">
+                    NORMÁL
+                  </button>
+                </Link>
+                <p className="ecard-text">
+                  Közepes mennyiségű alapanyag, xp és arany, de kevesebb esély a
+                  sikeres expedícióra.
+                </p>
               </div>
-              <div className="card-Hard text-center">
-                <img
-                  src="../images/difficulty/hard.png"
-                  className="ecard-img-fluid"
-                  alt="Hard"
-                  title="Nehéz"
-                ></img>
-                <div className="ecard-body">
-                  <Link to="/island">
-                    <button className="expedition-btn">NEHÉZ</button>
-                  </Link>
-                  <p className="ecard-text">
-                    Sok alapanyag, xp és arany, de alacsony esély a sikeres
-                    expedícióra.
-                  </p>
-                </div>
+            </div>
+            <div>
+              <img
+                src="../images/difficulty/hard.png"
+                className="ecard-img-fluid"
+                alt="Hard"
+                title="Nehéz"
+              ></img>
+              <div className="ecard-body">
+                <Link to="/island">
+                  <button className="expedition-btn" title="NEHÉZ">
+                    NEHÉZ
+                  </button>
+                </Link>
+                <p className="ecard-text">
+                  Sok alapanyag, xp és arany, de alacsony esély a sikeres
+                  expedícióra.
+                </p>
               </div>
             </div>
           </div>
