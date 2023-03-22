@@ -2,6 +2,8 @@ import { useContext } from "react"
 import { Button } from "react-bootstrap"
 import PlayerContext from "../../contexts/PlayerContext"
 import style from "./ManagementAbilities.module.css";
+import { OverlayTrigger } from "react-bootstrap";
+import { Popover } from "react-bootstrap";
 
 export default function ManagementAbilities() {
     return (
@@ -32,7 +34,22 @@ export default function ManagementAbilities() {
                     <span className="fs-5 text-warning">10</span>
                     <div>
                         <button className={style.btnBg}><img alt="Plusz" title="Plusz" src="../images/ui/plusz_btn_inactive.png" ></img></button>
-                        <button className={style.btnBg}><img alt="Leírás" title="Leírás" src="../images/ui/kerdojel_btn.png" ></img></button>
+                        <OverlayTrigger
+                            trigger="focus"
+                            placement="top"
+                            overlay={
+                                <Popover id="popover-basic" className="rounded-0">
+                                <Popover.Header as="h3" className="bg-body">
+                                    Szükséges anyagok
+                                </Popover.Header>
+                                <Popover.Body className="d-flex flex-column bg-transparent text-center">
+                                    {/* <div>{openedBuilding.description}</div> */}
+                                </Popover.Body>
+                                </Popover>
+                            }
+                            >
+                            <button className={style.btnBg}><img alt="Leírás" title="Leírás" src="../images/ui/kerdojel_btn.png" ></img></button>
+                        </OverlayTrigger>                       
                     </div>
                 </div>
             </div>
