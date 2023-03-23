@@ -3,9 +3,28 @@ import "../expedition/expedition.css";
 import { Link } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Expedition() {
   const { setIsHudDisplayed } = useContext(HudContext);
+
+  const [selectExpedition, setSelectExpedition] = useContext(null);
+  const navigate = useNavigate();
+
+  function selectExpeditionHandler(difficulty) {
+    setSelectExpedition(difficulty);
+  }
+  axios
+    .post(
+      `https://localhost:7276/api/Expedition/Expedition?dificulty=${selectedDifficulty}`
+    )
+    .then((response) => {
+      navigate("/island");
+    })
+    .catch(() => {
+      alert("Nem sikerült kapcsolódni a szerverhez");
+    });
 
   useEffect(() => {
     setIsHudDisplayed(true);
@@ -25,11 +44,14 @@ export default function Expedition() {
                 title="Könnyű"
               ></img>
               <div className="ecard-body">
-                <Link to="/island">
-                  <button className="expedition-btn" title="KÖNNYŰ">
-                    KÖNNYŰ
-                  </button>
-                </Link>
+                <button
+                  className="expedition-btn"
+                  title="KÖNNYŰ"
+                  onClick={() => selectExpeditionHandler("KÖNNYŰ")}
+                >
+                  KÖNNYŰ
+                </button>
+
                 <p className="ecard-text">
                   Kevés alapanyag, xp és arany, de több esély a sikeres
                   expedícióra.
