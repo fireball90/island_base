@@ -48,7 +48,13 @@ class Test extends Component {
     };
 
     this.setCollectedItemsToPlayer = (collectedItems) => {
-      console.log(collectedItems)
+      this.context.setPlayer({
+        ...this.context.player,
+        coins: this.context.player.coins + collectedItems.coins,
+        woods: this.context.player.woods + collectedItems.woods,
+        stones: this.context.player.stones + collectedItems.stones,
+        irons: this.context.player.irons + collectedItems.irons,
+      });
     };
   }
 

@@ -41,21 +41,29 @@ export default class Building extends Component {
   }
 
   calculateProducedItemsSinceLastCollection(item) {
-    const elapsedTimeFromLastCollection =
-      new Date() - new Date(this.props.building.lastCollectDate);
+    const now = new Date();
+    const buildDate = new Date(this.props.building.buildDate);
+    const lastCollectDate = new Date(this.props.building.lastCollectDate);
 
-    return this.calculateProducedItem(
-      item *
-        parseInt(
-          elapsedTimeFromLastCollection / this.props.building.productionInterval
-        )
+    const ticksFromBuild = Math.floor(
+      (now.getTime() - buildDate.getTime()) /
+        this.props.building.productionInterval
     );
+    const ticksBetweenBuildAndLastCollection = Math.floor(
+      (lastCollectDate.getTime() - buildDate.getTime()) /
+        this.props.building.productionInterval
+    );
+
+    const elapsedTicksFromLastCollection =
+      ticksFromBuild - ticksBetweenBuildAndLastCollection;
+
+    return this.calculateProducedItem(item * elapsedTicksFromLastCollection);
   }
 
   calculateFirstProductionDate() {
     const now = new Date();
     const nextProductionDate = new Date(this.props.building.buildDate);
-    while (nextProductionDate.getTime() < now.getTime()) {
+    while (nextProductionDate.getTime() <= now.getTime()) {
       nextProductionDate.setTime(
         nextProductionDate.getTime() + this.props.building.productionInterval
       );
@@ -128,7 +136,6 @@ export default class Building extends Component {
 
   componentDidMount() {
     this.production$.pipe(takeUntil(this.componentDestroyed$)).subscribe(() => {
-      console.log(new Date())
       this.setState((state) => ({
         ...state,
         producedCoins: this.calculateProducedItem(
