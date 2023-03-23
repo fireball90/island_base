@@ -1,11 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Frijole&family=Permanent+Marker&family=Press+Start+2P&family=Rubik+Dirt&display=swap');
-/*
-font-family: 'Frijole', cursive;
-font-family: 'Permanent Marker', cursive;
-font-family: 'Press Start 2P', cursive;
-font-family: 'Rubik Dirt', cursive;
-*/
-
 
 .register-container {
     margin-top: 10px;
@@ -31,7 +23,6 @@ font-family: 'Rubik Dirt', cursive;
     background-size: cover;
     color: rgb(0, 0, 0);
     text-shadow: 1px 1px rgb(179, 9, 88);
-    font-family: 'Frijole', cursive;
     margin-top: 5px;
 }
 .btn-button3:hover{
@@ -41,7 +32,6 @@ font-family: 'Rubik Dirt', cursive;
 .register-label{
     text-shadow: 2px 2px black;
     color: rgb(255, 255, 255);
-    font-family: 'Rubik Dirt', cursive;
     font-size: 20px;
 }
 
@@ -58,7 +48,6 @@ font-family: 'Rubik Dirt', cursive;
 .register-link a{
     color: aliceblue;
     font-size: 16px;
-    font-family: 'Rubik Dirt', cursive;
     text-shadow: 1px 1px black;
 }
 .register-link a:hover{

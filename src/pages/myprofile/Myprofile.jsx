@@ -66,26 +66,26 @@ export default function Myprofile() {
             <div className="User justify-content-center">
               <h2>{user.username}</h2>
               <h2>{user.email}</h2>
-              <div className="reset-password fs-3 justify-content-center bg-bleur">
-                <p>Jelszó módosítása:</p>
-                <label className="col-sm-12 col-form-label text-center">
+              <div className="reset-passwordjustify-content-center bg-bleur">
+                <h3 className="text-profile">Jelszó módosítása:</h3>
+                <label className="text-label col-sm-12 text-center">
                   Új jelszó:
                 </label>
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="new-password"
+                  placeholder="Jelszó"
                   aria-label="new-password"
                   value={password}
                   onChange={passwordChangeHandler}
                 ></input>
-                <label className="col-sm-12 col-form-label text-center">
+                <label className="text-label col-sm-12 text-center">
                   Új jelszó ismétlése:
                 </label>
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="repeat-new-password"
+                  placeholder="Jelszó ismétlése"
                   aria-label="repeat-new-password"
                   value={confirmPassword}
                   onChange={confirmPasswordChangeHandler}

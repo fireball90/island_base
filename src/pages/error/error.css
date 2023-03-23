@@ -23,7 +23,6 @@ font-family: 'Rubik Dirt', cursive;
 .error-link a{
     color: rgb(255, 255, 255);
     font-size: 25px;
-    font-family: 'Rubik Dirt', cursive;
     text-shadow: 2px 2px black;
 }
 .error-link a:hover{
