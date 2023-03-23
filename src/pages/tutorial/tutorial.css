@@ -8,7 +8,7 @@
 
 .information p{
     font-size: 130%;
-    text-align: center;
+    text-align: justify;
 }
 
 .makers{
@@ -21,7 +21,7 @@
 }
 
 .card-img-fluid{    
-    width: 8vw;
+    width: 10vw;
     margin-top: 6px;
 }
 
@@ -37,4 +37,27 @@
 .tcard-text a{
     text-decoration: none;
     color: lightblue;
+}
+
+@media only screen and (max-height: 480px) {
+    .card-img-fluid{    
+        width: 15vw;
+    }
+    .information p{
+        font-size: 100%;
+        text-align: justify;
+    }
+    .tcard-title{
+        font-size: 100%; 
+    }
+    
+    .tcard-name{
+        font-size: 100%; 
+        margin:0;
+    }
+    
+    .tcard-text a{
+        text-decoration: none;
+        color: lightblue;
+    }
 }
