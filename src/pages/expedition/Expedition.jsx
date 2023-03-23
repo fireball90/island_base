@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import "../expedition/expedition.css";
-import { Link } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
@@ -9,25 +8,21 @@ import { useNavigate } from "react-router-dom";
 export default function Expedition() {
   const { setIsHudDisplayed } = useContext(HudContext);
 
-  const [selectExpedition, setSelectExpedition] = useContext(null);
   const navigate = useNavigate();
-
-  const selectedDifficulty = 0;
   
   function selectExpeditionHandler(difficulty) {
-    setSelectExpedition(difficulty);
-  }
+
   axios
     .get(
-      `https://localhost:7276/api/Expedition/Expedition?dificulty=${selectedDifficulty}`
+      `https://localhost:7276/api/Expedition/Expedition?difficulty=${difficulty}`
     )
     .then((response) => {
-      navigate("/island");
+      console.log(response.data);
     })
     .catch(() => {
       alert("Nem sikerült kapcsolódni a szerverhez");
     });
-
+}
   useEffect(() => {
     setIsHudDisplayed(true);
   }, []);
@@ -49,11 +44,10 @@ export default function Expedition() {
                 <button
                   className="expedition-btn"
                   title="KÖNNYŰ"
-                  onClick={() => selectExpeditionHandler("KÖNNYŰ")}
+                  onClick={() => selectExpeditionHandler(1)}
                 >
                   KÖNNYŰ
                 </button>
-
                 <p className="ecard-text">
                   Kevés alapanyag, xp és arany, de több esély a sikeres
                   expedícióra.
@@ -68,11 +62,9 @@ export default function Expedition() {
                 title="Normál"
               ></img>
               <div className="ecard-body">
-                <Link to="/island">
-                  <button className="expedition-btn" title="NORMÁL">
+                  <button className="expedition-btn" title="NORMÁL"onClick={() => selectExpeditionHandler(2)}>
                     NORMÁL
                   </button>
-                </Link>
                 <p className="ecard-text">
                   Közepes mennyiségű alapanyag, xp és arany, de kevesebb esély a
                   sikeres expedícióra.
@@ -87,11 +79,9 @@ export default function Expedition() {
                 title="Nehéz"
               ></img>
               <div className="ecard-body">
-                <Link to="/island">
-                  <button className="expedition-btn" title="NEHÉZ">
+                  <button className="expedition-btn" title="NEHÉZ"onClick={() => selectExpeditionHandler(3)}>
                     NEHÉZ
                   </button>
-                </Link>
                 <p className="ecard-text">
                   Sok alapanyag, xp és arany, de alacsony esély a sikeres
                   expedícióra.
