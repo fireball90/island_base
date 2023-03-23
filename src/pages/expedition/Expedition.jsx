@@ -17,7 +17,7 @@ export default function Expedition() {
   }
   axios
     .post(
-      `https://localhost:7276/api/Expedition/Expedition?dificulty=${selectedDifficulty}`
+      // `https://localhost:7276/api/Expedition/Expedition?dificulty=${selectedDifficulty}`
     )
     .then((response) => {
       navigate("/island");
