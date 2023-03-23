@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 ::-webkit-scrollbar-track {
@@ -24,4 +22,8 @@ body {
       color-stop(0.0, rgb(143, 70, 27)),
       color-stop(0.50, rgb(228, 153, 110)),
       color-stop(1, rgb(143, 70, 27)));
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

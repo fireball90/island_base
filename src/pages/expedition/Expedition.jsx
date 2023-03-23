@@ -12,7 +12,8 @@ export default function Expedition() {
   const [selectExpedition, setSelectExpedition] = useContext(null);
   const navigate = useNavigate();
 
-
+  const selectedDifficulty = 0;
+  
   function selectExpeditionHandler(difficulty) {
     setSelectExpedition(difficulty);
   }
