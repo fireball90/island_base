@@ -12,11 +12,12 @@ export default function Expedition() {
   const [selectExpedition, setSelectExpedition] = useContext(null);
   const navigate = useNavigate();
 
+
   function selectExpeditionHandler(difficulty) {
     setSelectExpedition(difficulty);
   }
   axios
-    .post(
+    .get(
       `https://localhost:7276/api/Expedition/Expedition?dificulty=${selectedDifficulty}`
     )
     .then((response) => {
