@@ -29,7 +29,7 @@ export default function ManagementAbilities() {
   function handleClickStrength() {
     if (
       calculateUnusedAbilityPoints() > 0 &&
-      maximumSkills.strength >= addedStrength + player.strength
+      maximumSkills.strength > addedStrength + player.strength
     ) {
       setAddedStrength(addedStrength + 1);
     }
@@ -38,7 +38,7 @@ export default function ManagementAbilities() {
   function handleClickIntelligence() {
     if (
       calculateUnusedAbilityPoints() > 0 &&
-      maximumSkills.intelligence >= addedIntelligence + player.intelligence
+      maximumSkills.intelligence > addedIntelligence + player.intelligence
     ) {
       setAddedIntelligence(addedIntelligence + 1);
     }
@@ -47,7 +47,7 @@ export default function ManagementAbilities() {
   function handleClickAgility() {
     if (
       calculateUnusedAbilityPoints() > 0 &&
-      maximumSkills.agility >= addedAgility + player.agility
+      maximumSkills.agility > addedAgility + player.agility
     ) {
       setAddedAgility(addedAgility + 1);
     }
@@ -145,9 +145,21 @@ export default function ManagementAbilities() {
               <img
                 alt="Plusz"
                 title="Plusz"
-                src="../images/ui/plusz_btn_inactive.png"
+                src={calculateUnusedAbilityPoints()===0 ? "../images/ui/plusz_btn_inactive.png" : "../images/ui/plusz_btn_active.png"}
               ></img>
             </button>
+            <OverlayTrigger
+              trigger="focus"
+              placement="bottom"
+              overlay={
+                <Popover id="popover-basic" className="rounded-0">
+                  <Popover.Header as="h3" className="bg-body"></Popover.Header>
+                  <Popover.Body className="d-flex flex-column bg-transparent text-center">
+                    Növeli a bevitt sebzés mértékét.
+                  </Popover.Body>
+                </Popover>
+              }
+            >
             <button className={style.btnBg}>
               <img
                 alt="Leírás"
@@ -155,32 +167,11 @@ export default function ManagementAbilities() {
                 src="../images/ui/kerdojel_btn.png"
               ></img>
             </button>
+            </OverlayTrigger>
           </div>
         </div>
         <div className="d-flex flex-column text-center text-white p-2 stat-container">
           <span>Ügyesség</span>
-          <span className="fs-5 text-warning">
-            {addedIntelligence + player.intelligence}
-          </span>
-          <div>
-            <button className={style.btnBg} onClick={handleClickIntelligence}>
-              <img
-                alt="Plusz"
-                title="Plusz"
-                src="../images/ui/plusz_btn_inactive.png"
-              ></img>
-            </button>
-            <button className={style.btnBg}>
-              <img
-                alt="Leíráss"
-                title="Leírás"
-                src="../images/ui/kerdojel_btn.png"
-              ></img>
-            </button>
-          </div>
-        </div>
-        <div className="d-flex flex-column text-center text-white p-2 stat-container">
-          <span>Intelligencia</span>
           <span className="fs-5 text-warning">
             {addedAgility + player.agility}
           </span>
@@ -189,16 +180,53 @@ export default function ManagementAbilities() {
               <img
                 alt="Plusz"
                 title="Plusz"
-                src="../images/ui/plusz_btn_inactive.png"
+                src={calculateUnusedAbilityPoints()===0 ? "../images/ui/plusz_btn_inactive.png" : "../images/ui/plusz_btn_active.png"}
               ></img>
             </button>
             <OverlayTrigger
               trigger="focus"
-              placement="top"
+              placement="bottom"
               overlay={
                 <Popover id="popover-basic" className="rounded-0">
                   <Popover.Header as="h3" className="bg-body"></Popover.Header>
-                  <Popover.Body className="d-flex flex-column bg-transparent text-center"></Popover.Body>
+                  <Popover.Body className="d-flex flex-column bg-transparent text-center">
+                   Növeli a kritikus találat esélyét.
+                  </Popover.Body>
+                </Popover>
+              }
+            >
+            <button className={style.btnBg}>
+              <img
+                alt="Leírás"
+                title="Leírás"
+                src="../images/ui/kerdojel_btn.png"
+              ></img>
+            </button>
+            </OverlayTrigger>
+          </div>
+        </div>
+        <div className="d-flex flex-column text-center text-white p-2 stat-container">
+          <span>Intelligencia</span>
+          <span className="fs-5 text-warning">
+            {addedIntelligence + player.intelligence}
+          </span>
+          <div>
+            <button className={style.btnBg} onClick={handleClickIntelligence}>
+              <img
+                alt="Plusz"
+                title="Plusz"
+                src={calculateUnusedAbilityPoints()===0 ? "../images/ui/plusz_btn_inactive.png" : "../images/ui/plusz_btn_active.png"}
+              ></img>
+            </button>
+            <OverlayTrigger
+              trigger="focus"
+              placement="bottom"
+              overlay={
+                <Popover id="popover-basic" className="rounded-0">
+                  <Popover.Header as="h3" className="bg-body"></Popover.Header>
+                  <Popover.Body className="d-flex flex-column bg-transparent text-center">
+                    Növeli a visszatérő alapanyagok, érmék és XP mennyiségét.
+                  </Popover.Body>
                 </Popover>
               }
             >

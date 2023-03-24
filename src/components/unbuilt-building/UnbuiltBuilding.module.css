@@ -36,6 +36,7 @@
     color: aliceblue;
     font-weight: 600;
     padding-bottom: 0.5rem;
+    text-shadow: 2px 2px black;
 }
 .btnQuestionBuilding{
     border: none;
