@@ -20,6 +20,7 @@
     border: none;
     background-color: rgba(240, 248, 255, 0);
     color: aliceblue;
+    text-shadow: 2px 2px black;
 }
 
 .market-delete-btn{
@@ -75,7 +76,10 @@
     .market-btn{
         width: 140px;
         height: 50px;
+        font-size: 12px;
+        text-shadow: 2px 2px black;
     }
+
     .market-height{
         height: 70px;
     }

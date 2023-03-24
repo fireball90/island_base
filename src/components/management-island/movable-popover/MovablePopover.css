@@ -1,14 +1,14 @@
 .bg-pop{
-/*     background-image: url('../../../../public/images/icon-background.png');
+    background-image: url('../../../../public/images/ui/popupbg.png');
     background-color: transparent;
     background-repeat: repeat-x;
-    background-size: cover; */
+    background-size: cover; 
 
-    background-color: brown;
-
-    width: 100px;
-    height: 140px;
+    background-color: rgba(153, 89, 29, 0);
+    width: 105px;
+    height: 105px;
+    padding-top: 1rem;
     text-align: center;;
-    color: aliceblue;
+    color: beige;
     font-weight: 700;
 }

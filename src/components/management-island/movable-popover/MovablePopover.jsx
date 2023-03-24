@@ -9,9 +9,9 @@ const MovablePopover = React.forwardRef(
       }, [props.zoom, popper]);
   
       return (
-        <Popover ref={ref} body {...props} className="rounded-0 border-0 bg-pop">
+        <div ref={ref} body {...props} className="rounded-0 border-0 bg-pop">
           {children}
-        </Popover>
+        </div>
       );
     },
 );

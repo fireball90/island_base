@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import "../market/market.css";
 import { Link } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
-import { Button } from "react-bootstrap";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
+
 
 export default function Market() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -70,6 +70,7 @@ export default function Market() {
       setCount(1);
     });
   }
+
 
   function deleteExchange(id){
     console.log(id);
