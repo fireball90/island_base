@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function Expedition() {
   const { setIsHudDisplayed } = useContext(HudContext);
-
-  const navigate = useNavigate();
   
   function selectExpeditionHandler(difficulty) {
 
