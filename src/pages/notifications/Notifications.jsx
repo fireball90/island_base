@@ -3,6 +3,8 @@ import "../notifications/notifications.css";
 import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
+import moment from "moment";
+import 'moment/locale/hu';
 
 export default function Notifications() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -37,7 +39,7 @@ export default function Notifications() {
       //window.location.reload(false)
     });
   }
-
+  moment.locale('hu')
 
   return (
     <Layout navigations={[]} title="Értesítések">
@@ -75,7 +77,7 @@ export default function Notifications() {
                     </div>
                     <div className="col-3 text-center">
                       <h4>Időpont:</h4>
-                      <p>{notification.createDate}</p>
+                      <p>{moment(notification.createDate).format("llll")}</p>
                     </div>
                     <div className="col-3 text-center">
                       <button className="not-delete-btn" onClick={() => deleteNotification(notification.id)}>Törlés</button>

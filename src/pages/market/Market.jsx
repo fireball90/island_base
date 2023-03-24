@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import "../market/market.css";
 import { Link } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
-import { Button } from "react-bootstrap";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
+
 
 export default function Market() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -71,6 +71,7 @@ export default function Market() {
     });
   }
 
+
   function deleteExchange(id){
     console.log(id);
     axios
@@ -114,7 +115,7 @@ export default function Market() {
                     <div className="row d-flex align-items-center justify-content-center market-height">
                       <div className="col-3 text-center">
                         <p>
-                          <img src={iconPaths[exchange.item]} alt="wood"></img>
+                          <img src={iconPaths[exchange.item]} alt={exchange.item}></img>
                           <span> {iconNames[exchange.item]}</span>
                           <p>{exchange.amount} db</p>
                         </p>

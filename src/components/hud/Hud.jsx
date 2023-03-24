@@ -62,11 +62,11 @@ export default function Hud() {
             <img
               alt="Sziget"
               title="Sziget"
-              src="../images/ui/management.png"
+              src="../images/ui/build.png"
             ></img>
           </Link>
           <Link to="/management">
-            <img alt="Építés" title="Építés" src="../images/ui/build.png"></img>
+            <img alt="Management" title="Management" src="../images/ui/management.png"></img>
           </Link>
           <Link to="/war">
             <img alt="Csata" title="Csata" src="../images/ui/war.png"></img>

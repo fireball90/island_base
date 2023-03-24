@@ -5,7 +5,9 @@ import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
 
+
 export default function Sell() {
+
   const { setIsHudDisplayed } = useContext(HudContext);
 
   const [myItem, setMyItem] = useState(0);

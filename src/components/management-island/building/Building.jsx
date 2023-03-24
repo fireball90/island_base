@@ -92,30 +92,35 @@ export default class Building extends Component {
     if (this.state.producedCoins > 0) {
       notNullProducedItems.push({
         name: "Érmék",
+        num: 0,
         quantity: this.state.producedCoins,
       });
     }
     if (this.state.producedIrons) {
       notNullProducedItems.push({
         name: "Vas",
+        num: 3,
         quantity: this.state.producedIrons,
       });
     }
     if (this.state.producedStones) {
       notNullProducedItems.push({
         name: "Kő",
+        num: 2,
         quantity: this.state.producedStones,
       });
     }
     if (this.state.producedWoods) {
       notNullProducedItems.push({
         name: "Fa",
+        num: 1,
         quantity: this.state.producedWoods,
       });
     }
 
     return notNullProducedItems;
   }
+  
 
   collectItems() {
     axios
@@ -207,6 +212,13 @@ export default class Building extends Component {
   }
 
   render() {
+    const iconPaths  = [
+      "../images/icons/coin.png",
+      "../images/icons/wood.png",
+      "../images/icons/stone.png",
+      "../images/icons/steel.png"
+    ]
+
     return this.state.timeLeftToBuildingCompletion === 0 ? (
       <div
         className="building-sprite"
@@ -221,12 +233,14 @@ export default class Building extends Component {
             <MovablePopover zoom={this.context.zoom}>
               {this.notNullProducedItems().map((item, index) => (
                 <div key={index}>
-                  {item.name} {item.quantity}
+                    <img src={iconPaths[item.num]} alt={item.name} title={item.name} className="collect-icon"></img>
+                    <span className="collect-number">{item.quantity}</span>
                 </div>
               ))}
               <button
                 onClick={() => this.collectItems()}
                 disabled={this.state.isCollectPending}
+                className="collect-btn"
               >
                 Collect
               </button>
@@ -260,4 +274,5 @@ export default class Building extends Component {
       </div>
     );
   }
+  
 }
