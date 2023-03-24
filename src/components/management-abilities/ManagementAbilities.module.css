@@ -4,6 +4,7 @@
     background-color: rgba(240, 248, 255, 0);
     padding: 0px;
     margin: 0px;
+
 }
 .btnBg img{
     width: 50px;
@@ -17,6 +18,8 @@
     border: none;
     background-color: rgba(240, 248, 255, 0);
     color: aliceblue;
+    text-shadow: 2px 2px black;
+    font-weight: 500;
     background-repeat: no-repeat;
 }
 

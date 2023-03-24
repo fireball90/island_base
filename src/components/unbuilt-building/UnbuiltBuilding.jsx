@@ -27,7 +27,7 @@ export default function UnbuiltBuilding({
                             <button className={style.btnBuilding}>Megépít</button>
                             <OverlayTrigger
                                 trigger="focus"
-                                placement="top"
+                                placement="bottom"
                                 overlay={
                                     <Popover id="popover-basic" className="rounded-0">
                                         <Popover.Header as="h3" className="bg-body">Leírás</Popover.Header>
