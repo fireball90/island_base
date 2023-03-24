@@ -1,10 +1,9 @@
 /* .modal-backdrop {
     background-color: transparent !important; 
 }*/
-
 .building-modal .modal-content {
     border-radius: 0.5rem !important;
-    background-image: url('../../../public/images/ui/contentbg3.png');
+    background-image: url('../../../public/images/ui/contentbg2.png');
     background-size: cover;
     color: white;
 }

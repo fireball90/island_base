@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { OverlayTrigger } from "react-bootstrap";
-import { Subject, takeUntil, takeWhile, tap, timer } from "rxjs";
+import { Subject, switchMap, takeUntil, takeWhile, tap, timer } from "rxjs";
 import GameFieldContext from "../../../contexts/GameFieldContext";
 import MovablePopover from "../movable-popover/MovablePopover";
 
@@ -33,9 +33,12 @@ export default class Building extends Component {
 
     this.construction$ = timer(0, 1000);
     this.production$ = timer(
-      this.calculateFirstProductionDate(),
+      this.calculateFirstProductionTime(),
       this.props.building.productionInterval
     );
+
+      
+
     this.componentDestroyed$ = new Subject();
     this.ref = React.createRef();
   }
@@ -60,16 +63,17 @@ export default class Building extends Component {
     return this.calculateProducedItem(item * elapsedTicksFromLastCollection);
   }
 
-  calculateFirstProductionDate() {
+  calculateFirstProductionTime() {
     const now = new Date();
     const nextProductionDate = new Date(this.props.building.buildDate);
+    
     while (nextProductionDate.getTime() <= now.getTime()) {
       nextProductionDate.setTime(
         nextProductionDate.getTime() + this.props.building.productionInterval
       );
     }
 
-    return nextProductionDate;
+    return nextProductionDate.getTime() - now.getTime();
   }
 
   hasResourceProduction() {

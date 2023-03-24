@@ -35,7 +35,7 @@ class Test extends Component {
       this.setState((state) => ({
         ...state,
         isModalShowed: true,
-        openedBuilding: openedBuilding,
+        openedBuilding: openedBuilding
       }));
     };
 

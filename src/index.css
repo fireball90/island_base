@@ -1,6 +1,10 @@
 body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-image: url('../public/images/water_project_6.gif');
+  background-repeat: repeat;
+  background-size: 32px;
+  image-rendering: pixelated;
 }
 
 ::-webkit-scrollbar-track {
