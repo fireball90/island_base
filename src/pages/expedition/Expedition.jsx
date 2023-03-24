@@ -31,7 +31,7 @@ export default function Expedition() {
         <div className="expedition justify-content-center">
           <h2>Válasszon az expedíciók erősségei közül</h2>
           <div className="edificult d-flex justify-content-evenly">
-            <div>
+            <div className="exp-cont-bg">
               <img
                 src="../images/difficulty/easy.png"
                 className="ecard-img-fluid"
@@ -52,7 +52,7 @@ export default function Expedition() {
                 </p>
               </div>
             </div>
-            <div>
+            <div className="exp-cont-bg">
               <img
                 src="../images/difficulty/medium.png"
                 className="ecard-img-fluid"
@@ -69,7 +69,7 @@ export default function Expedition() {
                 </p>
               </div>
             </div>
-            <div>
+            <div className="exp-cont-bg">
               <img
                 src="../images/difficulty/hard.png"
                 className="ecard-img-fluid"
