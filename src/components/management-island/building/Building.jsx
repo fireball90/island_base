@@ -230,7 +230,7 @@ export default class Building extends Component {
               {this.notNullProducedItems().map((item, index) => (
                 <div key={index}>
                     <img src={iconPaths[item.num]} alt={item.name} title={item.name} className="collect-icon"></img>
-                    <span className="collect-number">{item.quantity+100}</span>
+                    <span className="collect-number">{item.quantity}</span>
                 </div>
               ))}
               <button
