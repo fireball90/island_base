@@ -115,7 +115,7 @@ export default function Market() {
                     <div className="row d-flex align-items-center justify-content-center market-height">
                       <div className="col-3 text-center">
                         <p>
-                          <img src={iconPaths[exchange.item]} alt="wood"></img>
+                          <img src={iconPaths[exchange.item]} alt={exchange.item}></img>
                           <span> {iconNames[exchange.item]}</span>
                           <p>{exchange.amount} db</p>
                         </p>
