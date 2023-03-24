@@ -29,13 +29,14 @@ class Test extends Component {
       buildableLocations: [],
       isModalShowed: false,
       openedBuilding: null,
+      openedBuildingRemainingTime: 0,
     };
 
     this.openBuildingModal = (openedBuilding) => {
       this.setState((state) => ({
         ...state,
         isModalShowed: true,
-        openedBuilding: openedBuilding
+        openedBuilding: openedBuilding,
       }));
     };
 
@@ -55,6 +56,21 @@ class Test extends Component {
         stones: this.context.player.stones + collectedItems.stones,
         irons: this.context.player.irons + collectedItems.irons,
       });
+    };
+
+    this.setOpenedBuildingRemainingTime = (
+      currentRemainingTime,
+      buildingType
+    ) => {
+      if (
+        this.state.openedBuilding &&
+        this.state.openedBuilding.buildingType === buildingType
+      ) {
+        this.setState((state) => ({
+          ...state,
+          openedBuildingRemainingTime: currentRemainingTime,
+        }));
+      }
     };
   }
 
@@ -85,6 +101,7 @@ class Test extends Component {
                   building={building}
                   setCollectedItemsToPlayer={this.setCollectedItemsToPlayer}
                   openBuildingModal={this.openBuildingModal}
+                  setOpenedBuildingRemainingTime={this.setOpenedBuildingRemainingTime}
                 />
               </Tile>
             )),
@@ -105,6 +122,7 @@ class Test extends Component {
           <BuildingModal
             openedBuilding={this.state.openedBuilding}
             closeBuildingModal={this.closeBuildingModal}
+            openedBuildingRemainingTime={this.state.openedBuildingRemainingTime}
           />
         ) : null}
       </div>

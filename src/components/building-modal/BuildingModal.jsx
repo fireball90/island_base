@@ -4,10 +4,15 @@ import { ListGroup, Modal } from "react-bootstrap";
 import { OverlayTrigger } from "react-bootstrap";
 import { Popover } from "react-bootstrap";
 import IslandContext from "../../contexts/IslandContext";
+import moment from "moment";
 
 import "./BuildingModal.css";
 
-export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
+export default function BuildingModal({
+  openedBuilding,
+  closeBuildingModal,
+  openedBuildingRemainingTime,
+}) {
   const { player, setPlayer, buildings, setBuildings } =
     useContext(IslandContext);
 
@@ -109,7 +114,8 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
       <Modal.Header className="border-0 pb-1">
         <div className="title">
           <h5>{openedBuilding.name}</h5>
-          <span className="fs-5">SZINT: 
+          <span className="fs-5">
+            SZINT:
             <span className="text-warning"> {openedBuilding.level}</span>
           </span>
         </div>
@@ -122,14 +128,17 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
               key={index}
               className="border-0 w-100 text-black d-flex justify-content-between bg-warning mb-3"
             >
-                <div>Termelt {item.name}</div>
-                <div>
-                  {item.quantity}db / {openedBuilding.productionInterval / 6000}{" "}
-                  perc &#40; max {openedBuilding.maximumProductionCount}db &#41;
-                </div>
+              <div>Termelt {item.name}</div>
+              <div>
+                {item.quantity}db / {openedBuilding.productionInterval / 6000}{" "}
+                perc &#40; max {openedBuilding.maximumProductionCount}db &#41;
+              </div>
             </ListGroup.Item>
           ))}
         </ListGroup>
+
+        <div> Következő termelés: {moment(openedBuildingRemainingTime - (1000 * 60 * 60)).format("LTS")}</div>
+
         {isNextLevelAvailable && checkEnoughRawMaterials() ? (
           <div className="d-flex flex-column align-items-center unbuilt-building-card">
             <h6>Elérhető fejlesztés</h6>
@@ -140,29 +149,37 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
                 src={nextLevelOfBuilding.spritePath}
               />
             </div>
-              <div className="d-flex align-items-center justify-content-center">
-                <button className="upgrade-build-btn" onClick={upgradeBuilding}>Fejlesztés</button>
-                <OverlayTrigger
-                  trigger="focus"
-                  placement="top"
-                  overlay={
-                    <Popover id="popover-basic" className="rounded-0">
-                      <Popover.Header as="h3" className="bg-body">
-                        Szükséges anyagok
-                      </Popover.Header>
-                      <Popover.Body className="d-flex flex-column bg-transparent text-center">
-                        {/* <div>{openedBuilding.description}</div> */}
-                        <div>Érmék: {openedBuilding.coinsForBuild}</div>
-                        <div>Vas: {openedBuilding.stonesForBuild}</div>
-                        <div>Kő: {openedBuilding.stonesForBuild}</div>
-                        <div>Fa: {openedBuilding.woodsForBuild}</div>
-                      </Popover.Body>
-                    </Popover>
-                  }
-                >
-                  <button className="build-question-btn"><img alt="Leírás" title="Leírás" src="../images/ui/kerdojel_btn.png" ></img></button>
-                </OverlayTrigger>
-              </div>
+            <div className="d-flex align-items-center justify-content-center">
+              <button className="upgrade-build-btn" onClick={upgradeBuilding}>
+                Fejlesztés
+              </button>
+              <OverlayTrigger
+                trigger="focus"
+                placement="top"
+                overlay={
+                  <Popover id="popover-basic" className="rounded-0">
+                    <Popover.Header as="h3" className="bg-body">
+                      Szükséges anyagok
+                    </Popover.Header>
+                    <Popover.Body className="d-flex flex-column bg-transparent text-center">
+                      {/* <div>{openedBuilding.description}</div> */}
+                      <div>Érmék: {openedBuilding.coinsForBuild}</div>
+                      <div>Vas: {openedBuilding.stonesForBuild}</div>
+                      <div>Kő: {openedBuilding.stonesForBuild}</div>
+                      <div>Fa: {openedBuilding.woodsForBuild}</div>
+                    </Popover.Body>
+                  </Popover>
+                }
+              >
+                <button className="build-question-btn">
+                  <img
+                    alt="Leírás"
+                    title="Leírás"
+                    src="../images/ui/kerdojel_btn.png"
+                  ></img>
+                </button>
+              </OverlayTrigger>
+            </div>
           </div>
         ) : null}
       </Modal.Body>

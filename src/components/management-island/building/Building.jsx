@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { OverlayTrigger } from "react-bootstrap";
-import { Subject, switchMap, takeUntil, takeWhile, tap, timer } from "rxjs";
+import { scan, Subject, takeUntil, takeWhile, tap, timer } from "rxjs";
 import GameFieldContext from "../../../contexts/GameFieldContext";
 import MovablePopover from "../movable-popover/MovablePopover";
+import moment from "moment";
 
 import "./Building.css";
 
@@ -31,13 +32,19 @@ export default class Building extends Component {
       isCollectPending: false,
     };
 
-    this.construction$ = timer(0, 1000);
-    this.production$ = timer(
-      this.calculateFirstProductionTime(),
-      this.props.building.productionInterval
-    );
-
+    const COUNTDOWN_TICK = 1000;
+    const beginTime = this.calculateFirstProductionTime() % COUNTDOWN_TICK;
+    const defaultProductionInterval =
+      Math.round((this.calculateFirstProductionTime() - beginTime) / 1000) * 1000;
       
+    this.construction$ = timer(0, COUNTDOWN_TICK);
+    this.production$ = timer(beginTime, 1000).pipe(
+      scan((previousTime) => {
+        return previousTime === 0
+          ? this.props.building.productionInterval
+          : previousTime - COUNTDOWN_TICK;
+      }, defaultProductionInterval)
+    );
 
     this.componentDestroyed$ = new Subject();
     this.ref = React.createRef();
@@ -66,7 +73,7 @@ export default class Building extends Component {
   calculateFirstProductionTime() {
     const now = new Date();
     const nextProductionDate = new Date(this.props.building.buildDate);
-    
+
     while (nextProductionDate.getTime() <= now.getTime()) {
       nextProductionDate.setTime(
         nextProductionDate.getTime() + this.props.building.productionInterval
@@ -92,35 +99,34 @@ export default class Building extends Component {
     if (this.state.producedCoins > 0) {
       notNullProducedItems.push({
         name: "Érmék",
-        num: 0,
+        iconPath: "../images/icons/coin.png",
         quantity: this.state.producedCoins,
       });
     }
     if (this.state.producedIrons) {
       notNullProducedItems.push({
         name: "Vas",
-        num: 3,
+        iconPath: "../images/icons/wood.png",
         quantity: this.state.producedIrons,
       });
     }
     if (this.state.producedStones) {
       notNullProducedItems.push({
         name: "Kő",
-        num: 2,
+        iconPath: "../images/icons/stone.png",
         quantity: this.state.producedStones,
       });
     }
     if (this.state.producedWoods) {
       notNullProducedItems.push({
         name: "Fa",
-        num: 1,
+        iconPath: "../images/icons/steel.png",
         quantity: this.state.producedWoods,
       });
     }
 
     return notNullProducedItems;
   }
-  
 
   collectItems() {
     axios
@@ -144,23 +150,36 @@ export default class Building extends Component {
   }
 
   componentDidMount() {
-    this.production$.pipe(takeUntil(this.componentDestroyed$)).subscribe(() => {
-      this.setState((state) => ({
-        ...state,
-        producedCoins: this.calculateProducedItem(
-          state.producedCoins + this.props.building.producedCoins
-        ),
-        producedIrons: this.calculateProducedItem(
-          state.producedIrons + this.props.building.producedIrons
-        ),
-        producedStones: this.calculateProducedItem(
-          state.producedStones + this.props.building.producedStones
-        ),
-        producedWoods: this.calculateProducedItem(
-          state.producedWoods + this.props.building.producedWoods
-        ),
-      }));
-    });
+    this.production$
+      .pipe(
+        takeUntil(this.componentDestroyed$),
+        tap((currentRemainingTime) => {
+          console.log(currentRemainingTime);
+          if (currentRemainingTime === 0) {
+            this.setState((state) => ({
+              ...state,
+              producedCoins: this.calculateProducedItem(
+                state.producedCoins + this.props.building.producedCoins
+              ),
+              producedIrons: this.calculateProducedItem(
+                state.producedIrons + this.props.building.producedIrons
+              ),
+              producedStones: this.calculateProducedItem(
+                state.producedStones + this.props.building.producedStones
+              ),
+              producedWoods: this.calculateProducedItem(
+                state.producedWoods + this.props.building.producedWoods
+              ),
+            }));
+          }
+        })
+      )
+      .subscribe((currentRemainingTime) => {
+        this.props.setOpenedBuildingRemainingTime(
+          currentRemainingTime,
+          this.props.building.buildingType
+        );
+      });
 
     this.construction$
       .pipe(
@@ -199,26 +218,12 @@ export default class Building extends Component {
       : amount;
   }
 
-  timestampToFormattedDate() {
-    const time = new Date(this.state.timeLeftToBuildingCompletion);
-    return `${
-      time.getHours() - 1
-    }h ${time.getMinutes()}m ${time.getSeconds()}s`;
-  }
-
   componentWillUnmount() {
     this.componentDestroyed$.next();
     this.componentDestroyed$.complete();
   }
 
   render() {
-    const iconPaths  = [
-      "../images/icons/coin.png",
-      "../images/icons/wood.png",
-      "../images/icons/stone.png",
-      "../images/icons/steel.png"
-    ]
-
     return this.state.timeLeftToBuildingCompletion === 0 ? (
       <div
         className="building-sprite"
@@ -233,8 +238,13 @@ export default class Building extends Component {
             <MovablePopover zoom={this.context.zoom}>
               {this.notNullProducedItems().map((item, index) => (
                 <div key={index}>
-                    <img src={iconPaths[item.num]} alt={item.name} title={item.name} className="collect-icon"></img>
-                    <span className="collect-number">{item.quantity}</span>
+                  <img
+                    src={item.iconPath}
+                    alt={item.name}
+                    title={item.name}
+                    className="collect-icon"
+                  ></img>
+                  <span className="collect-number">{item.quantity}</span>
                 </div>
               ))}
               <button
@@ -242,7 +252,7 @@ export default class Building extends Component {
                 disabled={this.state.isCollectPending}
                 className="collect-btn"
               >
-                Collect
+                Begyűjt
               </button>
             </MovablePopover>
           }
@@ -265,7 +275,7 @@ export default class Building extends Component {
           trigger={null}
           overlay={
             <MovablePopover zoom={this.context.zoom}>
-              {this.timestampToFormattedDate()}
+              {moment(this.state.timeLeftToBuildingCompletion).format("LTS")}
             </MovablePopover>
           }
         >
@@ -274,5 +284,4 @@ export default class Building extends Component {
       </div>
     );
   }
-  
 }
