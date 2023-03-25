@@ -58,6 +58,7 @@ font-family: 'Rubik Dirt', cursive;
     top: 0;
     left: 0;
     z-index: 300;
+    image-rendering:auto;
 }
 
 nav {
