@@ -4,6 +4,7 @@ import HudContext from "../../contexts/HudContext";
 import Layout from "../../components/layout/Layout";
 import Modal from 'react-bootstrap/Modal';
 import { Link } from "react-router-dom";
+import { ModalFooter } from "react-bootstrap";
 
 export default function Tutorial() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -253,6 +254,11 @@ function SlotGame(props) {
                 <button className="slot-btn" onClick={spin}></button>
                 <button className="close-slot-btn" onClick={props.onHide}>Bezárás</button>
               </div>
+            </div>
+            <div className="text-center text-warning pt-1">
+              <span>10 Coin / pörgetés</span><br></br>
+              <span>Vesztésnél: 0 loot | Nyerésnél: 20 coin</span><br></br>
+              <span>Jackpot esetén 10db minden anyagból</span>
             </div>
         </Modal.Body>
       </div>
