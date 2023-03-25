@@ -5,6 +5,7 @@ import Layout from "../../components/layout/Layout";
 import Modal from 'react-bootstrap/Modal';
 import { Link } from "react-router-dom";
 import { ModalFooter } from "react-bootstrap";
+import axios from "axios";
 
 export default function Tutorial() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -188,6 +189,7 @@ export default function Tutorial() {
     </Layout>
   );
 }
+
 const SLOT_VALUES = [
   '../images/makers/LeknerNorbert.jpg', 
   '../images/makers/MészárosBalázs.jpg', 
@@ -208,6 +210,59 @@ function SlotGame(props) {
         '../images/slot/slot_win.png',
         '../images/slot/slot_jackpot.png'
       ]
+
+      function gameCost(){
+        console.log("Levonás")
+        axios
+        .put("https://localhost:7276/api/Player/StartSlotMachine", {
+          coins: -10,
+          woods: 0,
+          stones: 0,
+          irons: 0,
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+        
+        });
+      }
+
+      function winPost(){
+        console.log("Hozzáadás")
+        axios
+        .put("https://localhost:7276/api/Player/StartSlotMachine", {
+          coins: 20,
+          woods: 0,
+          stones: 0,
+          irons: 0,
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+        
+        });
+      }
+
+      function jackpotPost(){
+        console.log("Jackpot")
+        axios
+        .put("https://localhost:7276/api/Player/StartSlotMachine", {
+          coins: 20,
+          woods: 10,
+          stones: 10,
+          irons: 10,
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+        
+        });
+      }
+
+
     function spin() {
       const newSlot1 = SLOT_VALUES[Math.floor(Math.random() * SLOT_VALUES.length)];
       const newSlot2 = SLOT_VALUES[Math.floor(Math.random() * SLOT_VALUES.length)];
@@ -219,8 +274,10 @@ function SlotGame(props) {
         setResult(2);
       } else if (newSlot1 === newSlot2 || newSlot2 === newSlot3 || newSlot1 === newSlot3) {
         setResult(1);
+        winPost();
       } else {
         setResult(0);
+        jackpotPost();
       }
     }
 
@@ -251,7 +308,7 @@ function SlotGame(props) {
                 </div>  
               </div>
               <div className="result-container d-flex justify-content-center">
-                <button className="slot-btn" onClick={spin}></button>
+                <button className="slot-btn" onClick={()=>{ spin(); gameCost() }}></button>
                 <button className="close-slot-btn" onClick={props.onHide}>Bezárás</button>
               </div>
             </div>
