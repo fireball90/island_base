@@ -26,6 +26,7 @@ font-family: 'Rubik Dirt', cursive;
 .items {
     width: 200px;
     position: relative;
+    image-rendering:auto;
 }
 
 .itemsText {
