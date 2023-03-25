@@ -53,63 +53,87 @@ export default function SelectIsland() {
         onSubmit={(event) => submitHandler(event)}
       >
         <div className="card-container">
-          <Card
-            className={selectedIsland === "Europian" ? "bg-primary" : null}
-            onClick={() => selectIslandHandler("Europian")}
-          >
-            <Card.Img variant="top" src="../assets/europian_island.png" />
-            <Card.Body className="text-center">
-              <Card.Title>Európai sziget</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-          <Card
-            className={selectedIsland === "Indian" ? "bg-primary" : null}
-            onClick={() => selectIslandHandler("Indian")}
-          >
-            <Card.Img variant="top" src="../assets/indian-island.png" />
-            <Card.Body className="text-center">
-              <Card.Title>Indián sziget</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-          <Card
-            className={selectedIsland === "Viking" ? "bg-primary" : null}
-            onClick={() => selectIslandHandler("Viking")}
-          >
-            <Card.Img variant="top" src="../assets/viking_island.png" />
-            <Card.Body className="text-center">
-              <Card.Title>Viking sziget</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-          <Card
-            className={selectedIsland === "Japan" ? "bg-primary" : null}
-            onClick={() => selectIslandHandler("Japan")}
-          >
-            <Card.Img variant="top" src="../assets/japanese_island.png" />
-            <Card.Body className="text-center">
-              <Card.Title>Japán sziget</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-          </Card>
+          <div className="selectisland-card-bg">
+            <Card
+              className={selectedIsland === "Europian" ? "bg-warning" : "bg-transparent text-white"}
+              onClick={() => selectIslandHandler("Europian")}
+            >
+              <Card.Img variant="top" src="../assets/europian_island.png" />
+              <Card.Body className="text-center select-text-bg">
+                <Card.Title>Európai sziget</Card.Title>
+                <Card.Text>
+                  <p>Alap statok:</p>
+                  <p>Erő: 7</p>
+                  <p>Ügyesség: 5</p>
+                  <p>Intelligencia: 8</p>
+                  <p>Alapanyag fontossági sorrend:</p>
+                  <p>Kő - Vas - Fa</p>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="selectisland-card-bg">
+            <Card
+              className={selectedIsland === "Indian" ? "bg-warning" : "bg-transparent text-white"}
+              onClick={() => selectIslandHandler("Indian")}
+            >
+              <Card.Img variant="top" src="../assets/indian-island.png" />
+              <Card.Body className="text-center select-text-bg">
+                <Card.Title>Indián sziget</Card.Title>
+                <Card.Text>
+                  <p>Alap statok:</p>
+                  <p>Erő: 4</p>
+                  <p>Ügyesség: 10</p>
+                  <p>Intelligencia: 6</p>
+                  <p>Alapanyag fontossági sorrend:</p>
+                  <p>Fa - Kő - Vas</p>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="selectisland-card-bg">
+            <Card
+              className={selectedIsland === "Viking" ? "bg-warning" : "bg-transparent text-white"}
+              onClick={() => selectIslandHandler("Viking")}
+            >
+              <Card.Img variant="top" src="../assets/viking_island.png" />
+              <Card.Body className="text-center select-text-bg">
+                <Card.Title>Viking sziget</Card.Title>
+                <Card.Text>
+                  <p>Alap statok:</p>
+                  <p>Erő: 9</p>
+                  <p>Ügyesség: 6</p>
+                  <p>Intelligencia: 5</p>
+                  <p>Alapanyag fontossági sorrend:</p>
+                  <p>Vas - Fa - Kő</p>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="selectisland-card-bg">
+            <Card
+              className={selectedIsland === "Japan" ? "bg-warning" : "bg-transparent text-white"}
+              onClick={() => selectIslandHandler("Japan")}
+            >
+              <Card.Img variant="top" src="../assets/japanese_island.png" />
+              <Card.Body className="text-center select-text-bg">
+                <Card.Title>Japán sziget</Card.Title>
+                <Card.Text>
+                  <p>Alap statok:</p>
+                  <p>Erő: 6</p>
+                  <p>Ügyesség: 8</p>
+                  <p>Intelligencia: 6</p>
+                  <p>Alapanyag fontossági sorrend:</p>
+                  <p>Fa - Vas - Kő</p>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
         </div>
         <div class="save-button-container">
-          <Button disabled={!selectedIsland || creatingPending} type="submit">
+          <button disabled={!selectedIsland || creatingPending} type="submit" className="selectisland-btn">
             Sziget mentése
-          </Button>
+          </button>
         </div>
       </form>
     </Layout>
