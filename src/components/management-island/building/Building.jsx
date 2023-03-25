@@ -106,7 +106,7 @@ export default class Building extends Component {
     if (this.state.producedIrons) {
       notNullProducedItems.push({
         name: "Vas",
-        iconPath: "../images/icons/wood.png",
+        iconPath: "../images/icons/steel.png",
         quantity: this.state.producedIrons,
       });
     }
@@ -120,7 +120,7 @@ export default class Building extends Component {
     if (this.state.producedWoods) {
       notNullProducedItems.push({
         name: "Fa",
-        iconPath: "../images/icons/steel.png",
+        iconPath: "../images/icons/wood.png",
         quantity: this.state.producedWoods,
       });
     }
