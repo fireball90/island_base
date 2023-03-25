@@ -41,7 +41,7 @@ export default class Building extends Component {
     this.production$ = timer(beginTime, 1000).pipe(
       scan((previousTime) => {
         return previousTime === 0
-          ? this.props.building.productionInterval
+          ? this.props.building.productionInterval - 1000
           : previousTime - COUNTDOWN_TICK;
       }, defaultProductionInterval)
     );
