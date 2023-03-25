@@ -1,17 +1,30 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../tutorial/tutorial.css";
 import HudContext from "../../contexts/HudContext";
 import Layout from "../../components/layout/Layout";
+import Modal from 'react-bootstrap/Modal';
+import { Link } from "react-router-dom";
+import { ModalFooter } from "react-bootstrap";
 
 export default function Tutorial() {
   const { setIsHudDisplayed } = useContext(HudContext);
+  const [modalShow, setModalShow] = React.useState(false);
 
   useEffect(() => {
     setIsHudDisplayed(true);
   }, []);
 
+  const slotClick = () =>{
+    setModalShow(true)
+  }
+
+
   return (
     <Layout navigations={[]} title="Útmutató">
+      <SlotGame
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+      />
       <div className="container-fluid">
         <div className="information justify-content-center">
           <span>
@@ -129,6 +142,7 @@ export default function Tutorial() {
                 className="card-img-fluid"
                 alt="Balázs"
                 title="Mészáros Balázs"
+                onClick={slotClick}
               ></img>
               <div className="tcard-body">
                 <h5 className="tcard-title">Fejlesztő</h5>
@@ -172,5 +186,82 @@ export default function Tutorial() {
         </div>
       </div>
     </Layout>
+  );
+}
+const SLOT_VALUES = [
+  '../images/makers/LeknerNorbert.jpg', 
+  '../images/makers/MészárosBalázs.jpg', 
+  '../images/makers/SzigiliEdit.jpg', 
+  '../images/profile_pictures/viking_profile.png', 
+  '../images/profile_pictures/indian_profile.png', 
+  '../images/profile_pictures/europian_profile.png'];
+
+function SlotGame(props) {
+      const [slot1, setSlot1] = useState('../images/makers/LeknerNorbert.jpg');
+      const [slot2, setSlot2] = useState('../images/makers/MészárosBalázs.jpg');
+      const [slot3, setSlot3] = useState('../images/makers/SzigiliEdit.jpg');
+      const [result, setResult] = useState(0);
+
+      const imgPath = 
+      [
+        '../images/slot/slot_lose.png',
+        '../images/slot/slot_win.png',
+        '../images/slot/slot_jackpot.png'
+      ]
+    function spin() {
+      const newSlot1 = SLOT_VALUES[Math.floor(Math.random() * SLOT_VALUES.length)];
+      const newSlot2 = SLOT_VALUES[Math.floor(Math.random() * SLOT_VALUES.length)];
+      const newSlot3 = SLOT_VALUES[Math.floor(Math.random() * SLOT_VALUES.length)];
+      setSlot1(newSlot1);
+      setSlot2(newSlot2);
+      setSlot3(newSlot3);
+      if (newSlot1 === newSlot2 && newSlot2 === newSlot3) {
+        setResult(2);
+      } else if (newSlot1 === newSlot2 || newSlot2 === newSlot3 || newSlot1 === newSlot3) {
+        setResult(1);
+      } else {
+        setResult(0);
+      }
+    }
+
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <div className="modal-game-container">
+        <Modal.Body>
+            <div className="">
+              <div className="winnings-img text-center">
+                <img src={imgPath[result]}></img>
+              </div>
+              <div className="d-flex justify-content-center align-items-center">
+                <div className="slot-machine d-flex justify-content-center align-items-center">
+                  <div className="slotbg">
+                    <img src={slot1}></img>
+                  </div>
+                  <div className="slotbg p-5">
+                    <img src={slot2}></img>
+                  </div>
+                  <div className="slotbg">
+                    <img src={slot3}></img> 
+                  </div>
+                </div>  
+              </div>
+              <div className="result-container d-flex justify-content-center">
+                <button className="slot-btn" onClick={spin}></button>
+                <button className="close-slot-btn" onClick={props.onHide}>Bezárás</button>
+              </div>
+            </div>
+            <div className="text-center text-warning pt-1">
+              <span>10 Coin / pörgetés</span><br></br>
+              <span>Vesztésnél: 0 loot | Nyerésnél: 20 coin</span><br></br>
+              <span>Jackpot esetén 10db minden anyagból</span>
+            </div>
+        </Modal.Body>
+      </div>
+    </Modal>
   );
 }
