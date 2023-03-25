@@ -86,12 +86,15 @@ export default function BuildingModal({
   }
 
   useEffect(() => {
+    console.log('belefut')
     if (openedBuilding.maxLevel > openedBuilding.level) {
+      console.log('Okés')
       axios
         .get(
           `https://localhost:7276/api/Building/GetNextLevelOfBuilding?type=${openedBuilding.buildingType}`
         )
         .then((response) => {
+          console.log(response.data)
           setNextLevelOfBuilding(response.data);
           setIsNextLevelAvailable(true);
         })
@@ -99,6 +102,8 @@ export default function BuildingModal({
           if (error.code === "ERR_NETWORK") {
             alert("Nem sikerült kapcsolódni a szerverhez.");
           }
+
+          console.log(error)
         });
     }
   }, []);

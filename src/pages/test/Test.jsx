@@ -7,6 +7,8 @@ import React, { Component, useContext, useEffect } from "react";
 import IslandContext from "../../contexts/IslandContext";
 import HudContext from "../../contexts/HudContext";
 import BuildingModal from "../../components/building-modal/BuildingModal";
+import BuildingNotification from "../../components/management-island/building-request-notification/BuildingRequestNotification";
+import axios from "axios";
 
 export default function TestPage() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -72,6 +74,48 @@ class Test extends Component {
         }));
       }
     };
+
+    this.buildBuilding = (xCoordinate, yCoordinate) => {
+      axios
+        .post("https://localhost:7276/api/Building/CreateBuilding", {
+          buildingType: this.context.buildingToBeBuild.buildingType,
+          xCoordinate: xCoordinate,
+          yCoordinate: yCoordinate,
+        })
+        .then((response) => {
+          this.context.setPlayer({
+            ...this.context.player,
+            coins:
+              this.context.player.coins -
+              this.context.buildingToBeBuild.coinsForBuild,
+            woods:
+              this.context.player.woods -
+              this.context.buildingToBeBuild.woodsForBuild,
+            stones:
+              this.context.player.stones -
+              this.context.buildingToBeBuild.stonesForBuild,
+            irons:
+              this.context.player.irons -
+              this.context.buildingToBeBuild.ironsForBuild,
+          });
+          this.context.setBuildings([...this.context.buildings, response.data]);
+          this.context.interruptBuildingRequest();
+        })
+        .catch(() => {
+          alert("Nem sikerült kapcsolódni a szerverhez!");
+        });
+    };
+  }
+
+  freeBuildingLocations() {
+    return this.context.buildableLocations.filter(
+      (buildableLocation) =>
+        this.context.buildings.filter(
+          (building) =>
+            building.xCoordinate === buildableLocation.xCoordinate &&
+            building.yCoordinate === buildableLocation.yCoordinate
+        ).length === 0
+    );
   }
 
   componentDidMount() {
@@ -101,18 +145,24 @@ class Test extends Component {
                   building={building}
                   setCollectedItemsToPlayer={this.setCollectedItemsToPlayer}
                   openBuildingModal={this.openBuildingModal}
-                  setOpenedBuildingRemainingTime={this.setOpenedBuildingRemainingTime}
+                  setOpenedBuildingRemainingTime={
+                    this.setOpenedBuildingRemainingTime
+                  }
                 />
               </Tile>
             )),
-            this.state.buildableLocations.map((buildableLocation, index) => (
+            this.freeBuildingLocations().map((buildableLocation, index) => (
               <Tile
                 key={index}
                 xCoordinate={buildableLocation.xCoordinate}
                 yCoordinate={buildableLocation.yCoordinate}
                 scale={2}
               >
-                <BuildableLocation />
+                <BuildableLocation
+                  xCoordinate={buildableLocation.xCoordinate}
+                  yCoordinate={buildableLocation.yCoordinate}
+                  buildBuilding={this.buildBuilding}
+                />
               </Tile>
             )),
           ]}
@@ -125,6 +175,7 @@ class Test extends Component {
             openedBuildingRemainingTime={this.state.openedBuildingRemainingTime}
           />
         ) : null}
+        {this.context.buildingToBeBuild ? <BuildingNotification /> : null}
       </div>
     ) : (
       <div>betöltés...</div>

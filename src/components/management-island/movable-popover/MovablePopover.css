@@ -1,7 +1,5 @@
 .bg-pop{
     background-image: url('../../../../public/images/ui/popupbg.png');
-    background-color: transparent;
-    background-repeat: repeat-x;
     background-size: cover; 
 
     background-color: rgba(153, 89, 29, 0);

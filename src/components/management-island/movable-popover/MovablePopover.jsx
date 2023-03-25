@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import { Popover } from 'react-bootstrap';
+import React, { useEffect } from "react";
+import { Popover } from "react-bootstrap";
 import "./MovablePopover.css";
 
 const MovablePopover = React.forwardRef(
-    ({ popper, children, show: _, ...props }, ref) => {
-      useEffect(() => {
-        popper.scheduleUpdate();
-      }, [props.zoom, popper]);
-  
-      return (
-        <div ref={ref} body {...props} className="rounded-0 border-0 bg-pop">
-          {children}
-        </div>
-      );
-    },
+  ({ popper, children, show: _, ...props }, ref) => {
+    useEffect(() => {
+      popper.scheduleUpdate();
+    }, [props.zoom, popper]);
+
+    return (
+      <Popover ref={ref} body {...props} className="border-0 rounded-0">
+        <div className="bg-pop">{children}</div>
+      </Popover>
+    );
+  }
 );
 
-export default MovablePopover
+export default MovablePopover;

@@ -29,20 +29,20 @@ export default class Building extends Component {
         this.props.building.producedWoods
       ),
       timeLeftToBuildingCompletion: 0,
-      isCollectPending: false,
     };
 
-    const COUNTDOWN_TICK = 1000;
-    const beginTime = this.calculateFirstProductionTime() % COUNTDOWN_TICK;
+    const countdownTick = 1000;
+    const beginTime = this.calculateFirstProductionTime() % countdownTick;
     const defaultProductionInterval =
-      Math.round((this.calculateFirstProductionTime() - beginTime) / 1000) * 1000;
-      
-    this.construction$ = timer(0, COUNTDOWN_TICK);
+      Math.round((this.calculateFirstProductionTime() - beginTime) / 1000) *
+      1000;
+
+    this.construction$ = timer(0, countdownTick);
     this.production$ = timer(beginTime, 1000).pipe(
       scan((previousTime) => {
         return previousTime === 0
           ? this.props.building.productionInterval - 1000
-          : previousTime - COUNTDOWN_TICK;
+          : previousTime - countdownTick;
       }, defaultProductionInterval)
     );
 
@@ -80,7 +80,7 @@ export default class Building extends Component {
       );
     }
 
-    return nextProductionDate.getTime() - now.getTime();
+    return nextProductionDate.getTime() - now.getTime() + 1000;
   }
 
   hasResourceProduction() {
@@ -129,22 +129,27 @@ export default class Building extends Component {
   }
 
   collectItems() {
-    axios
-      .post(
-        `https://localhost:7276/api/Building/CollectItems?type=${this.props.building.buildingType}`
-      )
-      .then((response) => {
-        this.setState((state) => ({
-          ...state,
-          producedCoins: 0,
-          producedIrons: 0,
-          producedStones: 0,
-          producedWoods: 0,
-        }));
+    this.setState((state) => ({
+      ...state,
+      producedCoins: 0,
+      producedIrons: 0,
+      producedStones: 0,
+      producedWoods: 0,
+    }));
 
+    const collectDate = new Date();
+    collectDate.setHours(collectDate.getHours() + 1);
+
+    axios
+      .post("https://localhost:7276/api/Building/CollectItems", {
+        collectDate: collectDate.toISOString(),
+        buildingType: this.props.building.buildingType,
+      })
+      .then((response) => {
         this.props.setCollectedItemsToPlayer(response.data);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         alert("Nem sikerült kapcsolódni a szerverhez!");
       });
   }
@@ -154,7 +159,6 @@ export default class Building extends Component {
       .pipe(
         takeUntil(this.componentDestroyed$),
         tap((currentRemainingTime) => {
-          console.log(currentRemainingTime);
           if (currentRemainingTime === 0) {
             this.setState((state) => ({
               ...state,
@@ -249,7 +253,6 @@ export default class Building extends Component {
               ))}
               <button
                 onClick={() => this.collectItems()}
-                disabled={this.state.isCollectPending}
                 className="collect-btn"
               >
                 Begyűjt
@@ -275,7 +278,7 @@ export default class Building extends Component {
           trigger={null}
           overlay={
             <MovablePopover zoom={this.context.zoom}>
-              {moment(this.state.timeLeftToBuildingCompletion).format("LTS")}
+              {moment(this.state.timeLeftToBuildingCompletion - 60 * 60 * 1000).format("LTS")}
             </MovablePopover>
           }
         >

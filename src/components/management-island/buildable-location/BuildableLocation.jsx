@@ -1,11 +1,15 @@
-import style from './BuildableLocation.module.css'
-import classNames from "classnames";
+import style from "./BuildableLocation.module.css";
+import { useContext } from "react";
+import IslandContext from "../../../contexts/IslandContext";
 
-export default function BuildableLocation(props) {
-    return (
-        <div 
-            className={style.buildableLocation}
-            onClick={() => props.buildBuilding(props.xCoordinate, props.yCoordinate)}
-        ></div>
-    )
+export default function BuildableLocation({ buildBuilding, xCoordinate, yCoordinate }) {
+  const { buildingToBeBuild } = useContext(IslandContext);
+
+  return buildingToBeBuild ? (
+    <div
+      className={style.buildableLocation}
+      onClick={() => buildBuilding(xCoordinate, yCoordinate)}
+    >
+    </div>
+  ) : null;
 }

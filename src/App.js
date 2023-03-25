@@ -56,10 +56,11 @@ export default class App extends Component {
       unbuiltBuildings: [],
       island: {
         spritePath: "",
-        buildingAreas: [],
+        buildableLocations: [],
         npcRoutes: [],
         npcSprites: [],
       },
+      buildingToBeBuilt: null,
     };
 
     this.setUserLogined = (username, email) => {
@@ -133,6 +134,20 @@ export default class App extends Component {
       }));
     };
 
+    this.setBuildingToBeBuilt = (buildingToBeBuild) => {
+      this.setState((state) => ({
+        ...state,
+        buildingToBeBuilt: buildingToBeBuild,
+      }));
+    };
+
+    this.interruptBuildingRequest = () => {
+      this.setState((state) => ({
+        ...state,
+        buildingToBeBuilt: null,
+      }));
+    };
+
     this.initializeIslandFromHttp = () => {
       const urls = [
         "https://localhost:7276/api/Island/GetIsland",
@@ -155,7 +170,7 @@ export default class App extends Component {
             unbuiltBuildings: unbuiltBuildings,
             island: {
               spritePath: island.spritePath,
-              buildingAreas: island.buildingAreas,
+              buildableLocations: island.buildableLocations,
               npcRoutes: island.npcRoutes,
               npcSprites: island.npcSprites,
             },
@@ -200,13 +215,17 @@ export default class App extends Component {
                 isIslandInitialized: this.state.isIslandInitialized,
                 player: this.state.player,
                 buildings: this.state.buildings,
+                buildableLocations: this.state.island.buildableLocations,
                 unbuiltBuildings: this.state.unbuiltBuildings,
                 island: this.state.island,
+                buildingToBeBuild: this.state.buildingToBeBuilt,
 
                 setPlayer: this.setPlayer,
                 setBuildings: this.setBuildings,
                 setUnbuiltBuildings: this.setUnbuiltBuildings,
                 initializeIslandFromHttp: this.initializeIslandFromHttp,
+                setBuildingToBeBuilt: this.setBuildingToBeBuilt,
+                interruptBuildingRequest: this.interruptBuildingRequest
               }}
             >
               <BrowserRouter>

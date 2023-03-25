@@ -36,3 +36,13 @@ h1,h2,h3,h4,h5,h6 {
 a, p, li, span {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+.popover-body {
+  padding: 0 !important;
+}
+
+.popover{
+  background-color: transparent !important;
+}
+
+.popover-arrow {visibility:hidden;}
