@@ -27,7 +27,7 @@ export default function SelectIsland() {
       )
       .then((response) => {
         setPlayer(response.data);
-        navigate("/island");
+        navigate("/notifications");
       })
       .catch(() => {
         alert("Nem sikerült kapcsolódni a szerverhez");

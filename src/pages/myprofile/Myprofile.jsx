@@ -67,7 +67,7 @@ export default function Myprofile() {
               <h2>{user.username}</h2>
               <h2>{user.email}</h2>
               <div className="reset-passwordjustify-content-center bg-bleur">
-                <h3 className="text-profile">Jelszó módosítása:</h3>
+                <h3 className="text-profile text-center">Jelszó módosítása:</h3>
                 <label className="text-label col-sm-12 text-center">
                   Új jelszó:
                 </label>
