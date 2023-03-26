@@ -53,7 +53,7 @@ export default function Myprofile() {
 
   useEffect(() => {
     setIsHudDisplayed(true);
-  });
+  }, []);
 
   return (
     <Layout navigations={[]} title="Saját profil">
