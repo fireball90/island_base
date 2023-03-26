@@ -326,6 +326,7 @@ class SlotGame extends Component {
 
     if (newSlot1 === newSlot2 && newSlot2 === newSlot3) {
       this.setResult(2);
+      this.jackpotPost();
     } else if (
       newSlot1 === newSlot2 ||
       newSlot2 === newSlot3 ||
@@ -335,7 +336,6 @@ class SlotGame extends Component {
       this.winPost();
     } else {
       this.setResult(0);
-      this.jackpotPost();
     }
   }
 
@@ -383,7 +383,7 @@ class SlotGame extends Component {
               <div className="result-container d-flex justify-content-center">
                 <button
                   className="slot-btn"
-                  onClick={() => this.spins$.next()}
+                  onClick={() => {this.spins$.next();this.gameCost()}}
                 ></button>
                 <button className="close-slot-btn" onClick={this.props.onHide}>
                   Bezárás
