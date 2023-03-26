@@ -7,11 +7,11 @@ import ExperienceBar from "../experience-bar/ExperienceBar";
 import ProfileImage from "../profile-image/ProfileImage";
 import HudContext from "../../contexts/HudContext";
 import UserContext from "../../contexts/UserContext";
-import PlayerContext from "../../contexts/PlayerContext";
+import IslandContext from "../../contexts/IslandContext";
 
 export default function Hud() {
   const { setUserLoggedOut } = useContext(UserContext);
-  const { player } = useContext(PlayerContext);
+  const { player, resetplayer, resetIsland, interruptBuildingRequest } = useContext(IslandContext);
   const { isHudDisplayed } = useContext(HudContext);
 
   const navigate = useNavigate();
@@ -21,6 +21,10 @@ export default function Hud() {
     cookie.remove("token");
 
     setUserLoggedOut();
+    resetplayer();
+    resetIsland();
+    interruptBuildingRequest();
+    
     navigate("");
   }
 

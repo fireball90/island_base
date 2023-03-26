@@ -586,7 +586,7 @@ export default class GameMap extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     this.calculateCameraPosition();
     this.scheduleNextNPCAnimations();
 

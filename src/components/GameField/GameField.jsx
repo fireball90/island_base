@@ -64,6 +64,7 @@ export default class GameField extends Component {
           top: (screenHeight - tileSize * this.props.mapTilesHigh) / 2,
           left: 0,
         },
+        zoom: 0
       }));
     } else {
       const tileSize = screenHeight / this.props.mapTilesHigh;
@@ -83,6 +84,7 @@ export default class GameField extends Component {
           top: 0,
           left: (screenWidth - tileSize * this.props.mapTilesWide) / 2,
         },
+        zoom: 0
       }));
     }
   }

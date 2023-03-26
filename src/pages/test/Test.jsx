@@ -9,7 +9,7 @@ import HudContext from "../../contexts/HudContext";
 import BuildingModal from "../../components/building-modal/BuildingModal";
 import BuildingNotification from "../../components/management-island/building-request-notification/BuildingRequestNotification";
 import axios from "axios";
-import { timer, expand, of, Subject, takeUntil, skip } from "rxjs";
+import { timer, expand, Subject, takeUntil, skip, take } from "rxjs";
 
 export default function TestPage() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -112,12 +112,18 @@ class Test extends Component {
     };
 
     this.componentDestroyed$ = new Subject();
-    this.scheduledAnimations$ = of(undefined)
-    
-    // of(undefined).pipe(
-    //   expand(() => timer(Math.floor(Math.random() * 5000) + 5000)),
-    //   skip(1)
-    // )
+    this.scheduledAnimations$ = new Subject().pipe(
+      take(1),
+      expand(() => timer(Math.floor(Math.random() * 5000) + 5000)),
+      take(1)
+    );
+
+    this.DIRECTIONS = {
+      top: 0,
+      right: 1,
+      bottom: 2,
+      left: 3,
+    };
   }
 
   freeBuildingLocations() {
@@ -131,27 +137,22 @@ class Test extends Component {
     );
   }
 
-  // Animations
-
   startNPCAnimation() {
-    const routeTilesMap = this.convertRoutesToMap(this.context.island.npcRoutes);
-    console.log(this.context.island)
-    // console.log(routeTilesMap)
-    
+    const routesMap = this.convertRoutesToMap(this.context.island.npcRoutes);
 
-    // const startCoordinatesMap = this.searchStartCoordinates(routeTilesMap);
-    // const startCoordinate = this.chooseRandomCoordinate(startCoordinatesMap);
-    // const routeCoordinates = this.createRouteForNPC(
-    //   startCoordinate,
-    //   routeTilesMap
-    // );
-    // const movements = this.convertRouteCoordinatesToMovements(routeCoordinates);
-    // const sprite = this.chooseRandomSprite(this.props.sprites);
-    // const npcAnimation = this.createNPCAnimation(
-    //   startCoordinate,
-    //   movements,
-    //   sprite
-    // );
+    const startCoordinatesMap = this.startingCoordinates(routesMap);
+    const startCoordinate = this.chooseRandomCoordinate(startCoordinatesMap);
+    const routeCoordinates = this.createRouteForNPC(startCoordinate, routesMap);
+    const movements = this.convertRouteCoordinatesToMovements(routeCoordinates);
+
+    const sprite = this.chooseRandomSprite(this.context.island.npcSprites);
+    const animation = this.createNPCAnimation(
+      startCoordinate,
+      movements,
+      sprite
+    );
+
+    console.log(animation);
 
     // const extendedNPCAnimations = this.state.npcAnimations.slice();
     // extendedNPCAnimations.push(npcAnimation);
@@ -182,162 +183,169 @@ class Test extends Component {
 
   convertRoutesToMap(routes) {
     const map = new Map();
-
     for (const route of routes) {
-      map.set(`${route.coordX}${route.coordY}`, route);
+      map.set(`${route.xCoordinate}${route.yCoordinate}`, route);
     }
-
     return map;
   }
 
-  searchStartCoordinates(routeTilesMap) {
-    const startCoordinates = [];
+  startingCoordinates(routesMap) {
+    const startingCoordinates = [];
 
-    for (const routeTileMap of routeTilesMap) {
-      const topNeighbourRouteKey = `${routeTileMap[1].coordX}${
-        routeTileMap[1].coordY + 1
+    for (const route of routesMap) {
+      const topNeighbourRouteKey = `${route[1].xCoordinate}${
+        route[1].yCoordinate + 1
       }`;
-      const rightNeighbourRouteKey = `${routeTileMap[1].coordX + 1}${
-        routeTileMap[1].coordY
+      const rightNeighbourRouteKey = `${route[1].xCoordinate + 1}${
+        route[1].yCoordinate
       }`;
-      const bottomNeighbourRouteKey = `${routeTileMap[1].coordX}${
-        routeTileMap[1].coordY - 1
+      const bottomNeighbourRouteKey = `${route[1].xCoordinate}${
+        route[1].yCoordinate - 1
       }`;
-      const leftNeighbourRouteKey = `${routeTileMap[1].coordX - 1}${
-        routeTileMap[1].coordY
+      const leftNeighbourRouteKey = `${route[1].xCoordinate - 1}${
+        route[1].yCoordinate
       }`;
 
       let numberOfNeighbors = 0;
 
-      if (routeTilesMap.get(topNeighbourRouteKey)) {
+      if (routesMap.get(topNeighbourRouteKey)) {
         numberOfNeighbors++;
       }
 
-      if (routeTilesMap.get(rightNeighbourRouteKey)) {
+      if (routesMap.get(rightNeighbourRouteKey)) {
         numberOfNeighbors++;
       }
 
-      if (routeTilesMap.get(bottomNeighbourRouteKey)) {
+      if (routesMap.get(bottomNeighbourRouteKey)) {
         numberOfNeighbors++;
       }
 
-      if (routeTilesMap.get(leftNeighbourRouteKey)) {
+      if (routesMap.get(leftNeighbourRouteKey)) {
         numberOfNeighbors++;
       }
 
       if (numberOfNeighbors === 1) {
-        startCoordinates.push(routeTileMap);
+        startingCoordinates.push(route);
       }
     }
 
-    return startCoordinates;
+    return startingCoordinates;
   }
 
   chooseRandomCoordinate(coordinates) {
     const randomIndex = Math.floor(Math.random() * coordinates.length);
-
     return coordinates[randomIndex][1];
   }
 
-  createRouteForNPC(startingCoordinate, routeTilesMap) {
-    const touchedRouteTiles = new Map();
+  createRouteForNPC(startingCoordinate, routesMap) {
+    const touchedRouteParts = new Map();
     const npcRouteCoordinates = [startingCoordinate];
 
-    let currentStep = startingCoordinate;
-    let isReachedEndOfRoute = false;
+    let currentRoutePart = startingCoordinate;
+    let isEndRouteReached = false;
 
-    while (!isReachedEndOfRoute) {
-      const possibleSteps = [];
+    while (!isEndRouteReached) {
+      const possibleRouteParts = [];
 
-      const keyOfTopStep = `${currentStep.coordX}${currentStep.coordY + 1}`;
-      const keyOfRightStep = `${currentStep.coordX + 1}${currentStep.coordY}`;
-      const keyOfBottomStep = `${currentStep.coordX}${currentStep.coordY - 1}`;
-      const keyOfLeftStep = `${currentStep.coordX - 1}${currentStep.coordY}`;
+      const topRoutePartKey = `${currentRoutePart.xCoordinate}${
+        currentRoutePart.yCoordinate + 1
+      }`;
+      const rightRoutePartKey = `${currentRoutePart.xCoordinate + 1}${
+        currentRoutePart.yCoordinate
+      }`;
+      const bottomRoutePartKey = `${currentRoutePart.xCoordinate}${
+        currentRoutePart.yCoordinate - 1
+      }`;
+      const leftRoutePartKey = `${currentRoutePart.xCoordinate - 1}${
+        currentRoutePart.yCoordinate
+      }`;
 
       if (
-        routeTilesMap.get(keyOfTopStep) &&
-        !touchedRouteTiles.get(keyOfTopStep)
+        routesMap.get(topRoutePartKey) &&
+        !touchedRouteParts.get(topRoutePartKey)
       ) {
-        possibleSteps.push(routeTilesMap.get(keyOfTopStep));
+        possibleRouteParts.push(routesMap.get(topRoutePartKey));
       }
 
       if (
-        routeTilesMap.get(keyOfRightStep) &&
-        !touchedRouteTiles.get(keyOfRightStep)
+        routesMap.get(rightRoutePartKey) &&
+        !touchedRouteParts.get(rightRoutePartKey)
       ) {
-        possibleSteps.push(routeTilesMap.get(keyOfRightStep));
+        possibleRouteParts.push(routesMap.get(rightRoutePartKey));
       }
 
       if (
-        routeTilesMap.get(keyOfBottomStep) &&
-        !touchedRouteTiles.get(keyOfBottomStep)
+        routesMap.get(bottomRoutePartKey) &&
+        !touchedRouteParts.get(bottomRoutePartKey)
       ) {
-        possibleSteps.push(routeTilesMap.get(keyOfBottomStep));
+        possibleRouteParts.push(routesMap.get(bottomRoutePartKey));
       }
 
       if (
-        routeTilesMap.get(keyOfLeftStep) &&
-        !touchedRouteTiles.get(keyOfLeftStep)
+        routesMap.get(leftRoutePartKey) &&
+        !touchedRouteParts.get(leftRoutePartKey)
       ) {
-        possibleSteps.push(routeTilesMap.get(keyOfLeftStep));
+        possibleRouteParts.push(routesMap.get(leftRoutePartKey));
       }
 
-      if (possibleSteps.length === 1) {
-        npcRouteCoordinates.push(possibleSteps[0]);
-        touchedRouteTiles.set(
-          `${currentStep.coordX}${currentStep.coordY}`,
-          currentStep
+      if (possibleRouteParts.length === 1) {
+        npcRouteCoordinates.push(possibleRouteParts[0]);
+        touchedRouteParts.set(
+          `${currentRoutePart.xCoordinate}${currentRoutePart.yCoordinate}`,
+          currentRoutePart
         );
 
-        currentStep = possibleSteps[0];
-      } else if (possibleSteps.length > 1) {
-        const randomIndex = Math.floor(Math.random() * possibleSteps.length);
-
-        npcRouteCoordinates.push(possibleSteps[randomIndex]);
-        touchedRouteTiles.set(
-          `${currentStep.coordX}${currentStep.coordY}`,
-          currentStep
+        currentRoutePart = possibleRouteParts[0];
+      } else if (possibleRouteParts.length > 1) {
+        const randomIndex = Math.floor(
+          Math.random() * possibleRouteParts.length
         );
 
-        currentStep = possibleSteps[randomIndex];
+        npcRouteCoordinates.push(possibleRouteParts[randomIndex]);
+        touchedRouteParts.set(
+          `${currentRoutePart.xCoordinate}${currentRoutePart.yCoordinate}`,
+          currentRoutePart
+        );
+
+        currentRoutePart = possibleRouteParts[randomIndex];
       } else {
-        isReachedEndOfRoute = true;
+        isEndRouteReached = true;
       }
     }
 
     return npcRouteCoordinates;
   }
 
-  Directions = {
-    top: 0,
-    right: 1,
-    bottom: 2,
-    left: 3,
-  };
-
   convertRouteCoordinatesToMovements(routeCoordinates) {
     const movements = [];
-
     let currentMovementDirection = null;
     let currentMovementIndex = -1;
 
     for (let i = 1; i < routeCoordinates.length; i++) {
       let newMovementDirection;
 
-      if (routeCoordinates[i - 1].coordX > routeCoordinates[i].coordX) {
-        newMovementDirection = this.Directions.left;
+      if (
+        routeCoordinates[i - 1].xCoordinate > routeCoordinates[i].xCoordinate
+      ) {
+        newMovementDirection = this.DIRECTIONS.left;
       }
 
-      if (routeCoordinates[i - 1].coordY > routeCoordinates[i].coordY) {
-        newMovementDirection = this.Directions.top;
+      if (
+        routeCoordinates[i - 1].yCoordinate > routeCoordinates[i].yCoordinate
+      ) {
+        newMovementDirection = this.DIRECTIONS.top;
       }
 
-      if (routeCoordinates[i - 1].coordX < routeCoordinates[i].coordX) {
-        newMovementDirection = this.Directions.right;
+      if (
+        routeCoordinates[i - 1].xCoordinate < routeCoordinates[i].xCoordinate
+      ) {
+        newMovementDirection = this.DIRECTIONS.right;
       }
 
-      if (routeCoordinates[i - 1].coordY < routeCoordinates[i].coordY) {
-        newMovementDirection = this.Directions.bottom;
+      if (
+        routeCoordinates[i - 1].yCoordinate < routeCoordinates[i].yCoordinate
+      ) {
+        newMovementDirection = this.DIRECTIONS.bottom;
       }
 
       if (newMovementDirection !== currentMovementDirection) {
@@ -367,9 +375,9 @@ class Test extends Component {
 
     const allSteps = movements.reduce((r, a) => r + a.steps, 0);
     let currentTranslateX =
-      startCoordinate.coordX / islandWidthCoordinatesOnePercent;
+      startCoordinate.xCoordinate / islandWidthCoordinatesOnePercent;
     let currentTranslateY =
-      startCoordinate.coordY / islandHeightCoordinatesOnePercent;
+      startCoordinate.yCoordinate / islandHeightCoordinatesOnePercent;
     let animationKeyframePercent = 0;
 
     keyframes.push({
@@ -504,11 +512,9 @@ class Test extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState, prevContext) {
-    // console.log(this.context.island.npcRoutes)
-    console.log(prevContext)
-    if (prevContext !== this.context.island.npcRoutes) {
-      console.log('Hello')
+  componentDidUpdate() {
+    if (this.context.isIslandInitialized) {
+      this.scheduledAnimations$.next();
     }
   }
 
@@ -520,7 +526,7 @@ class Test extends Component {
     this.scheduledAnimations$
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(() => {
-        this.startNPCAnimation()
+        this.startNPCAnimation();
       });
   }
 
@@ -570,6 +576,22 @@ class Test extends Component {
                 />
               </Tile>
             )),
+            // this.context.island.npcRoutes.map((route, index) => (
+            //   <Tile
+            //     key={index}
+            //     xCoordinate={route.xCoordinate}
+            //     yCoordinate={route.yCoordinate}
+            //     scale={1}
+            //   >
+            //     <div style={{
+            //       width: '100%',
+            //       height: '100%',
+            //       backgroundColor: 'green'
+            //     }}>
+            //       { route.xCoordinate } - { route.yCoordinate }
+            //     </div>
+            //   </Tile>
+            // ))
           ]}
           animations={[]}
         />
