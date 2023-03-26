@@ -49,17 +49,13 @@
     background-color: rgba(0, 0, 0, 0.445);
     border-radius: 10px;
     border: 2px dashed rgb(156, 104, 37);
-    width: 90%;
-    height: 300px;
+    width: 100%;
+    height: auto;
     overflow: auto;
+    text-align: justify;
+    padding: 10px;
 }
-.exp-items-container{
-    background-color: rgba(0, 0, 0, 0.445);
-    border-radius: 10px;
-    border: 2px dashed rgb(156, 104, 37);
-    width: 90%;
-    height: 60px;
-}
+
 .modal-exp-btn{
     background-image: url("../../../public/images/ui/btn_bg_2.png");
     width: 200px;
@@ -75,7 +71,7 @@
     background-size: cover;
     background-color: rgba(0, 136, 255, 0);
     color: aliceblue;
-    padding: 20px;
+    padding: 10px;
 }
 @media only screen and (max-height: 480px) {
     .ecard-text{

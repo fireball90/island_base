@@ -270,7 +270,7 @@ class SlotGame extends Component {
   gameCost() {
     console.log("Levonás");
     axios
-      .put("https://localhost:7276/api/Player/StartSlotMachine", {
+      .put("https://localhost:7276/api/Player/CollectRewards", {
         coins: -10,
         woods: 0,
         stones: 0,
@@ -285,7 +285,7 @@ class SlotGame extends Component {
   winPost() {
     console.log("Hozzáadás");
     axios
-      .put("https://localhost:7276/api/Player/StartSlotMachine", {
+      .put("https://localhost:7276/api/Player/CollectRewards", {
         coins: 20,
         woods: 0,
         stones: 0,
@@ -300,7 +300,7 @@ class SlotGame extends Component {
   jackpotPost() {
     console.log("Jackpot");
     axios
-      .put("https://localhost:7276/api/Player/StartSlotMachine", {
+      .put("https://localhost:7276/api/Player/CollectRewards", {
         coins: 20,
         woods: 10,
         stones: 10,
@@ -326,6 +326,7 @@ class SlotGame extends Component {
 
     if (newSlot1 === newSlot2 && newSlot2 === newSlot3) {
       this.setResult(2);
+      this.jackpotPost();
     } else if (
       newSlot1 === newSlot2 ||
       newSlot2 === newSlot3 ||
@@ -335,7 +336,6 @@ class SlotGame extends Component {
       this.winPost();
     } else {
       this.setResult(0);
-      this.jackpotPost();
     }
   }
 
@@ -383,7 +383,7 @@ class SlotGame extends Component {
               <div className="result-container d-flex justify-content-center">
                 <button
                   className="slot-btn"
-                  onClick={() => this.spins$.next()}
+                  onClick={() => {this.spins$.next();this.gameCost()}}
                 ></button>
                 <button className="close-slot-btn" onClick={this.props.onHide}>
                   Bezárás

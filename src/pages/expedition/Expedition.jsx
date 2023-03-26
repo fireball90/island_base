@@ -38,32 +38,29 @@ export default function Expedition() {
       >
         <div className="modal-exp-container">
         <Modal.Body>
-          {expData.map((expData)=>(
-            <div className="successful-register-modal" key={expData.id}>
-              <div closeButton>
-                <div id="contained-modal-title-vcenter">
-                  {expData.title}
+            <div className="" key={expData.id}>
+                <div className="text-center">
+                  <h4>{expData.title}</h4>
                 </div>
-              </div>
               <div className="exp-message-container text-white">
                 <p>
                   {expData.message}
                 </p>
-              </div>
-              <div className="exp-message-container text-center text-white">
-                <p>
-                  <span><img src="../images/icons/coin.png" alt="Érme" title="Érme"></img>{expData.coins}</span>
-                  <span><img src="../images/icons/wood.png" alt="Fa" title="Fa"></img>{expData.woods}</span>
-                  <span><img src="../images/icons/stone.png" alt="Kő" title="Kő"></img>{expData.stones}</span>
-                  <span><img src="../images/icons/steel.png" alt="Vas" title="Vas"></img>{expData.irons}</span>
-                  <span><img src="../images/icons/coin.png" alt="XP" title="XP"></img>{expData.experience}</span>
+                <p className="text-center">
+                  <span><img src="../images/icons/coin.png" alt="Érme" title="Érme"></img> {expData.coins} - </span>
+                  <span><img src="../images/icons/wood.png" alt="Fa" title="Fa"></img> {expData.woods} - </span>
+                  <span><img src="../images/icons/stone.png" alt="Kő" title="Kő"></img> {expData.stones} - </span>
+                  <span><img src="../images/icons/steel.png" alt="Vas" title="Vas"></img> {expData.irons} - </span>
+                  <span><img src="../images/icons/xp.png" alt="XP" title="XP"></img> {expData.experience} </span>
                 </p>
               </div>
+{/*               <div className="exp-message-container text-center text-white">
+
+              </div> */}
               <div className="d-flex justify-content-center">
                 <button onClick={props.onHide} className="modal-exp-btn">Bezárás</button>
               </div>
             </div>
-          ))}
         </Modal.Body>
         </div>
       </Modal>

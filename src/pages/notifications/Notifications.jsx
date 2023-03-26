@@ -71,7 +71,7 @@ export default function Notifications() {
                         Coin - {notification.coins} db
                       </p>
                       <p>
-                        <img src="../images/icons/coin.png" alt="xp"></img>XP -
+                        <img src="../images/icons/xp.png" alt="xp"></img>XP -
                         {notification.experience} pont
                       </p>
                     </div>
