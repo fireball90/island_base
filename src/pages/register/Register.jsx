@@ -26,13 +26,9 @@ export default function Register() {
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
           setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
-        } else if (error.code === "EEXIST") {
-          setErrorMessage(
-            "A felhasználónév vagy az e-mail cím már regisztrálva lett a rendszerben. Kérjük, használj másikat."
-          );
         } else {
           setErrorMessage(
-            "A jelszó tartalmazzon egy kisbetűt, egy nagybetűt és egy számot!"
+            "A felhasználónév vagy az e-mail cím már regisztrálva lett a rendszerben. Kérjük, használj másikat."
           );
         }
       });
