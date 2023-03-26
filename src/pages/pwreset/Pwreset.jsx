@@ -17,7 +17,7 @@ export default function Pwreset() {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if (email == "") {
+    if (email === "") {
       setErrorMessage('Adjon meg egy email címet!');
       return;
     }

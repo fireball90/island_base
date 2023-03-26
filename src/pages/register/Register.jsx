@@ -1,11 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import '../register/register.css';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
+import HudContext from "../../contexts/HudContext";
 
 
 export default function Register() {
+  const { setIsHudDisplayed } = useContext(HudContext);
+  
   const [modalShow, setModalShow] = React.useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const { register, handleSubmit, watch, formState: { errors } } = useForm()
@@ -29,6 +32,9 @@ export default function Register() {
       })
   };
 
+  useEffect(() => {
+    setIsHudDisplayed(false);
+  }, []);
 
   return <div className='d-flex justify-content-center align-items-center'>
     <div className='register-container justify-content-center d-flex align-items-center '>

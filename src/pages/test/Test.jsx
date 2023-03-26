@@ -10,6 +10,8 @@ import BuildingModal from "../../components/building-modal/BuildingModal";
 import BuildingNotification from "../../components/management-island/building-request-notification/BuildingRequestNotification";
 import axios from "axios";
 import { timer, expand, Subject, takeUntil, skip, take } from "rxjs";
+import { AnimateKeyframes } from "react-simple-animate";
+import NPC from "../../components/management-island/npc/NPC";
 
 export default function TestPage() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -34,6 +36,7 @@ class Test extends Component {
       openedBuilding: null,
       openedBuildingRemainingTime: 0,
       currentlyRunningAnimations: [],
+      currentAnimationIndex: 0,
     };
 
     this.openBuildingModal = (openedBuilding) => {
@@ -114,8 +117,7 @@ class Test extends Component {
     this.componentDestroyed$ = new Subject();
     this.scheduledAnimations$ = new Subject().pipe(
       take(1),
-      expand(() => timer(Math.floor(Math.random() * 5000) + 5000)),
-      take(1)
+      expand(() => timer(Math.floor(Math.random() * 5000) + 5000))
     );
 
     this.DIRECTIONS = {
@@ -124,6 +126,8 @@ class Test extends Component {
       bottom: 2,
       left: 3,
     };
+
+    this.MAX_ANIMATIONS = 6;
   }
 
   freeBuildingLocations() {
@@ -152,20 +156,19 @@ class Test extends Component {
       sprite
     );
 
-    console.log(animation);
+    const now = new Date();
+    const currentlyRunningAnimations =
+      this.state.currentlyRunningAnimations.filter(
+        (animation) => animation.endTime.getTime() > now.getTime()
+      );
 
-    // const extendedNPCAnimations = this.state.npcAnimations.slice();
-    // extendedNPCAnimations.push(npcAnimation);
-
-    // let npcAnimations = this.state.npcAnimations;
-    // npcAnimations = this.animationGarbageCollect(npcAnimations);
-
-    // if (npcAnimations.length < 6) {
-    //   this.setState((state) => ({
-    //     ...state,
-    //     npcAnimations: extendedNPCAnimations,
-    //   }));
-    // }
+    if (currentlyRunningAnimations.length < 6) {
+      this.setState((state) => ({
+        ...state,
+        currentAnimationIndex: animation.index,
+        currentlyRunningAnimations: [...currentlyRunningAnimations, animation],
+      }));
+    }
   }
 
   animationGarbageCollect(animations) {
@@ -368,32 +371,34 @@ class Test extends Component {
   }
 
   createNPCAnimation(startCoordinate, movements, sprite) {
-    const keyframes = [];
-    const islandWidthCoordinatesOnePercent = 0.3;
-    const islandHeightCoordinatesOnePercent = 0.2;
-    const stepTime = 3.5;
+    const ISLAND_WIDTH_COORDINATES_PERCENT = 0.5;
+    const ISlAND_HEIGHT_COODINATES_PERCENT = 0.3;
+    const TIME_PER_STEP = 2;
 
-    const allSteps = movements.reduce((r, a) => r + a.steps, 0);
+    const STEPS_COUNT = movements.reduce((r, a) => r + a.steps, 0);
+
     let currentTranslateX =
-      startCoordinate.xCoordinate / islandWidthCoordinatesOnePercent;
+      startCoordinate.xCoordinate / ISLAND_WIDTH_COORDINATES_PERCENT;
     let currentTranslateY =
-      startCoordinate.yCoordinate / islandHeightCoordinatesOnePercent;
+      startCoordinate.yCoordinate / ISlAND_HEIGHT_COODINATES_PERCENT;
     let animationKeyframePercent = 0;
 
-    keyframes.push({
-      0: `transform: translateX(${currentTranslateX}%) translateY(${currentTranslateY}%);`,
-    });
+    const keyframes = [
+      {
+        0: `transform: translateX(${currentTranslateX}%) translateY(${currentTranslateY}%);`,
+      },
+    ];
 
     for (const movement of movements) {
       let keyframe = {};
 
-      animationKeyframePercent += movement.steps / (allSteps / 100);
+      animationKeyframePercent += movement.steps / (STEPS_COUNT / 100);
       if (animationKeyframePercent > 100) animationKeyframePercent = 100;
 
       switch (movement.direction) {
-        case this.Directions.top:
+        case this.DIRECTIONS.top:
           currentTranslateY -=
-            movement.steps / islandHeightCoordinatesOnePercent;
+            movement.steps / ISlAND_HEIGHT_COODINATES_PERCENT;
           keyframe[
             animationKeyframePercent
           ] = `transform: translateX(${currentTranslateX}%) translateY(${currentTranslateY}%);`;
@@ -401,9 +406,9 @@ class Test extends Component {
           keyframes.push(keyframe);
 
           break;
-        case this.Directions.right:
+        case this.DIRECTIONS.right:
           currentTranslateX +=
-            movement.steps / islandWidthCoordinatesOnePercent;
+            movement.steps / ISLAND_WIDTH_COORDINATES_PERCENT;
           keyframe[
             animationKeyframePercent
           ] = `transform: translateX(${currentTranslateX}%) translateY(${currentTranslateY}%);`;
@@ -411,9 +416,9 @@ class Test extends Component {
           keyframes.push(keyframe);
 
           break;
-        case this.Directions.bottom:
+        case this.DIRECTIONS.bottom:
           currentTranslateY +=
-            movement.steps / islandHeightCoordinatesOnePercent;
+            movement.steps / ISlAND_HEIGHT_COODINATES_PERCENT;
           keyframe[
             animationKeyframePercent
           ] = `transform: translateX(${currentTranslateX}%) translateY(${currentTranslateY}%);`;
@@ -421,9 +426,9 @@ class Test extends Component {
           keyframes.push(keyframe);
 
           break;
-        case this.Directions.left:
+        case this.DIRECTIONS.left:
           currentTranslateX -=
-            movement.steps / islandWidthCoordinatesOnePercent;
+            movement.steps / ISLAND_WIDTH_COORDINATES_PERCENT;
           keyframe[
             animationKeyframePercent
           ] = `transform: translateX(${currentTranslateX}%) translateY(${currentTranslateY}%)`;
@@ -432,83 +437,82 @@ class Test extends Component {
 
           break;
         default:
-          console.log("Error while generate animation");
       }
     }
 
-    const animationFrequency = 8;
-    const walkingKeyframes = [];
-    const walkingAnimationKeyframePercent =
-      100 / (allSteps * animationFrequency);
+    const ANIMATION_FREQUENCY = 8;
+    const WALKING_ANIMATION_KEYFRAME_PERCENT =
+      100 / (STEPS_COUNT * ANIMATION_FREQUENCY);
 
+    const walkingKeyframes = [];
     let spritePosition = 0;
     let currentWalkingAnimationKeyframePercent = 0;
 
     for (const movement of movements) {
       for (let step = 0; step < movement.steps; step++) {
-        for (let keyframes = 0; keyframes < animationFrequency; keyframes++) {
+        for (let keyframes = 0; keyframes < ANIMATION_FREQUENCY; keyframes++) {
           const walkingKeyframe = {};
 
           switch (movement.direction) {
-            case this.Directions.top:
+            case this.DIRECTIONS.top:
               walkingKeyframe[
                 currentWalkingAnimationKeyframePercent
               ] = `background-image: url(${sprite}); background-position: ${
-                (100 / 3) * spritePosition
-              }% ${(100 / 3) * 2}%`;
+                (100 / 3) * 2
+              }% ${(100 / 2) * spritePosition}%`;
               walkingKeyframes.push(walkingKeyframe);
 
               break;
-            case this.Directions.right:
+            case this.DIRECTIONS.right:
               walkingKeyframe[
                 currentWalkingAnimationKeyframePercent
               ] = `background-image: url(${sprite}); background-position: ${
-                (100 / 3) * spritePosition
-              }% ${100 / 3}%`;
+                100 / 3
+              }% ${(100 / 2) * spritePosition}%`;
               walkingKeyframes.push(walkingKeyframe);
 
               break;
-            case this.Directions.bottom:
+            case this.DIRECTIONS.bottom:
               walkingKeyframe[
                 currentWalkingAnimationKeyframePercent
-              ] = `background-image: url(${sprite}); background-position: ${
-                (100 / 3) * spritePosition
-              }% ${0}%`;
+              ] = `background-image: url(${sprite}); background-position: ${0}% ${
+                (100 / 2) * spritePosition
+              }%`;
               walkingKeyframes.push(walkingKeyframe);
 
               break;
-            case this.Directions.left:
+            case this.DIRECTIONS.left:
               walkingKeyframe[
                 currentWalkingAnimationKeyframePercent
-              ] = `background-image: url(/assets/sprites/sprite-0001.png); background-position: ${
-                (100 / 3) * spritePosition
-              }% ${100}%`;
+              ] = `background-image: url(${sprite}); background-position: ${100}% ${
+                (100 / 2) * spritePosition
+              }%`;
               walkingKeyframes.push(walkingKeyframe);
 
               break;
             default:
-              console.log("Error while generate animation");
           }
 
-          spritePosition < 3 ? spritePosition++ : (spritePosition = 0);
+          spritePosition < 2 ? spritePosition++ : (spritePosition = 0);
 
           currentWalkingAnimationKeyframePercent +=
-            walkingAnimationKeyframePercent;
+            WALKING_ANIMATION_KEYFRAME_PERCENT;
           if (currentWalkingAnimationKeyframePercent > 100)
             currentWalkingAnimationKeyframePercent = 100;
         }
       }
     }
 
-    const createTime = Date.now();
-    const duration = allSteps * stepTime;
+    const duration = STEPS_COUNT * TIME_PER_STEP;
+    const endTime = new Date();
+    endTime.setMilliseconds(endTime.getMilliseconds() + duration * 1000);
 
     return {
       duration: duration,
       keyframes: keyframes,
       walkingKeyframes: walkingKeyframes,
-      createTime: new Date(),
-      endTime: new Date(createTime + duration * 1000),
+      endTime: endTime,
+      index: this.state.currentAnimationIndex + 1,
     };
   }
 
@@ -528,6 +532,13 @@ class Test extends Component {
       .subscribe(() => {
         this.startNPCAnimation();
       });
+  }
+
+  currentlyRunningAnimations() {
+    const now = new Date();
+    return this.state.currentlyRunningAnimations.filter(
+      (animaton) => animaton.endTime.getTime() > now.getTime()
+    );
   }
 
   componentWillUnmount() {
@@ -576,24 +587,21 @@ class Test extends Component {
                 />
               </Tile>
             )),
-            // this.context.island.npcRoutes.map((route, index) => (
-            //   <Tile
-            //     key={index}
-            //     xCoordinate={route.xCoordinate}
-            //     yCoordinate={route.yCoordinate}
-            //     scale={1}
-            //   >
-            //     <div style={{
-            //       width: '100%',
-            //       height: '100%',
-            //       backgroundColor: 'green'
-            //     }}>
-            //       { route.xCoordinate } - { route.yCoordinate }
-            //     </div>
-            //   </Tile>
-            // ))
           ]}
-          animations={[]}
+          animations={this.state.currentlyRunningAnimations.map((animation) => (
+            <AnimateKeyframes
+              play
+              duration={animation.duration}
+              direction="normal"
+              keyframes={animation.keyframes}
+              key={animation.index}
+            >
+              <NPC
+                walkingKeyframes={animation.walkingKeyframes}
+                duration={animation.duration}
+              />
+            </AnimateKeyframes>
+          ))}
         />
         {this.state.isModalShowed ? (
           <BuildingModal
