@@ -52,35 +52,35 @@ export default class Building extends Component {
 
   calculateProducedItemsSinceLastCollection(item) {
     const now = new Date();
-    const buildDate = new Date(this.props.building.buildDate);
-    const lastCollectDate = new Date(this.props.building.lastCollectDate);
+    const currentProductionDate = new Date(this.props.building.buildDate);
+    const lastCollectDate = new Date(this.props.building.lastCollectDate)
 
-    const ticksFromBuild = Math.floor(
-      (now.getTime() - buildDate.getTime()) /
-        this.props.building.productionInterval
-    );
-    const ticksBetweenBuildAndLastCollection = Math.floor(
-      (lastCollectDate.getTime() - buildDate.getTime()) /
-        this.props.building.productionInterval
-    );
+    let productionsFromLastCollection = 0;
 
-    const elapsedTicksFromLastCollection =
-      ticksFromBuild - ticksBetweenBuildAndLastCollection;
+    while(currentProductionDate.getTime() < now.getTime()) {
+      if (currentProductionDate.getTime() > lastCollectDate.getTime()) {
+        productionsFromLastCollection++
+      }
+      
+      currentProductionDate.setTime(
+        currentProductionDate.getTime() + this.props.building.productionInterval
+      )
+    }
 
-    return this.calculateProducedItem(item * elapsedTicksFromLastCollection);
+    return this.calculateProducedItem(item * productionsFromLastCollection);
   }
 
   calculateFirstProductionTime() {
     const now = new Date();
-    const nextProductionDate = new Date(this.props.building.buildDate);
+    const currentProductionDate = new Date(this.props.building.buildDate);
 
-    while (nextProductionDate.getTime() <= now.getTime()) {
-      nextProductionDate.setTime(
-        nextProductionDate.getTime() + this.props.building.productionInterval
+    while (currentProductionDate.getTime() <= now.getTime()) {
+      currentProductionDate.setTime(
+        currentProductionDate.getTime() + this.props.building.productionInterval
       );
     }
 
-    return nextProductionDate.getTime() - now.getTime() + 1000;
+    return currentProductionDate.getTime() - now.getTime() + 1000;
   }
 
   hasResourceProduction() {
@@ -138,11 +138,9 @@ export default class Building extends Component {
     }));
 
     const collectDate = new Date();
-    collectDate.setHours(collectDate.getHours() + 1);
-
     axios
       .post("https://localhost:7276/api/Building/CollectItems", {
-        collectDate: collectDate.toISOString(),
+        collectDate: moment(collectDate).format(),
         buildingType: this.props.building.buildingType,
       })
       .then((response) => {
