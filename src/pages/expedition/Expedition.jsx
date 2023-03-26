@@ -3,7 +3,6 @@ import "../expedition/expedition.css";
 import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 
 export default function Expedition() {
@@ -19,8 +18,6 @@ export default function Expedition() {
     )
     .then((response) => {
       setExpData(response.data);
-    })
-    .then(() =>{
       setModalShow(true);
     })
     .catch(() => {
