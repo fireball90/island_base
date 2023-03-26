@@ -99,9 +99,9 @@ export default function Market() {
   return (
     <Layout
       navigations={[
-        <button className="market-btn" onClick={() => allChange()}>Összes hirdetés</button>,
-        <button className="market-btn" onClick={() => ownChange()}>Saját hirdetés</button>,
-        <Link to='/sell'><button className="market-btn">Hirdetés feladása</button></Link>,
+        <button className="market-btn font-btn" onClick={() => allChange()}>Összes hirdetés</button>,
+        <button className="market-btn font-btn" onClick={() => ownChange()}>Saját hirdetés</button>,
+        <Link to='/sell'><button className="market-btn font-btn">Hirdetés feladása</button></Link>,
       ]}
       title="Jelenlegi piaci hirdetések"
     >
@@ -139,9 +139,9 @@ export default function Market() {
                       </div>
                       <div className="col-3 text-center">
                         {count===0 ? (
-                            <button className="market-update-btn" onClick={() => takeExchange(exchange.id)}>Csere</button>
+                            <button className="market-update-btn font-btn" onClick={() => takeExchange(exchange.id)}>Csere</button>
                         ) : (
-                            <button className="market-delete-btn" onClick={() => deleteExchange(exchange.id)}>Törlés</button>
+                            <button className="market-delete-btn font-btn" onClick={() => deleteExchange(exchange.id)}>Törlés</button>
                         )}
                       </div>
                     </div>

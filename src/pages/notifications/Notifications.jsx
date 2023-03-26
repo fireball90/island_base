@@ -80,7 +80,7 @@ export default function Notifications() {
                       <p>{moment(notification.createDate).format("llll")}</p>
                     </div>
                     <div className="col-3 text-center">
-                      <button className="not-delete-btn" onClick={() => deleteNotification(notification.id)}>Törlés</button>
+                      <button className="not-delete-btn font-btn" onClick={() => deleteNotification(notification.id)}>Törlés</button>
                     </div>
                   </div>
                 </div>

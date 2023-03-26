@@ -385,7 +385,7 @@ class SlotGame extends Component {
                   className="slot-btn"
                   onClick={() => {this.spins$.next();this.gameCost()}}
                 ></button>
-                <button className="close-slot-btn" onClick={this.props.onHide}>
+                <button className="close-slot-btn font-btn" onClick={this.props.onHide}>
                   Bezárás
                 </button>
               </div>

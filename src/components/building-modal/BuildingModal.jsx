@@ -153,7 +153,7 @@ export default function BuildingModal({
               />
             </div>
             <div className="d-flex align-items-center justify-content-center">
-              <button className="upgrade-build-btn" onClick={upgradeBuilding}>
+              <button className="upgrade-build-btn font-btn" onClick={upgradeBuilding}>
                 Fejlesztés
               </button>
               <OverlayTrigger

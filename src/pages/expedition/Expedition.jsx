@@ -58,7 +58,7 @@ export default function Expedition() {
 
               </div> */}
               <div className="d-flex justify-content-center">
-                <button onClick={props.onHide} className="modal-exp-btn">Bezárás</button>
+                <button onClick={props.onHide} className="modal-exp-btn font-btn">Bezárás</button>
               </div>
             </div>
         </Modal.Body>
@@ -86,7 +86,7 @@ export default function Expedition() {
               ></img>
               <div className="ecard-body">
                 <button
-                  className="expedition-btn"
+                  className="expedition-btn font-btn"
                   title="KÖNNYŰ"
                   onClick={() => selectExpeditionHandler(1)}
                 >
@@ -106,7 +106,7 @@ export default function Expedition() {
                 title="Normál"
               ></img>
               <div className="ecard-body">
-                  <button className="expedition-btn" title="NORMÁL"onClick={() => selectExpeditionHandler(2)}>
+                  <button className="expedition-btn font-btn" title="NORMÁL"onClick={() => selectExpeditionHandler(2)}>
                     NORMÁL
                   </button>
                 <p className="ecard-text">
@@ -123,7 +123,7 @@ export default function Expedition() {
                 title="Nehéz"
               ></img>
               <div className="ecard-body">
-                  <button className="expedition-btn" title="NEHÉZ"onClick={() => selectExpeditionHandler(3)}>
+                  <button className="expedition-btn font-btn" title="NEHÉZ"onClick={() => selectExpeditionHandler(3)}>
                     NEHÉZ
                   </button>
                 <p className="ecard-text">
