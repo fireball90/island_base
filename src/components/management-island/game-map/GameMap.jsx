@@ -554,7 +554,7 @@ export default class GameMap extends Component {
             case this.Directions.left:
               walkingKeyframe[
                 currentWalkingAnimationKeyframePercent
-              ] = `background-image: url(/assets/sprites/sprite-0001.png); background-position: ${
+              ] = `background-image: url(${sprite}); background-position: ${
                 (100 / 3) * spritePosition
               }% ${100}%`;
               walkingKeyframes.push(walkingKeyframe);

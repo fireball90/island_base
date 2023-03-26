@@ -3,7 +3,7 @@ import { Subject } from "rxjs";
 import { fromEvent } from "rxjs/internal/observable/fromEvent";
 import { startWith } from "rxjs/internal/operators/startWith";
 import { takeUntil } from "rxjs/internal/operators/takeUntil";
-import GameFieldContext from "../../contexts/GameFieldContext"
+import GameFieldContext from "../../contexts/GameFieldContext";
 
 import style from "./GameField.module.css";
 
@@ -64,7 +64,7 @@ export default class GameField extends Component {
           top: (screenHeight - tileSize * this.props.mapTilesHigh) / 2,
           left: 0,
         },
-        zoom: 0
+        zoom: 0,
       }));
     } else {
       const tileSize = screenHeight / this.props.mapTilesHigh;
@@ -84,7 +84,7 @@ export default class GameField extends Component {
           top: 0,
           left: (screenWidth - tileSize * this.props.mapTilesWide) / 2,
         },
-        zoom: 0
+        zoom: 0,
       }));
     }
   }
@@ -278,10 +278,12 @@ export default class GameField extends Component {
 
   render() {
     return this.isAspectRatioSupported() ? (
-      <GameFieldContext.Provider value={{
-        zoom: this.state.zoom,
-        tileSize: this.state.tileSize
-      }}>
+      <GameFieldContext.Provider
+        value={{
+          zoom: this.state.zoom,
+          tileSize: this.state.tileSize,
+        }}
+      >
         <div
           className={style.camera}
           onMouseMove={(event) => this.mouseMove$.next(event)}
@@ -303,14 +305,15 @@ export default class GameField extends Component {
             onDragStart={(event) => event.preventDefault()}
             style={{
               ...this.state.mapSizeAndPosition,
-              backgroundImage: `url(${this.props.mapSpritePath})`
+              backgroundImage: `url(${this.props.mapSpritePath})`,
             }}
           >
-            {
-              this.props.staticObjects.map((objects) => (
-                objects.map((object) => (object))
-              ))
-            }
+            <div className={style.animations}>
+              {this.props.animations.map((animation) => animation)}
+            </div>
+            {this.props.staticObjects.map((objects) =>
+              objects.map((object) => object)
+            )}
           </div>
         </div>
       </GameFieldContext.Provider>

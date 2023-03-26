@@ -243,10 +243,10 @@ export default function ManagementAbilities() {
       </div>
       <div className="d-flex justify-content-center gap-2">
         <button className={style.btnBase} onClick={handleSave}>
-          Mentés
+          <span>Mentés</span>
         </button>
         <button className={style.btnBase} onClick={handleCancel}>
-          Visszavonás
+          <span>Visszavonás</span>
         </button>
       </div>
     </div>

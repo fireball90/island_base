@@ -103,7 +103,7 @@ export default function Sell() {
                   className="form-control"
                 ></input>
                 <div className="d-flex justify-content-center pt-3">
-                  <button className="sell-btn" type="submit">
+                  <button className="sell-btn font-btn" type="submit">
                     Hirdetés feladása
                   </button>
                 </div>
@@ -112,7 +112,7 @@ export default function Sell() {
           </div>
           <div className="why-tho d-flex justify-content-center align-items-center">
             <Link className="pb-3" to="/market">
-              <button className="market-btn">Mégse</button>
+              <button className="market-btn font-btn">Mégse</button>
             </Link>
           </div>
         </div>

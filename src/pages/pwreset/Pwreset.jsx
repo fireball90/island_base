@@ -17,7 +17,7 @@ export default function Pwreset() {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if (email == "") {
+    if (email === "") {
       setErrorMessage('Adjon meg egy email címet!');
       return;
     }
@@ -80,7 +80,7 @@ export default function Pwreset() {
             </div>
             <div className="fs-6 text-danger text-center bg-warning">{ errorMessage }</div>
             <div className="d-flex justify-content-center">
-              <button type="submit" className="btn-button-reset">
+              <button type="submit" className="btn-button-reset font-btn">
                 Küldés
               </button>
             </div>

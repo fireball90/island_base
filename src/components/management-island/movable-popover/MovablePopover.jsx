@@ -10,7 +10,7 @@ const MovablePopover = React.forwardRef(
 
     return (
       <Popover ref={ref} body {...props} className="border-0 rounded-0">
-        <div className="bg-pop">{children}</div>
+        <div className="bg-pop font-btn">{children}</div>
       </Popover>
     );
   }
