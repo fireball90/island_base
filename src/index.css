@@ -1,3 +1,20 @@
+@font-face {
+  font-family: "BebasNeue"; 
+  src: local("BebasNeue"),
+    url("./fonts/BebasNeue.ttf") format("truetype");
+}
+@font-face {
+  font-family: "PoetsenOne"; 
+  src: local("PoetsenOne"),
+    url("./fonts/PoetsenOne.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Propagan"; 
+  src: local("Propagan"),
+    url("./fonts/Propagan.ttf") format("truetype");
+}
+
+
 body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -29,12 +46,19 @@ body {
       color-stop(1, rgb(143, 70, 27)));
 }
 
-h1,h2,h3,h4,h5,h6 {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+h1,h2,h3 {
+  font-family: "Propagan", Verdana, Geneva, Tahoma, sans-serif;
+}
+h4,h5,h6{
+  font-family: "PoetsenOne", Verdana, Geneva, Tahoma, sans-serif;
 }
 
 a, p, li, span {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "PoetsenOne", Verdana, Geneva, Tahoma, sans-serif;
+}
+.font-btn{
+  font-family: "PoetsenOne", Verdana, Geneva, Tahoma, sans-serif;
+  text-shadow: 2px 2px black;
 }
 
 .popover-body {

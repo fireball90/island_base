@@ -161,7 +161,7 @@ export default function Login() {
               </div>
             ) : null}
             <div className="d-flex justify-content-center">
-              <button className="btn-button1" type="submit" disabled={isLoginPending}>
+              <button className="btn-button1 font-btn" type="submit" disabled={isLoginPending}>
                 Belépés
               </button>
             </div>

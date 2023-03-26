@@ -130,7 +130,7 @@ export default function SelectIsland() {
           </div>
         </div>
         <div class="save-button-container">
-          <button disabled={!selectedIsland || creatingPending} type="submit" className="selectisland-btn">
+          <button disabled={!selectedIsland || creatingPending} type="submit" className="selectisland-btn font-btn">
             Sziget mentése
           </button>
         </div>

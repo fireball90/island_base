@@ -38,7 +38,7 @@ export default function UnbuiltBuilding({ building, isBuilt, hasEnoughMaterials 
                 className={style.btnBuilding}
                 onClick={handleBuildRequest}
               >
-                Megépít
+                <span>Megépít</span>
               </button>
               <OverlayTrigger
                 trigger="focus"
