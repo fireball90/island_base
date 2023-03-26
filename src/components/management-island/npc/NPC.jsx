@@ -1,10 +1,10 @@
-import { Component } from 'react';
+import { Component, PureComponent } from 'react';
 import { AnimateKeyframes } from 'react-simple-animate'
 import GameFieldContext from '../../../contexts/GameFieldContext';
 
 import './NPC.css'
 
-export default class NPC extends Component {
+export default class NPC extends PureComponent {
     static contextType = GameFieldContext;
     
     // eslint-disable-next-line no-useless-constructor
