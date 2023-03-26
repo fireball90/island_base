@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import HudContext from '../../contexts/HudContext';
-import style from './Island.module.css'
+import ManagementIsland from '../../components/management-island/ManagementIsland';
 
 export default function Island() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -10,9 +10,7 @@ export default function Island() {
   }, [])
 
   return (
-      <div className={style.container}>
-        {/* <ManagementIsland /> */}
-      </div>
+      <ManagementIsland />
     ) 
 }
 

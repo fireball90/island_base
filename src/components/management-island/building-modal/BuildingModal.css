@@ -3,7 +3,7 @@
 }*/
 .building-modal .modal-content {
     border-radius: 0.5rem !important;
-    background-image: url('../../../public/images/ui/contentbg2.png');
+    background-image: url('../../../../public/images/ui/contentbg2.png');
     background-size: cover;
     color: white;
 }
@@ -23,7 +23,7 @@
 .close {
     height: 3rem;
     width: 3rem;
-    background-image: url('../../../public/images/ui/close.png');
+    background-image: url('../../../../public/images/ui/close.png');
     background-position: center;
     background-size: cover;
     position: absolute;
@@ -51,7 +51,7 @@
 
 
 .upgrade-build-btn{
-    background-image: url("../../../public/images/ui/btn_bg_update.png");
+    background-image: url("../../../../public/images/ui/btn_bg_update.png");
     width: 130px;
     height: 70px;
     border: none;

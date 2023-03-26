@@ -20,7 +20,6 @@ import PlayerContext from "./contexts/PlayerContext";
 import UserContext from "./contexts/UserContext";
 import HudContext from "./contexts/HudContext";
 import Management from "./pages/management/Management";
-import TestPage from "./pages/test/Test";
 import axios from "axios";
 import { forkJoin, from } from "rxjs";
 
@@ -296,7 +295,7 @@ export default class App extends Component {
                         <ProtectedRoute
                           guards={[new Guard(this.state.isLogined, "/")]}
                         >
-                          <TestPage />
+                          <Island />
                         </ProtectedRoute>
                       }
                     />

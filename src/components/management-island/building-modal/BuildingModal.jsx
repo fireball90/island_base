@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { ListGroup, Modal } from "react-bootstrap";
 import { OverlayTrigger } from "react-bootstrap";
 import { Popover } from "react-bootstrap";
-import IslandContext from "../../contexts/IslandContext";
+import IslandContext from "../../../contexts/IslandContext";
 import moment from "moment";
 
 import "./BuildingModal.css";
@@ -130,7 +130,7 @@ export default function BuildingModal({
             >
               <div>Termelt {item.name}</div>
               <div>
-                {item.quantity}db / {openedBuilding.productionInterval / 6000}{" "}
+                {item.quantity}db / {openedBuilding.productionInterval / 60000}{" "}
                 perc &#40; max {openedBuilding.maximumProductionCount}db &#41;
               </div>
             </ListGroup.Item>
@@ -162,7 +162,6 @@ export default function BuildingModal({
                       Szükséges anyagok
                     </Popover.Header>
                     <Popover.Body className="d-flex flex-column bg-transparent text-center">
-                      {/* <div>{openedBuilding.description}</div> */}
                       <div>Érmék: {openedBuilding.coinsForBuild}</div>
                       <div>Vas: {openedBuilding.stonesForBuild}</div>
                       <div>Kő: {openedBuilding.stonesForBuild}</div>
