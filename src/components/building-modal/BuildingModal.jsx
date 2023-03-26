@@ -35,11 +35,11 @@ export default function BuildingModal({
         setBuildings([...buildingsWithoutOpened]);
         setPlayer({
           ...player,
-          experience: player.experience + upgradedBuilding.experienceReward,
           coins: player.coins - upgradedBuilding.coinsForBuild,
           woods: player.woods - upgradedBuilding.woodsForBuild,
           stones: player.stones - upgradedBuilding.stonesForBuild,
           irons: player.irons - upgradedBuilding.ironsForBuild,
+          experience: player.experience + upgradedBuilding.experienceReward,
         });
 
         closeBuildingModal();
@@ -86,9 +86,7 @@ export default function BuildingModal({
   }
 
   useEffect(() => {
-    console.log('belefut')
     if (openedBuilding.maxLevel > openedBuilding.level) {
-      console.log('Okés')
       axios
         .get(
           `https://localhost:7276/api/Building/GetNextLevelOfBuilding?type=${openedBuilding.buildingType}`

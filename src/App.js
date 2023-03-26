@@ -106,6 +106,27 @@ export default class App extends Component {
       }));
     };
 
+    this.resetPlayer = () => {
+      this.setState((state) => ({
+        ...state,
+        isIslandSelected: false,
+        player: {
+          id: 0,
+          experience: 0,
+          coins: 0,
+          woods: 0,
+          stones: 0,
+          irons: 0,
+          selectedIsland: "",
+          lastExpeditionDate: null,
+          lastBattleDate: null,
+          strength: 0,
+          intelligence: 0,
+          agility: 0,
+        },
+      }));
+    };
+
     this.setIsIslandSelected = (isIslandSelected) => {
       this.state((state) => ({
         ...state,
@@ -181,6 +202,21 @@ export default class App extends Component {
         },
       });
     };
+
+    this.resetIsland = () => {
+      this.setState((state) => ({
+        ...state,
+        isIslandInitialized: false,
+        buildings: [],
+        unbuiltBuildings: [],
+        island: {
+          spritePath: "",
+          buildableLocations: [],
+          npcRoutes: [],
+          npcSprites: [],
+        },
+      }));
+    };
   }
 
   render() {
@@ -221,11 +257,13 @@ export default class App extends Component {
                 buildingToBeBuild: this.state.buildingToBeBuilt,
 
                 setPlayer: this.setPlayer,
+                resetplayer: this.resetPlayer,
                 setBuildings: this.setBuildings,
                 setUnbuiltBuildings: this.setUnbuiltBuildings,
                 initializeIslandFromHttp: this.initializeIslandFromHttp,
+                resetIsland: this.resetIsland,
                 setBuildingToBeBuilt: this.setBuildingToBeBuilt,
-                interruptBuildingRequest: this.interruptBuildingRequest
+                interruptBuildingRequest: this.interruptBuildingRequest,
               }}
             >
               <BrowserRouter>

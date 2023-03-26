@@ -1,13 +1,15 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../expedition/expedition.css";
 import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal';
 
 export default function Expedition() {
   const { setIsHudDisplayed } = useContext(HudContext);
-  
+  const [modalShow, setModalShow] = React.useState(false);
+  const [expData, setExpData] = useState([]);
+
   function selectExpeditionHandler(difficulty) {
 
   axios
@@ -15,7 +17,8 @@ export default function Expedition() {
       `https://localhost:7276/api/Expedition/Expedition?difficulty=${difficulty}`
     )
     .then((response) => {
-      console.log(response.data);
+      setExpData(response.data);
+      setModalShow(true);
     })
     .catch(() => {
       alert("Nem sikerült kapcsolódni a szerverhez");
@@ -25,8 +28,51 @@ export default function Expedition() {
     setIsHudDisplayed(true);
   }, []);
 
+  function ExpeditionResultModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <div className="modal-exp-container">
+        <Modal.Body>
+            <div className="" key={expData.id}>
+                <div className="text-center">
+                  <h4>{expData.title}</h4>
+                </div>
+              <div className="exp-message-container text-white">
+                <p>
+                  {expData.message}
+                </p>
+                <p className="text-center">
+                  <span><img src="../images/icons/coin.png" alt="Érme" title="Érme"></img> {expData.coins} - </span>
+                  <span><img src="../images/icons/wood.png" alt="Fa" title="Fa"></img> {expData.woods} - </span>
+                  <span><img src="../images/icons/stone.png" alt="Kő" title="Kő"></img> {expData.stones} - </span>
+                  <span><img src="../images/icons/steel.png" alt="Vas" title="Vas"></img> {expData.irons} - </span>
+                  <span><img src="../images/icons/xp.png" alt="XP" title="XP"></img> {expData.experience} </span>
+                </p>
+              </div>
+{/*               <div className="exp-message-container text-center text-white">
+
+              </div> */}
+              <div className="d-flex justify-content-center">
+                <button onClick={props.onHide} className="modal-exp-btn">Bezárás</button>
+              </div>
+            </div>
+        </Modal.Body>
+        </div>
+      </Modal>
+    );
+  }
+
   return (
     <Layout navigations={[]} title="Expedíció">
+          <ExpeditionResultModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+      />
       <div className="container-fluid">
         <div className="expedition justify-content-center">
           <h2>Válasszon az expedíciók erősségei közül</h2>
@@ -87,6 +133,7 @@ export default function Expedition() {
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </Layout>

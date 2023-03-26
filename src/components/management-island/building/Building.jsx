@@ -148,8 +148,7 @@ export default class Building extends Component {
       .then((response) => {
         this.props.setCollectedItemsToPlayer(response.data);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         alert("Nem sikerült kapcsolódni a szerverhez!");
       });
   }
