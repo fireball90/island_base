@@ -3,6 +3,7 @@ import "../register/register.css";
 import { useForm } from "react-hook-form";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [modalShow, setModalShow] = React.useState(false);
@@ -226,9 +227,11 @@ function MyVerticallyCenteredModal(props) {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={props.onHide} className="modal-register-btn">
-            Bezárás
-          </button>
+          <Link to="/">
+            <button onClick={props.onHide} className="modal-register-btn">
+              Bezárás
+            </button>
+          </Link>
         </Modal.Footer>
       </div>
     </Modal>
