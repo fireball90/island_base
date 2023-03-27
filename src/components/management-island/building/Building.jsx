@@ -190,6 +190,7 @@ export default class Building extends Component {
           const buildDate = new Date(this.props.building.buildDate);
 
           if (now.getTime() >= buildDate.getTime()) {
+
             this.setState((state) => ({
               ...state,
               timeLeftToBuildingCompletion: 0,
