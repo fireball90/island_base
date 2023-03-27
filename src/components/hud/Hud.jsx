@@ -1,6 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
+import useSound from 'use-sound';
+import music from '../../sounds/music.mp3';
+import click from '../../sounds/click2.wav';
 
 import style from "./Hud.module.css";
 import ExperienceBar from "../experience-bar/ExperienceBar";
@@ -16,6 +19,16 @@ export default function Hud() {
 
   const navigate = useNavigate();
   const cookie = new Cookies();
+
+
+  const [play] = useSound(click, {
+    volume: 0.3
+  });
+
+  const handleClick = () => {
+    play();
+  };
+
 
   function handleLogout() {
     cookie.remove("token");
@@ -57,42 +70,44 @@ export default function Hud() {
         </div>
       </div>
       <div className={style.hudLeft}>
-        <div className={style.playerInformation}>
-          <ProfileImage />
+        <div className={style.playerInformation} >
+          <div onClick={()=>handleClick()}>
+            <ProfileImage/>
+          </div>
           <ExperienceBar experiencePoints={player.experience} />
         </div>
         <nav>
-          <Link to="/island">
+          <Link to="/island" onClick={()=>handleClick()}>
             <img
               alt="Sziget"
               title="Sziget"
               src="../images/ui/build.png"
             ></img>
           </Link>
-          <Link to="/management">
+          <Link to="/management" onClick={()=>handleClick()}>
             <img alt="Management" title="Management" src="../images/ui/management.png"></img>
           </Link>
           <Link to="/war">
             <img alt="Csata" title="Csata" src="../images/ui/war.png"></img>
           </Link>
-          <Link to="/expedition">
+          <Link to="/expedition" onClick={()=>handleClick()}>
             <img
               alt="Expedíció"
               title="Expedíció"
               src="../images/ui/expedition.png"
             ></img>
           </Link>
-          <Link to="/market">
+          <Link to="/market" onClick={()=>handleClick()}>
             <img alt="Piac" title="Piac" src="../images/ui/market.png"></img>
           </Link>
-          <Link to="/tutorial">
+          <Link to="/tutorial" onClick={()=>handleClick()}>
             <img
               alt="Útmutató"
               title="Útmutató"
               src="../images/ui/tutorial.png"
             ></img>
           </Link>
-          <Link to="/notifications">
+          <Link to="/notifications" onClick={()=>handleClick()}>
             <img
               alt="Értesítések"
               title="Értesítések"
@@ -106,6 +121,8 @@ export default function Hud() {
               src="../images/ui/logout.png"
             ></img>
           </button>
+          <div className="">
+          </div>
         </nav>
       </div>
       <Outlet />
