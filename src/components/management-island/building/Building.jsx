@@ -6,6 +6,7 @@ import GameFieldContext from "../../../contexts/GameFieldContext";
 import MovablePopover from "../movable-popover/MovablePopover";
 import moment from "moment";
 
+
 import "./Building.css";
 
 export default class Building extends Component {
@@ -29,6 +30,7 @@ export default class Building extends Component {
         this.props.building.producedWoods
       ),
       timeLeftToBuildingCompletion: 0,
+
     };
 
     const countdownTick = 1000;
@@ -94,6 +96,7 @@ export default class Building extends Component {
   }
 
   notNullProducedItems() {
+
     const notNullProducedItems = [];
 
     if (this.state.producedCoins > 0) {
@@ -224,7 +227,8 @@ export default class Building extends Component {
     this.componentDestroyed$.next();
     this.componentDestroyed$.complete();
   }
-
+  
+  
   render() {
     return this.state.timeLeftToBuildingCompletion === 0 ? (
       <div

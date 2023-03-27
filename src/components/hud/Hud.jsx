@@ -19,16 +19,29 @@ export default function Hud() {
 
   const navigate = useNavigate();
   const cookie = new Cookies();
-
-
-  const [play] = useSound(click, {
-    volume: 0.3
+  
+  const [play1] = useSound(click, {
+    volume: 0.2
   });
 
   const handleClick = () => {
-    play();
+    play1();
   };
 
+  const [play, { stop }] = useSound(music, {
+    volume: 0.1
+  });
+
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  const handleMusic = () =>{
+    if (isPlaying==false){
+      play();
+    }else{
+      stop();
+    }
+    setIsPlaying(!isPlaying)
+  }
 
   function handleLogout() {
     cookie.remove("token");
@@ -42,7 +55,7 @@ export default function Hud() {
   }
 
   return isHudDisplayed ? (
-    <div className={style.layout}>
+    <div className={style.layout}>    
       <div className={style.hudTop}>
         <div className={style.items}>
           <img alt="Érme" title="Érme" src="../images/ui/coin_ui_2.png"></img>
@@ -121,11 +134,19 @@ export default function Hud() {
               src="../images/ui/logout.png"
             ></img>
           </button>
-          <div className="">
+          <div className={style.musicContent}>
+            {isPlaying ? 
+                (<button className={style.musicOn} onClick={() => handleMusic()}>
+                </button>)
+                :
+                (<button className={style.musicOff} onClick={() => handleMusic()}>
+                </button>)
+            }
           </div>
         </nav>
       </div>
       <Outlet />
+
     </div>
   ) : (
     <Outlet />

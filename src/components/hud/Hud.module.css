@@ -61,6 +61,33 @@ font-family: 'Rubik Dirt', cursive;
     image-rendering:auto;
 }
 
+.musicContent{
+    position: fixed;
+    bottom:0px;
+    right: 0px;
+}
+
+.musicOn{
+    background-image: url('../../../public/images/ui/music_on.png');
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    image-rendering: auto;
+    border: none;
+    background-color: transparent;
+}
+
+.musicOff{
+    background-image: url('../../../public/images/ui/music_off.png');
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    image-rendering: auto;
+    border: none;
+    background-color: transparent;
+}
 nav {
     display: flex;
     flex-wrap: wrap;
@@ -93,6 +120,15 @@ nav button {
         margin-top: 5px;
         color: white;
         font-size: 16px;
+    }
+    .musicOn{
+        width: 60px;
+        height: 60px;
+    }
+    
+    .musicOff{
+        width: 60px;
+        height: 60px;
     }
     
 }

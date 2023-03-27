@@ -1,7 +1,17 @@
 import { Link } from "react-router-dom";
 import style from "./Layout.module.css";
+import useSound from 'use-sound';
+import click from '../../sounds/click3.wav';
+
 
 export default function Layout({ title, navigations, close, children }) {
+  const [play1] = useSound(click, {
+    volume: 0.3
+  });
+  
+  const handleSound = () => {
+    play1();
+  };
   return (
     <div className={style.blur}>
       <div className={style.container}>
@@ -16,7 +26,7 @@ export default function Layout({ title, navigations, close, children }) {
               ))}
             </div>
             {close !== false ? (
-              <Link to="/island">
+              <Link to="/island" onClick={()=>handleSound()}>
                 <div className={style.close}></div>
               </Link>
             ) : null}
