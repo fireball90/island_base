@@ -7,7 +7,6 @@ import Market from "./pages/market/Market";
 import Myprofile from "./pages/myprofile/Myprofile";
 import Notifications from "./pages/notifications/Notifications";
 import Tutorial from "./pages/tutorial/Tutorial";
-import War from "./pages/war/War";
 import { Component } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Error from "./pages/error/Error";
@@ -22,6 +21,7 @@ import HudContext from "./contexts/HudContext";
 import Management from "./pages/management/Management";
 import axios from "axios";
 import { forkJoin, from } from "rxjs";
+import Battle from "./pages/battle/Battle";
 
 export default class App extends Component {
   constructor(props) {
@@ -280,12 +280,12 @@ export default class App extends Component {
                       }
                     />
                     <Route
-                      path="war"
+                      path="battle"
                       element={
                         <ProtectedRoute
                           guards={[new Guard(this.state.isLogined, "/")]}
                         >
-                          <War />
+                          <Battle />
                         </ProtectedRoute>
                       }
                     />

@@ -513,6 +513,8 @@ export default class ManagementIsland extends Component {
   }
 
   componentDidMount() {
+    console.log()
+    
     if (!this.context.isIslandInitialized) {
       this.context.initializeIslandFromHttp();
     }
@@ -577,6 +579,22 @@ export default class ManagementIsland extends Component {
                 />
               </Tile>
             )),
+            // this.context.island.npcRoutes.map((route, index) => (
+            //   <Tile
+            //     key={index}
+            //     xCoordinate={route.xCoordinate}
+            //     yCoordinate={route.yCoordinate}
+            //     scale={1}
+            //   >
+            //     <div style={{
+            //       width: '100%',
+            //       height: '100%',
+            //       backgroundColor: 'green'
+            //     }}>
+
+            //     </div>
+            //   </Tile>
+            // ))
           ]}
           animations={this.state.currentlyRunningAnimations.map((animation) => (
             <AnimateKeyframes

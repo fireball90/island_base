@@ -72,7 +72,7 @@ export default function Hud() {
           <Link to="/management">
             <img alt="Management" title="Management" src="../images/ui/management.png"></img>
           </Link>
-          <Link to="/war">
+          <Link to="/battle">
             <img alt="Csata" title="Csata" src="../images/ui/war.png"></img>
           </Link>
           <Link to="/expedition">

@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import IslandsPVP from "../../components/islands-pvp/IslandsPVP";
+import IslandsBattle from "../../components/islands-battle/IslandsBattle";
 import HudContext from "../../contexts/HudContext";
-import style from "./War.module.css";
 
-export default function War() {
+export default function Battle() {
   const { setIsHudDisplayed } = useContext(HudContext);
 
   useEffect(() => {
@@ -11,8 +10,6 @@ export default function War() {
   }, []);
 
   return (
-    <div className={style.container}>
-      <IslandsPVP />
-    </div>
-  );
+    <IslandsBattle />
+  )
 }
