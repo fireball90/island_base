@@ -1,62 +1,39 @@
-import React, { Component } from 'react';
-import { Button, OverlayTrigger } from "react-bootstrap";
-import { Badge } from 'react-bootstrap';
-import { GameHelper } from '../../../game-helper/GameHelper';
-import MovablePopover from '../../management-island/movable-popover/MovablePopover';
+import React, { Component } from "react";
+import { Image, ProgressBar } from "react-bootstrap";
+import GameFieldContext from "../../../contexts/GameFieldContext";
 
-import style from "./EnemyIsland.module.css"
-
+import style from "./EnemyIsland.module.css";
 
 export class EnemyIsland extends Component {
-    constructor(props) {
-        super(props)
+  static contextType = GameFieldContext;
 
-        this.ref = React.createRef()
-    }
+  constructor(props) {
+    super(props);
 
-    render() {
-        const health = 100 + (GameHelper.CalculateLevel(this.props.experiencePoints) * 10)
-        const level = GameHelper.CalculateLevel(this.props.experiencePoints)
+    this.ref = React.createRef();
+  }
 
-        return (
-            <div 
-                className={style.island} 
-                style={{backgroundImage: `url(${this.props.sprite})`}}
-            >
-                <div className={style.position} ref={this.ref}>
-                    <OverlayTrigger
-                        show={true}
-                        container={this.ref}
-                        trigger={null}
-                        overlay={
-                            <MovablePopover
-                                zoom={this.props.zoom} 
-                            >
-                                <div className="mb-3 text-center">
-                                    <div style={{ width: '6rem' }} className="mb-1">
-                                        <span className="fw-bold">{this.props.username}</span>
-                                    </div>
-                                    <div className="d-flex align-items-baseline justify-content-center">
-                                        <Badge pill>{level}</Badge><span className="ms-1">szint</span>
-                                    </div>
-                                    <div className="d-flex align-items-baseline justify-content-center">   
-                                        <Badge pill>{health}</Badge><span className="ms-1">élet</span>
-                                    </div>
-                                </div>
-                                <div className="text-center">
-                                    <Button 
-                                        onClick={() => this.props.openPVPConfirmDialog(this.props.playerId)}
-                                    >
-                                        <i className="bi bi-fire"></i>
-                                    </Button>
-                                </div>
-                            </MovablePopover>
-                        }
-                    >
-                        <div></div>
-                    </OverlayTrigger>
-                </div>
-            </div>
-        )
-    }
+  health() {
+    return this.props.enemy.health / 5.5;
+  }
+
+  render() {
+    return (
+      <div
+        onClick={() => this.props.setAttackedEnemy(this.props.enemy)}
+        className={style.island}
+        style={{ backgroundImage: `url(${this.props.enemy.spritePath})` }}
+      >
+        <div className="w-75 h-25 bg-white d-flex">
+          <div className="w-25 h-75">
+            <Image className="w-100 h-100" src={this.props.enemy.profileImage}></Image>
+          </div>
+          <div className="w-75 h-100">
+            <div className="bg-primary text-white h-50">{this.props.enemy.username} - {this.props.enemy.level}</div>
+            <div className="d-flex align-items-center h-50"><ProgressBar className="w-100" now={this.health()} label={this.props.enemy.health}/></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }

@@ -14,8 +14,11 @@ import {
 } from "rxjs";
 import PlayerContext from "../../contexts/PlayerContext";
 import { GameHelper } from "../../game-helper/GameHelper";
-import Form from "react-bootstrap/Form";
-import { Button } from "react-bootstrap";
+import axios from "axios";
+import Tile from "../management-island/tile/Tile";
+import { EnemyIsland } from "./enemy-island/EnemyIsland";
+import BattleConfirmDialog from "./battle-confirm-dialog/BattleConfirmDialog";
+import BattleReportDialog from "./battle-report-dialog/BattleReportDialog";
 
 export default class IslandsBattle extends Component {
   static contextType = PlayerContext;
@@ -24,10 +27,77 @@ export default class IslandsBattle extends Component {
     super(props);
 
     this.LOCK_MINUTES_AFTER_BATTLE = 10;
+    this.MAX_X_COORDINATES = 5;
+    this.MAX_Y_COORDINATES = 3;
 
     this.state = {
       isInitReady: true,
       tempoparyLockCounter: 0,
+      enemies: [],
+      attackedEnemy: null,
+      battleReports: null,
+    };
+
+    this.close = () => {
+      this.setState((state) => ({
+        ...state,
+        attackedEnemy: null,
+      }));
+    };
+
+    this.setAttackedEnemy = (attackedEnemy) => {
+      this.setState((state) => ({
+        ...state,
+        attackedEnemy: attackedEnemy,
+      }));
+    };
+
+    this.attack = () => {
+      const battleDate = new Date();
+
+      axios
+        .get(
+          `https://localhost:7276/api/Battle/StartBattle?enemyUsername=${this.state.attackedEnemy.username}`
+        )
+        .then((response) => {
+          const battleReports = response.data;
+
+          this.setState((state) => ({
+            ...state,
+            battleReports: battleReports,
+          }));
+
+          this.context.setPlayer({
+            ...this.context.player,
+            experience:
+              this.context.player.experience + battleReports.experience,
+            coins: this.context.player.coins + battleReports.coins,
+            woods: this.context.player.woods + battleReports.woods,
+            stones: this.context.player.stones + battleReports.stones,
+            irons: this.context.player.irons + battleReports.irons,
+            lastBattleDate: battleDate,
+          });
+        })
+        .catch(() => {
+          alert("Nem sikerült kapcsolódni a szerverhez!");
+        });
+
+      this.setState((state) => ({
+        ...state,
+        attackedEnemy: null,
+      }));
+    };
+
+    this.resetBattleReports = () => {
+      const earliestBattleDate = new Date(this.context.player.lastBattleDate);
+      earliestBattleDate.setMinutes(earliestBattleDate.getMinutes() + 10);
+
+      this.battle$.next(earliestBattleDate);
+      
+      this.setState((state) => ({
+        ...state,
+        battleReport: null,
+      }));
     };
 
     this.battle$ = new Subject().pipe(
@@ -57,8 +127,59 @@ export default class IslandsBattle extends Component {
     }));
   }
 
+  setEnemies(enemies) {
+    this.setState((state) => ({
+      ...state,
+      enemies: enemies,
+    }));
+  }
+
+  enemiesWithCoordinates(enemies) {
+    const enemiesWithCoordinates = [];
+
+    enemies.forEach((enemy) => {
+      let randomCoordinatesFound = false;
+
+      while (!randomCoordinatesFound) {
+        const randomXCoordinate = Math.floor(
+          Math.random() * this.MAX_X_COORDINATES
+        );
+        const randomYCoordinate = Math.floor(
+          Math.random() * this.MAX_Y_COORDINATES
+        );
+
+        if (
+          enemiesWithCoordinates.findIndex(
+            (enemyWithCoordinates) =>
+              enemyWithCoordinates.xCoordinate === randomXCoordinate &&
+              enemyWithCoordinates.yCoordinate === randomYCoordinate
+          ) === -1
+        ) {
+          randomCoordinatesFound = true;
+          enemiesWithCoordinates.push({
+            ...enemy,
+            xCoordinate: randomXCoordinate,
+            yCoordinate: randomYCoordinate,
+          });
+        }
+      }
+    });
+
+    return enemiesWithCoordinates;
+  }
+
   searchEnemies() {
-    console.log('ok')
+    axios
+      .get("https://localhost:7276/api/Battle/GetAllEnemies")
+      .then((response) => {
+        const enemiesWithCoordinates = this.enemiesWithCoordinates(
+          response.data
+        );
+        this.setEnemies(enemiesWithCoordinates);
+      })
+      .catch(() => {
+        alert("Nem sikerült kapcsolódni a szerverhez!");
+      });
   }
 
   componentDidMount() {
@@ -77,6 +198,8 @@ export default class IslandsBattle extends Component {
     if (now < earliestBattleDate) {
       this.battle$.next(earliestBattleDate);
     }
+
+    this.searchEnemies();
   }
 
   componentWillUnmount() {
@@ -99,9 +222,33 @@ export default class IslandsBattle extends Component {
           backgroundTilesWide={80}
           backgroundTilesHigh={60}
           mapSpritePath={""}
-          staticObjects={[]}
+          staticObjects={[
+            this.state.enemies.map((enemy, index) => (
+              <Tile
+                key={index}
+                xCoordinate={enemy.xCoordinate}
+                yCoordinate={enemy.yCoordinate}
+                scale={10}
+              >
+                <EnemyIsland
+                  enemy={enemy}
+                  setAttackedEnemy={this.setAttackedEnemy}
+                />
+              </Tile>
+            )),
+          ]}
           animations={[]}
         />
+        {this.state.attackedEnemy ? (
+          <BattleConfirmDialog
+            attackedEnemy={this.state.attackedEnemy}
+            close={this.close}
+            attack={this.attack}
+          />
+        ) : null}
+        {this.state.battleReports ? (
+          <BattleReportDialog battleReports={this.state.battleReports} resetBattleReports={this.resetBattleReports}/>
+        ) : null}
       </div>
     );
   }

@@ -5,18 +5,20 @@
     background-repeat: no-repeat;
     image-rendering: pixelated;
     position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .position {
     position: absolute;
-    background-color: aqua;
     width: 0;
     height: 0;
-    top: calc(50% - 1rem);
+    top: calc(50%);
     left: 50%;
 }
 
 .name {
     width: 14rem;
-    background-color: antiquewhite;
 }

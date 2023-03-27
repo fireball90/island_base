@@ -1,12 +1,17 @@
-import "./Lock.css";
+import Modal from "react-bootstrap/Modal";
+import style from "./Lock.module.css";
 
 export default function Lock({ children }) {
   return (
-    <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-      <div className="lock-modal">
-        <div><h4>A csata nem elérhető jelenleg!</h4></div>
-        <div>{children}</div>
-      </div>
+    <div className={style.container}>
+      <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>Csata nem elérhető!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {children}
+        </Modal.Body>
+      </Modal.Dialog>
     </div>
   );
 }
