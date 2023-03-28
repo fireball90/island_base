@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
-
+import Modal from "react-bootstrap/Modal";
 
 export default function Sell() {
 
   const { setIsHudDisplayed } = useContext(HudContext);
+
+  const [modalShow, setModalShow] = React.useState(false);
 
   const [myItem, setMyItem] = useState(0);
   const [myItemAmount, setMyItemAmount] = useState(0);
@@ -45,16 +47,29 @@ export default function Sell() {
       replacementItem: Number(theirItem),
       replacementAmount: Number(theirItemAmount),
     })
-    .catch((error) => {
-      console.log(error);
+    .then(()=>{
+      setModalShow(true);
     })
+    .catch((error) => {
+      if (error.code === "ERR_NETWORK") {
+        alert("Nem sikerült kapcsolódni a szerverhez.");
+      } else {
+        alert(
+          "Nincs elég anyagod az adott hirdetés feladásához.")
+     }})
     .finally(() => {
-    
+      
     });
   }
 
   return (
     <Layout navigations={[]} title="Hirdetés feladása">
+
+      <SellModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+      />
+
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-center flex-column sell-all">
@@ -118,5 +133,37 @@ export default function Sell() {
         </div>
       </div>
     </Layout>
+  );
+}
+
+function SellModal(props) {
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <div className="successful-sell-modal">
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Sikeres hirdetés feladás
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+           A hirdetését sikeresen feladta a piacon. A saját hirdetések gombra kattintva törölheti, ha meggondolja magát!
+           Kattinston a bezárás gombra a továbblépéshez!
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Link to="/market">
+            <button onClick={props.onHide} className="modal-sell-btn">
+              Bezárás
+            </button>
+          </Link>
+        </Modal.Footer>
+      </div>
+    </Modal>
   );
 }
