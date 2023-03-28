@@ -28,9 +28,9 @@ export default function Notifications() {
     })
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+        alert("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        setErrorMessage(
+        alert(
           "Nem található értesítés."
         );
       }
@@ -46,9 +46,9 @@ export default function Notifications() {
     .delete(`https://localhost:7276/api/Notification/DeleteNotification?id=${id}`)
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+        alert("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        setErrorMessage(
+        alert(
           "Nem található értesítés."
         );
       }
