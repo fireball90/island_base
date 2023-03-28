@@ -10,6 +10,12 @@ export default function Notifications() {
   const { setIsHudDisplayed } = useContext(HudContext);
   const [notifications,setNotification] = useState([]);
 
+  function removeNotification(notId) {
+    return (
+      setNotification(previousNotifications => previousNotifications.filter((notification)=> notification.id !== notId ))
+    );
+  }
+
   useEffect(() => {
     setIsHudDisplayed(true);
     
@@ -21,7 +27,13 @@ export default function Notifications() {
       setNotification(allNotification)
     })
     .catch((error) => {
-      console.log(error);
+      if (error.code === "ERR_NETWORK") {
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+      } else {
+        setErrorMessage(
+          "Nem található értesítés."
+        );
+      }
     })
     .finally(() => {
 
@@ -33,10 +45,19 @@ export default function Notifications() {
     axios
     .delete(`https://localhost:7276/api/Notification/DeleteNotification?id=${id}`)
     .catch((error) => {
-      console.log(error);
+      if (error.code === "ERR_NETWORK") {
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+      } else {
+        setErrorMessage(
+          "Nem található értesítés."
+        );
+      }
+    })
+    .then(()=>{
+      
     })
     .finally(() => {
-      //window.location.reload(false)
+      
     });
   }
   moment.locale('hu')
@@ -80,7 +101,7 @@ export default function Notifications() {
                       <p>{moment(notification.createDate).format("llll")}</p>
                     </div>
                     <div className="col-3 text-center">
-                      <button className="not-delete-btn font-btn" onClick={() => deleteNotification(notification.id)}>Törlés</button>
+                      <button className="not-delete-btn font-btn" onClick={() => {deleteNotification(notification.id); removeNotification(notification.id)}}>Törlés</button>
                     </div>
                   </div>
                 </div>
