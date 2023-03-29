@@ -3,7 +3,7 @@ import "../expedition/expedition.css";
 import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
-import Modal from 'react-bootstrap/Modal';
+import Modal from "react-bootstrap/Modal";
 
 export default function Expedition() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -11,19 +11,22 @@ export default function Expedition() {
   const [expData, setExpData] = useState([]);
 
   function selectExpeditionHandler(difficulty) {
-
-  axios
-    .get(
-      `https://localhost:7276/api/Expedition/Expedition?difficulty=${difficulty}`
-    )
-    .then((response) => {
-      setExpData(response.data);
-      setModalShow(true);
-    })
-    .catch(() => {
-      alert("Nem sikerült kapcsolódni a szerverhez");
-    });
-}
+    axios
+      .get(
+        `https://localhost:7276/api/Expedition/Expedition?difficulty=${difficulty}`
+      )
+      .then((response) => {
+        setExpData(response.data);
+        setModalShow(true);
+      })
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          alert("Nem sikerült kapcsolódni a szerverhez");
+        } else {
+          alert("A lefutott expedíció után 10 percig nem indítható új.");
+        }
+      });
+  }
   useEffect(() => {
     setIsHudDisplayed(true);
   }, []);
@@ -37,31 +40,65 @@ export default function Expedition() {
         centered
       >
         <div className="modal-exp-container">
-        <Modal.Body>
+          <Modal.Body>
             <div className="" key={expData.id}>
-                <div className="text-center">
-                  <h4>{expData.title}</h4>
-                </div>
+              <div className="text-center">
+                <h4>{expData.title}</h4>
+              </div>
               <div className="exp-message-container text-white">
-                <p>
-                  {expData.message}
-                </p>
+                <p>{expData.message}</p>
                 <p className="text-center">
-                  <span><img src="../images/icons/coin.png" alt="Érme" title="Érme"></img> {expData.coins} - </span>
-                  <span><img src="../images/icons/wood.png" alt="Fa" title="Fa"></img> {expData.woods} - </span>
-                  <span><img src="../images/icons/stone.png" alt="Kő" title="Kő"></img> {expData.stones} - </span>
-                  <span><img src="../images/icons/steel.png" alt="Vas" title="Vas"></img> {expData.irons} - </span>
-                  <span><img src="../images/icons/xp.png" alt="XP" title="XP"></img> {expData.experience} </span>
+                  <span>
+                    <img
+                      src="../images/icons/coin.png"
+                      alt="Érme"
+                      title="Érme"
+                    ></img>{" "}
+                    {expData.coins} -{" "}
+                  </span>
+                  <span>
+                    <img
+                      src="../images/icons/wood.png"
+                      alt="Fa"
+                      title="Fa"
+                    ></img>{" "}
+                    {expData.woods} -{" "}
+                  </span>
+                  <span>
+                    <img
+                      src="../images/icons/stone.png"
+                      alt="Kő"
+                      title="Kő"
+                    ></img>{" "}
+                    {expData.stones} -{" "}
+                  </span>
+                  <span>
+                    <img
+                      src="../images/icons/steel.png"
+                      alt="Vas"
+                      title="Vas"
+                    ></img>{" "}
+                    {expData.irons} -{" "}
+                  </span>
+                  <span>
+                    <img src="../images/icons/xp.png" alt="XP" title="XP"></img>{" "}
+                    {expData.experience}{" "}
+                  </span>
                 </p>
               </div>
-{/*               <div className="exp-message-container text-center text-white">
+              {/*               <div className="exp-message-container text-center text-white">
 
               </div> */}
               <div className="d-flex justify-content-center">
-                <button onClick={props.onHide} className="modal-exp-btn font-btn">Bezárás</button>
+                <button
+                  onClick={props.onHide}
+                  className="modal-exp-btn font-btn"
+                >
+                  Bezárás
+                </button>
               </div>
             </div>
-        </Modal.Body>
+          </Modal.Body>
         </div>
       </Modal>
     );
@@ -69,9 +106,9 @@ export default function Expedition() {
 
   return (
     <Layout navigations={[]} title="Expedíció">
-          <ExpeditionResultModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
+      <ExpeditionResultModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
       />
       <div className="container-fluid">
         <div className="expedition justify-content-center">
@@ -106,9 +143,13 @@ export default function Expedition() {
                 title="Normál"
               ></img>
               <div className="ecard-body">
-                  <button className="expedition-btn font-btn" title="NORMÁL"onClick={() => selectExpeditionHandler(2)}>
-                    NORMÁL
-                  </button>
+                <button
+                  className="expedition-btn font-btn"
+                  title="NORMÁL"
+                  onClick={() => selectExpeditionHandler(2)}
+                >
+                  NORMÁL
+                </button>
                 <p className="ecard-text">
                   Közepes mennyiségű alapanyag, xp és arany, de kevesebb esély a
                   sikeres expedícióra.
@@ -123,9 +164,13 @@ export default function Expedition() {
                 title="Nehéz"
               ></img>
               <div className="ecard-body">
-                  <button className="expedition-btn font-btn" title="NEHÉZ"onClick={() => selectExpeditionHandler(3)}>
-                    NEHÉZ
-                  </button>
+                <button
+                  className="expedition-btn font-btn"
+                  title="NEHÉZ"
+                  onClick={() => selectExpeditionHandler(3)}
+                >
+                  NEHÉZ
+                </button>
                 <p className="ecard-text">
                   Sok alapanyag, xp és arany, de alacsony esély a sikeres
                   expedícióra.
@@ -133,7 +178,6 @@ export default function Expedition() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </Layout>
