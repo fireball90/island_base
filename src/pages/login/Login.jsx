@@ -195,7 +195,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <Modal show={showVerifyEmailModal} centered>
+      <Modal className="modal-animation" show={showVerifyEmailModal} centered>
         <Modal.Body>
           Nem sikerült bejelentkezni, mert nem lett megerősítve az email cím. A
           korábban elküldött megerősítő emailben található linkre kattintva

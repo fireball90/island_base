@@ -143,10 +143,11 @@ function SellModal(props) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className="modal-animation"
     >
       <div className="successful-sell-modal">
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter modal-animation">
+          <Modal.Title id="contained-modal-title-vcenter">
             Sikeres hirdetés feladás
           </Modal.Title>
         </Modal.Header>
