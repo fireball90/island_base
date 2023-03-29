@@ -2,3 +2,9 @@
     border: none !important;
     border-radius: 0 !important;
 }
+
+.battleContainer{
+    background-color: rgb(155, 91, 19);
+    background-image: url('../../../../public/images/ui/contentbg2.png');
+    background-size: cover;
+}

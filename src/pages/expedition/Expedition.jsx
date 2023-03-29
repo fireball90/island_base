@@ -36,7 +36,7 @@ export default function Expedition() {
       <Modal
         {...props}
         size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
+        aria-labelledby="contained-modal-title-vcenter modal-animation"
         centered
       >
         <div className="modal-exp-container">

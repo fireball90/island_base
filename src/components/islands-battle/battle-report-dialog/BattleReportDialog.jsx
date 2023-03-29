@@ -10,7 +10,8 @@ export default function BattleReportDialog({
 }) {
   return (
     <Modal show={true} size="lg" centered>
-      <Modal.Header className="border-0">
+      <div className={style.battleContainer}>
+      <Modal.Header className="border-0 text-white">
         <div>
           <Modal.Title>
             {battleReports.isWinner
@@ -21,7 +22,7 @@ export default function BattleReportDialog({
         </div>
       </Modal.Header>
       <div className={style.battleReportContainer}>
-        <ListGroup className="rounded-0">
+        <ListGroup className="rounded-0 text-white">
           {battleReports.rounds.map((round, index) => (
             <ListGroup.Item key={index} className="border-0">
               <div className="d-flex mb-4">
@@ -44,7 +45,7 @@ export default function BattleReportDialog({
         </ListGroup>
       </div>
       <Modal.Body>
-        <div className="mt-3">
+        <div className="mt-3 text-white">
           <div className="d-flex flex-row justify-content-around">
             <div className="d-flex align-items-center">
                 Érmék: 
@@ -82,6 +83,7 @@ export default function BattleReportDialog({
       <Modal.Footer className="border-0">
         <Button onClick={() => resetBattleReports()}>Rendben</Button>
       </Modal.Footer>
+      </div>
     </Modal>
   );
 }

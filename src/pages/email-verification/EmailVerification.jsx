@@ -36,9 +36,9 @@ export default function EmailVerification() {
 
   return !isVerifyingPending ? (
     <div className={style.container}>
-      <div className="w-25 h-25 bg-white d-flex flex-column justify-content-between p-4">
+      <div className="w-25 h-25 text-white d-flex flex-column justify-content-between p-4">
         {message}
-        <Button onClick={() => navigate("/")}>Vissza a bejelentkezéshez</Button>
+        <button className={style.verifyBtn} onClick={() => navigate("/")}>Vissza a bejelentkezéshez</button>
       </div>
     </div>
   ) : null;

@@ -213,7 +213,7 @@ function RegisterModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <div className="successful-register-modal">
+      <div className="successful-register-modal modal-animation">
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Sikeres regisztráció

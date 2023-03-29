@@ -146,7 +146,7 @@ function SellModal(props) {
     >
       <div className="successful-sell-modal">
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+          <Modal.Title id="contained-modal-title-vcenter modal-animation">
             Sikeres hirdetés feladás
           </Modal.Title>
         </Modal.Header>

@@ -2,11 +2,13 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
-import "./BattleConfirmDialog.css";
+import style from "./BattleConfirmDialog.css";
 
 export default function BattleConfirmDialog({ close, attack }) {
   return (
-    <Modal show={true} centered>
+    <div >
+    <Modal show={true} centered classname={style.battleContainer}>
+
       <Modal.Header className="border-0">
         <Modal.Title>Csata megerősítése</Modal.Title>
       </Modal.Header>
@@ -15,6 +17,8 @@ export default function BattleConfirmDialog({ close, attack }) {
         <Button onClick={() => close()}>Mégse</Button>
         <Button onClick={() => attack()}>Támad</Button>
       </Modal.Footer>
+
     </Modal>
+    </div>
   );
 }

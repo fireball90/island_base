@@ -49,7 +49,7 @@ body {
 h1,h2,h3 {
   font-family: "Propagan", Verdana, Geneva, Tahoma, sans-serif;
 }
-h4,h5,h6{
+h4,h5,h6, label{
   font-family: "PoetsenOne", Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -70,3 +70,17 @@ a, p, li, span {
 }
 
 .popover-arrow {visibility:hidden;}
+
+.modal-animation {  
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
