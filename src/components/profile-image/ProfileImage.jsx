@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import PlayerContext from "../../contexts/PlayerContext";
+import IslandContext from "../../contexts/IslandContext";
 import { GameHelper } from "../../game-helper/GameHelper";
 
 import style from "./ProfileImage.module.css";
 
 export default function ProfileImage() {
-  const { player } = useContext(PlayerContext);
+  const { player } = useContext(IslandContext);
   const imagePaths = {
     Europian: "../images/ui/eu_ribbon.png",
     Indian: "../images/ui/indian_ribbon.png",

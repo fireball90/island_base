@@ -6,11 +6,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
-import PlayerContext from "../../contexts/PlayerContext";
+import IslandContext from "../../contexts/IslandContext";
 
 export default function SelectIsland() {
   const { setIsHudDisplayed } = useContext(HudContext);
-  const { setPlayer } = useContext(PlayerContext);
+  const { setPlayer } = useContext(IslandContext);
 
   const [selectedIsland, setSelectedIsland] = useState(null);
   const [creatingPending, setCreatingPending] = useState(false);

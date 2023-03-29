@@ -1,6 +1,6 @@
 import { Component } from "react";
 import style from "./IslandsBattle.module.css";
-import GameField from "../GameField/GameField";
+import GameField from "../game-field/GameField";
 import moment from "moment";
 import Lock from "./lock/Lock";
 import {
@@ -12,16 +12,16 @@ import {
   timer,
   takeUntil,
 } from "rxjs";
-import PlayerContext from "../../contexts/PlayerContext";
 import { GameHelper } from "../../game-helper/GameHelper";
 import axios from "axios";
 import Tile from "../management-island/tile/Tile";
 import { EnemyIsland } from "./enemy-island/EnemyIsland";
 import BattleConfirmDialog from "./battle-confirm-dialog/BattleConfirmDialog";
 import BattleReportDialog from "./battle-report-dialog/BattleReportDialog";
+import IslandContext from "../../contexts/IslandContext";
 
 export default class IslandsBattle extends Component {
-  static contextType = PlayerContext;
+  static contextType = IslandContext;
 
   constructor(props) {
     super(props);

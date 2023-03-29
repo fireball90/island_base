@@ -1,4 +1,4 @@
-import GameField from "../GameField/GameField";
+import GameField from "../game-field/GameField";
 import BuildableLocation from "./buildable-location/BuildableLocation";
 import Building from "./building/Building";
 import Tile from "./tile/Tile";
@@ -54,6 +54,10 @@ export default class ManagementIsland extends Component {
         irons: this.context.player.irons + collectedItems.irons,
       });
     };
+
+    this.updateLastCollectDate = (buildingId, lastCollectDate) => {
+      console.log(buildingId, lastCollectDate)
+    }
 
     this.setOpenedBuildingRemainingTime = (
       currentRemainingTime,
@@ -558,6 +562,7 @@ export default class ManagementIsland extends Component {
                 <Building
                   building={building}
                   setCollectedItemsToPlayer={this.setCollectedItemsToPlayer}
+                  updateLastCollectDate={this.updateLastCollectDate}
                   openBuildingModal={this.openBuildingModal}
                   setOpenedBuildingRemainingTime={
                     this.setOpenedBuildingRemainingTime

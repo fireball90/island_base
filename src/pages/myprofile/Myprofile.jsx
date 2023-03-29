@@ -6,14 +6,12 @@ import Layout from "../../components/layout/Layout";
 import ProfileImage from "../../components/profile-image/ProfileImage";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import Cookies from "universal-cookie";
 
 export default function Myprofile() {
   const navigate = useNavigate();
-  const cookie = new Cookies();
 
   const { setIsHudDisplayed } = useContext(HudContext);
-  const { user, setUserLoggedOut } = useContext(UserContext);
+  const { user, setUserLoggedOut, isEmailVerified } = useContext(UserContext);
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -41,8 +39,6 @@ export default function Myprofile() {
         confirmPassword: confirmPassword,
       })
       .then(() => {
-        cookie.remove("token");
-
         setUserLoggedOut();
         navigate("");
       })
@@ -66,6 +62,9 @@ export default function Myprofile() {
             <div className="User justify-content-center">
               <h2>{user.username}</h2>
               <h2>{user.email}</h2>
+              {
+                  isEmailVerified ? 'Email megerősítve' : 'Nincs megerősítve az email'
+              }
               <div className="reset-passwordjustify-content-center bg-bleur">
                 <h3 className="text-profile text-center">Jelszó módosítása:</h3>
                 <label className="text-label col-sm-12 text-center">

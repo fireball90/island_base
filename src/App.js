@@ -15,13 +15,14 @@ import SelectIsland from "./pages/select-island/SelectIsland";
 import Guard from "./models/Guard";
 import Hud from "./components/hud/Hud";
 import IslandContext from "./contexts/IslandContext";
-import PlayerContext from "./contexts/PlayerContext";
 import UserContext from "./contexts/UserContext";
 import HudContext from "./contexts/HudContext";
 import Management from "./pages/management/Management";
 import axios from "axios";
 import { forkJoin, from } from "rxjs";
 import Battle from "./pages/battle/Battle";
+import EmailVerification from "./pages/email-verification/EmailVerification";
+import { Cookies } from "react-cookie";
 
 export default class App extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ export default class App extends Component {
     this.state = {
       isHudDisplayed: false,
       isLogined: false,
-      isEmailValidated: false,
+      isEmailVerified: false,
       isIslandSelected: false,
       isIslandInitialized: false,
       user: {
@@ -74,12 +75,40 @@ export default class App extends Component {
     };
 
     this.setUserLoggedOut = () => {
+      const cookies = new Cookies();
+      cookies.remove('token', { path: '/' });
+
       this.setState((state) => ({
         ...state,
         isLogined: false,
+        isIslandSelected: false,
+        isIslandInitialized: false,
         user: {
           username: "",
           email: "",
+        },
+        player: {
+          id: 0,
+          experience: 0,
+          coins: 0,
+          woods: 0,
+          stones: 0,
+          irons: 0,
+          selectedIsland: "",
+          lastExpeditionDate: null,
+          lastBattleDate: null,
+          strength: 0,
+          intelligence: 0,
+          agility: 0,
+        },
+        buildingToBeBuilt: null,
+        buildings: [],
+        unbuiltBuildings: [],
+        island: {
+          spritePath: "",
+          buildableLocations: [],
+          npcRoutes: [],
+          npcSprites: [],
         },
       }));
     };
@@ -101,27 +130,6 @@ export default class App extends Component {
           strength: player.strength,
           intelligence: player.intelligence,
           agility: player.agility,
-        },
-      }));
-    };
-
-    this.resetPlayer = () => {
-      this.setState((state) => ({
-        ...state,
-        isIslandSelected: false,
-        player: {
-          id: 0,
-          experience: 0,
-          coins: 0,
-          woods: 0,
-          stones: 0,
-          irons: 0,
-          selectedIsland: "",
-          lastExpeditionDate: null,
-          lastBattleDate: null,
-          strength: 0,
-          intelligence: 0,
-          agility: 0,
         },
       }));
     };
@@ -201,21 +209,6 @@ export default class App extends Component {
         },
       });
     };
-
-    this.resetIsland = () => {
-      this.setState((state) => ({
-        ...state,
-        isIslandInitialized: false,
-        buildings: [],
-        unbuiltBuildings: [],
-        island: {
-          spritePath: "",
-          buildableLocations: [],
-          npcRoutes: [],
-          npcSprites: [],
-        },
-      }));
-    };
   }
 
   render() {
@@ -230,153 +223,146 @@ export default class App extends Component {
         <UserContext.Provider
           value={{
             isLogined: this.state.isLogined,
-            isEmailValidated: this.state.isEmailValidated,
             user: this.state.user,
 
             setUserLogined: this.setUserLogined,
             setUserLoggedOut: this.setUserLoggedOut,
           }}
         >
-          <PlayerContext.Provider
+          <IslandContext.Provider
             value={{
+              isIslandInitialized: this.state.isIslandInitialized,
               player: this.state.player,
+              buildings: this.state.buildings,
+              buildableLocations: this.state.island.buildableLocations,
+              unbuiltBuildings: this.state.unbuiltBuildings,
+              island: this.state.island,
+              buildingToBeBuild: this.state.buildingToBeBuilt,
 
               setPlayer: this.setPlayer,
               setIsIslandSelected: this.setIsIslandSelected,
+              setBuildings: this.setBuildings,
+              setUnbuiltBuildings: this.setUnbuiltBuildings,
+              initializeIslandFromHttp: this.initializeIslandFromHttp,
+              setBuildingToBeBuilt: this.setBuildingToBeBuilt,
+              interruptBuildingRequest: this.interruptBuildingRequest,
             }}
           >
-            <IslandContext.Provider
-              value={{
-                isIslandInitialized: this.state.isIslandInitialized,
-                player: this.state.player,
-                buildings: this.state.buildings,
-                buildableLocations: this.state.island.buildableLocations,
-                unbuiltBuildings: this.state.unbuiltBuildings,
-                island: this.state.island,
-                buildingToBeBuild: this.state.buildingToBeBuilt,
-
-                setPlayer: this.setPlayer,
-                resetplayer: this.resetPlayer,
-                setBuildings: this.setBuildings,
-                setUnbuiltBuildings: this.setUnbuiltBuildings,
-                initializeIslandFromHttp: this.initializeIslandFromHttp,
-                resetIsland: this.resetIsland,
-                setBuildingToBeBuilt: this.setBuildingToBeBuilt,
-                interruptBuildingRequest: this.interruptBuildingRequest,
-              }}
-            >
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<Hud />}>
-                    <Route index element={<Login />} />
-                    <Route
-                      path="management"
-                      element={
-                        <ProtectedRoute
-                          guards={[new Guard(this.state.isLogined, "/")]}
-                        >
-                          <Management />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="battle"
-                      element={
-                        <ProtectedRoute
-                          guards={[new Guard(this.state.isLogined, "/")]}
-                        >
-                          <Battle />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="island"
-                      element={
-                        <ProtectedRoute
-                          guards={[new Guard(this.state.isLogined, "/")]}
-                        >
-                          <Island />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="expedition"
-                      element={
-                        <ProtectedRoute
-                          guards={[new Guard(this.state.isLogined, "/")]}
-                        >
-                          <Expedition />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="market"
-                      element={
-                        <ProtectedRoute
-                          guards={[new Guard(this.state.isLogined, "/")]}
-                        >
-                          <Market />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="select-island"
-                      element={
-                        <ProtectedRoute
-                          guards={[new Guard(this.state.isLogined, "/")]}
-                        >
-                          <SelectIsland />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="tutorial"
-                      element={
-                        <ProtectedRoute
-                          guards={[new Guard(this.state.isLogined, "/")]}
-                        >
-                          <Tutorial />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="notifications"
-                      element={
-                        <ProtectedRoute
-                          guards={[new Guard(this.state.isLogined, "/")]}
-                        >
-                          <Notifications />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="myprofile"
-                      element={
-                        <ProtectedRoute
-                          guards={[new Guard(this.state.isLogined, "/")]}
-                        >
-                          <Myprofile />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route path="register" element={<Register />} />
-                    <Route path="pwreset" element={<Pwreset />} />
-                    <Route path="error" element={<Error />} />
-                    <Route
-                      path="sell"
-                      element={
-                        <ProtectedRoute
-                          guards={[new Guard(this.state.isLogined, "/")]}
-                        >
-                          <Sell />
-                        </ProtectedRoute>
-                      }
-                    />
-                  </Route>
-                </Routes>
-              </BrowserRouter>
-            </IslandContext.Provider>
-          </PlayerContext.Provider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Hud />}>
+                  <Route index element={<Login />} />
+                  <Route
+                    path="management"
+                    element={
+                      <ProtectedRoute
+                        guards={[new Guard(this.state.isLogined, "/")]}
+                      >
+                        <Management />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="battle"
+                    element={
+                      <ProtectedRoute
+                        guards={[new Guard(this.state.isLogined, "/")]}
+                      >
+                        <Battle />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="island"
+                    element={
+                      <ProtectedRoute
+                        guards={[new Guard(this.state.isLogined, "/")]}
+                      >
+                        <Island />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="expedition"
+                    element={
+                      <ProtectedRoute
+                        guards={[new Guard(this.state.isLogined, "/")]}
+                      >
+                        <Expedition />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="market"
+                    element={
+                      <ProtectedRoute
+                        guards={[new Guard(this.state.isLogined, "/")]}
+                      >
+                        <Market />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="select-island"
+                    element={
+                      <ProtectedRoute
+                        guards={[new Guard(this.state.isLogined, "/")]}
+                      >
+                        <SelectIsland />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="tutorial"
+                    element={
+                      <ProtectedRoute
+                        guards={[new Guard(this.state.isLogined, "/")]}
+                      >
+                        <Tutorial />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="notifications"
+                    element={
+                      <ProtectedRoute
+                        guards={[new Guard(this.state.isLogined, "/")]}
+                      >
+                        <Notifications />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="myprofile"
+                    element={
+                      <ProtectedRoute
+                        guards={[new Guard(this.state.isLogined, "/")]}
+                      >
+                        <Myprofile />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="sell"
+                    element={
+                      <ProtectedRoute
+                        guards={[new Guard(this.state.isLogined, "/")]}
+                      >
+                        <Sell />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Route>
+                <Route path="register" element={<Register />} />
+                <Route
+                  path="email-verification/:token"
+                  element={<EmailVerification />}
+                />
+                <Route path="pwreset" element={<Pwreset />} />
+                <Route path="error" element={<Error />} />
+              </Routes>
+            </BrowserRouter>
+          </IslandContext.Provider>
         </UserContext.Provider>
       </HudContext.Provider>
     );

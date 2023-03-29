@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
-import useSound from 'use-sound';
-import music from '../../sounds/music.mp3';
-import click from '../../sounds/click2.wav';
+import useSound from "use-sound";
+import music from "../../sounds/music.mp3";
+import click from "../../sounds/click2.wav";
 
 import style from "./Hud.module.css";
 import ExperienceBar from "../experience-bar/ExperienceBar";
@@ -14,14 +14,13 @@ import IslandContext from "../../contexts/IslandContext";
 
 export default function Hud() {
   const { setUserLoggedOut } = useContext(UserContext);
-  const { player, resetplayer, resetIsland, interruptBuildingRequest } = useContext(IslandContext);
+  const { player } = useContext(IslandContext);
   const { isHudDisplayed } = useContext(HudContext);
 
   const navigate = useNavigate();
-  const cookie = new Cookies();
-  
+
   const [play1] = useSound(click, {
-    volume: 0.2
+    volume: 0.2,
   });
 
   const handleClick = () => {
@@ -29,33 +28,27 @@ export default function Hud() {
   };
 
   const [play, { stop }] = useSound(music, {
-    volume: 0.1
+    volume: 0.1,
   });
 
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const handleMusic = () =>{
-    if (isPlaying==false){
+  const handleMusic = () => {
+    if (isPlaying === false) {
       play();
-    }else{
+    } else {
       stop();
     }
-    setIsPlaying(!isPlaying)
-  }
+    setIsPlaying(!isPlaying);
+  };
 
   function handleLogout() {
-    cookie.remove("token");
-
     setUserLoggedOut();
-    resetplayer();
-    resetIsland();
-    interruptBuildingRequest();
-    
     navigate("");
   }
 
   return isHudDisplayed ? (
-    <div className={style.layout}>    
+    <div className={style.layout}>
       <div className={style.hudTop}>
         <div className={style.items}>
           <img alt="Érme" title="Érme" src="../images/ui/coin_ui_2.png"></img>
@@ -83,44 +76,44 @@ export default function Hud() {
         </div>
       </div>
       <div className={style.hudLeft}>
-        <div className={style.playerInformation} >
-          <div onClick={()=>handleClick()}>
-            <ProfileImage/>
+        <div className={style.playerInformation}>
+          <div onClick={() => handleClick()}>
+            <ProfileImage />
           </div>
           <ExperienceBar experiencePoints={player.experience} />
         </div>
         <nav>
-          <Link to="/island" onClick={()=>handleClick()}>
-            <img
-              alt="Sziget"
-              title="Sziget"
-              src="../images/ui/build.png"
-            ></img>
+          <Link to="/island" onClick={() => handleClick()}>
+            <img alt="Sziget" title="Sziget" src="../images/ui/build.png"></img>
           </Link>
-          <Link to="/management" onClick={()=>handleClick()}>
-            <img alt="Management" title="Management" src="../images/ui/management.png"></img>
+          <Link to="/management" onClick={() => handleClick()}>
+            <img
+              alt="Management"
+              title="Management"
+              src="../images/ui/management.png"
+            ></img>
           </Link>
           <Link to="/battle">
             <img alt="Csata" title="Csata" src="../images/ui/war.png"></img>
           </Link>
-          <Link to="/expedition" onClick={()=>handleClick()}>
+          <Link to="/expedition" onClick={() => handleClick()}>
             <img
               alt="Expedíció"
               title="Expedíció"
               src="../images/ui/expedition.png"
             ></img>
           </Link>
-          <Link to="/market" onClick={()=>handleClick()}>
+          <Link to="/market" onClick={() => handleClick()}>
             <img alt="Piac" title="Piac" src="../images/ui/market.png"></img>
           </Link>
-          <Link to="/tutorial" onClick={()=>handleClick()}>
+          <Link to="/tutorial" onClick={() => handleClick()}>
             <img
               alt="Útmutató"
               title="Útmutató"
               src="../images/ui/tutorial.png"
             ></img>
           </Link>
-          <Link to="/notifications" onClick={()=>handleClick()}>
+          <Link to="/notifications" onClick={() => handleClick()}>
             <img
               alt="Értesítések"
               title="Értesítések"
@@ -135,18 +128,21 @@ export default function Hud() {
             ></img>
           </button>
           <div className={style.musicContent}>
-            {isPlaying ? 
-                (<button className={style.musicOn} onClick={() => handleMusic()}>
-                </button>)
-                :
-                (<button className={style.musicOff} onClick={() => handleMusic()}>
-                </button>)
-            }
+            {isPlaying ? (
+              <button
+                className={style.musicOn}
+                onClick={() => handleMusic()}
+              ></button>
+            ) : (
+              <button
+                className={style.musicOff}
+                onClick={() => handleMusic()}
+              ></button>
+            )}
           </div>
         </nav>
       </div>
       <Outlet />
-
     </div>
   ) : (
     <Outlet />

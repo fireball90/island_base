@@ -147,7 +147,11 @@ export default class Building extends Component {
         buildingType: this.props.building.buildingType,
       })
       .then((response) => {
+
+        
         this.props.setCollectedItemsToPlayer(response.data);
+
+        
       })
       .catch(() => {
         alert("Nem sikerült kapcsolódni a szerverhez!");

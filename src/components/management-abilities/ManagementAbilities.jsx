@@ -2,13 +2,13 @@ import style from "./ManagementAbilities.module.css";
 import { OverlayTrigger } from "react-bootstrap";
 import { Popover } from "react-bootstrap";
 import { useContext, useEffect, useState } from "react";
-import PlayerContext from "../../contexts/PlayerContext";
 import { GameHelper } from "../../game-helper/GameHelper";
 import { forkJoin, from } from "rxjs";
 import axios from "axios";
+import IslandContext from "../../contexts/IslandContext";
 
 export default function ManagementAbilities() {
-  const { player, setPlayer } = useContext(PlayerContext);
+  const { player, setPlayer } = useContext(IslandContext);
 
   const [addedStrength, setAddedStrength] = useState(0);
   const [addedIntelligence, setAddedIntelligence] = useState(0);
