@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "../tutorial/tutorial.css";
 import HudContext from "../../contexts/HudContext";
 import Layout from "../../components/layout/Layout";
 import Modal from "react-bootstrap/Modal";
-import { Link } from "react-router-dom";
-import { ModalFooter } from "react-bootstrap";
 import axios from "axios";
 import { Component } from "react";
-import { repeat, Subject, switchMap, take, tap, timer } from "rxjs";
+import { Subject, switchMap, take, tap, timer } from "rxjs";
 
 export default function Tutorial() {
   const { setIsHudDisplayed } = useContext(HudContext);
@@ -363,20 +361,20 @@ class SlotGame extends Component {
               <div className="winnings-img text-center">
                 {
                   this.state.isFinished ? (
-                    <img src={this.imgPath[this.state.result]}></img>
+                    <img src={this.imgPath[this.state.result]} alt="eredmény"></img>
                   ) : null
                 }
               </div>
               <div className="d-flex justify-content-center align-items-center">
                 <div className="slot-machine d-flex justify-content-center align-items-center">
                   <div className="slotbg">
-                    <img src={this.state.firstSlot}></img>
+                    <img src={this.state.firstSlot} alt="slot1"></img>
                   </div>
                   <div className="slotbg p-5">
-                    <img src={this.state.secondSlot}></img>
+                    <img src={this.state.secondSlot} alt="slot2"></img>
                   </div>
                   <div className="slotbg">
-                    <img src={this.state.thirdSlot}></img>
+                    <img src={this.state.thirdSlot} alt="slot3"></img>
                   </div>
                 </div>
               </div>

@@ -21,6 +21,7 @@
     background-color: rgba(240, 248, 255, 0);
     color: aliceblue;
     text-shadow: 2px 2px black;
+    image-rendering: auto;
 }
 
 .market-delete-btn{
@@ -30,6 +31,7 @@
     border: none;
     background-color: rgba(240, 248, 255, 0);
     color: aliceblue;
+    image-rendering: auto;
 }
 
 .market-update-btn{
@@ -39,10 +41,26 @@
     border: none;
     background-color: rgba(240, 248, 255, 0);
     color: aliceblue;
+    image-rendering: auto;
 }
 .market-height{
     height: 100px;
 }
+
+.market-search-btn{
+    background-image: url("../../../public/images/ui/btn_bg_search.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 130px;
+    height: 80px;
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+    color: aliceblue;
+    text-shadow: 2px 2px black;
+    padding-bottom: 0.5rem;
+    image-rendering: auto;
+}
+
 @media only screen and (max-height: 480px) {
     .market-delete-btn{
         background-size: cover;
@@ -50,6 +68,7 @@
         width: 100px;
         height: 50px;
         text-shadow: 2px 2px black;
+        padding-top:0.3rem;
     }
     .market-update-btn{
         background-size: cover;
@@ -57,6 +76,7 @@
         width: 100px;
         height: 50px;
         text-shadow: 2px 2px black;
+        padding-top:0.3rem;
     }
     .trade-img{
         width: 50px;
@@ -82,5 +102,11 @@
 
     .market-height{
         height: 70px;
+    }
+    
+    .market-search-btn{
+        width: 100px;
+        height: 60px;
+        image-rendering: auto;
     }
 }

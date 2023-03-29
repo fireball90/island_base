@@ -55,7 +55,7 @@ export default function Register() {
             ></img>
           </div>
 
-          <MyVerticallyCenteredModal
+          <RegisterModal
             show={modalShow}
             onHide={() => setModalShow(false)}
           />
@@ -205,7 +205,7 @@ export default function Register() {
   );
 }
 
-function MyVerticallyCenteredModal(props) {
+function RegisterModal(props) {
   return (
     <Modal
       {...props}
