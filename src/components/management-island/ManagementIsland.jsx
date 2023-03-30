@@ -56,7 +56,12 @@ export default class ManagementIsland extends Component {
     };
 
     this.updateLastCollectDate = (buildingId, lastCollectDate) => {
-      console.log(buildingId, lastCollectDate)
+      const collectedBuildings = this.context.buildings.map(building => building.id == buildingId ? {
+        ...building,
+        lastCollectDate: lastCollectDate
+      } : building);
+
+      this.context.setBuildings(collectedBuildings);
     }
 
     this.setOpenedBuildingRemainingTime = (
@@ -190,18 +195,14 @@ export default class ManagementIsland extends Component {
     const startingCoordinates = [];
 
     for (const route of routesMap) {
-      const topNeighbourRouteKey = `${route[1].xCoordinate}${
-        route[1].yCoordinate + 1
-      }`;
-      const rightNeighbourRouteKey = `${route[1].xCoordinate + 1}${
-        route[1].yCoordinate
-      }`;
-      const bottomNeighbourRouteKey = `${route[1].xCoordinate}${
-        route[1].yCoordinate - 1
-      }`;
-      const leftNeighbourRouteKey = `${route[1].xCoordinate - 1}${
-        route[1].yCoordinate
-      }`;
+      const topNeighbourRouteKey = `${route[1].xCoordinate}${route[1].yCoordinate + 1
+        }`;
+      const rightNeighbourRouteKey = `${route[1].xCoordinate + 1}${route[1].yCoordinate
+        }`;
+      const bottomNeighbourRouteKey = `${route[1].xCoordinate}${route[1].yCoordinate - 1
+        }`;
+      const leftNeighbourRouteKey = `${route[1].xCoordinate - 1}${route[1].yCoordinate
+        }`;
 
       let numberOfNeighbors = 0;
 
@@ -244,18 +245,14 @@ export default class ManagementIsland extends Component {
     while (!isEndRouteReached) {
       const possibleRouteParts = [];
 
-      const topRoutePartKey = `${currentRoutePart.xCoordinate}${
-        currentRoutePart.yCoordinate + 1
-      }`;
-      const rightRoutePartKey = `${currentRoutePart.xCoordinate + 1}${
-        currentRoutePart.yCoordinate
-      }`;
-      const bottomRoutePartKey = `${currentRoutePart.xCoordinate}${
-        currentRoutePart.yCoordinate - 1
-      }`;
-      const leftRoutePartKey = `${currentRoutePart.xCoordinate - 1}${
-        currentRoutePart.yCoordinate
-      }`;
+      const topRoutePartKey = `${currentRoutePart.xCoordinate}${currentRoutePart.yCoordinate + 1
+        }`;
+      const rightRoutePartKey = `${currentRoutePart.xCoordinate + 1}${currentRoutePart.yCoordinate
+        }`;
+      const bottomRoutePartKey = `${currentRoutePart.xCoordinate}${currentRoutePart.yCoordinate - 1
+        }`;
+      const leftRoutePartKey = `${currentRoutePart.xCoordinate - 1}${currentRoutePart.yCoordinate
+        }`;
 
       if (
         routesMap.get(topRoutePartKey) &&
@@ -451,36 +448,32 @@ export default class ManagementIsland extends Component {
             case this.DIRECTIONS.top:
               walkingKeyframe[
                 currentWalkingAnimationKeyframePercent
-              ] = `background-image: url(${sprite}); background-position: ${
-                (100 / 3) * 2
-              }% ${(100 / 2) * spritePosition}%`;
+              ] = `background-image: url(${sprite}); background-position: ${(100 / 3) * 2
+                }% ${(100 / 2) * spritePosition}%`;
               walkingKeyframes.push(walkingKeyframe);
 
               break;
             case this.DIRECTIONS.right:
               walkingKeyframe[
                 currentWalkingAnimationKeyframePercent
-              ] = `background-image: url(${sprite}); background-position: ${
-                100 / 3
-              }% ${(100 / 2) * spritePosition}%`;
+              ] = `background-image: url(${sprite}); background-position: ${100 / 3
+                }% ${(100 / 2) * spritePosition}%`;
               walkingKeyframes.push(walkingKeyframe);
 
               break;
             case this.DIRECTIONS.bottom:
               walkingKeyframe[
                 currentWalkingAnimationKeyframePercent
-              ] = `background-image: url(${sprite}); background-position: ${0}% ${
-                (100 / 2) * spritePosition
-              }%`;
+              ] = `background-image: url(${sprite}); background-position: ${0}% ${(100 / 2) * spritePosition
+                }%`;
               walkingKeyframes.push(walkingKeyframe);
 
               break;
             case this.DIRECTIONS.left:
               walkingKeyframe[
                 currentWalkingAnimationKeyframePercent
-              ] = `background-image: url(${sprite}); background-position: ${100}% ${
-                (100 / 2) * spritePosition
-              }%`;
+              ] = `background-image: url(${sprite}); background-position: ${100}% ${(100 / 2) * spritePosition
+                }%`;
               walkingKeyframes.push(walkingKeyframe);
 
               break;
@@ -517,8 +510,6 @@ export default class ManagementIsland extends Component {
   }
 
   componentDidMount() {
-    console.log()
-    
     if (!this.context.isIslandInitialized) {
       this.context.initializeIslandFromHttp();
     }
