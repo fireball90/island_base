@@ -29,6 +29,7 @@ export default function Hud() {
 
   const [play, { stop }] = useSound(music, {
     volume: 0.1,
+    loop:true
   });
 
   const [isPlaying, setIsPlaying] = useState(false);

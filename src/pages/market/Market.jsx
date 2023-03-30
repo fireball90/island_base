@@ -168,14 +168,16 @@ export default function Market() {
         onHide={() => setModalShow(false)}
     />
       <div className="container-fluid">
-        <div className="d-flex justify-content-center align-items-center">
-          <div className="col-9 text-center">
-            <button className="market-search-btn font-btn" onClick={()=>handleExchange(0)}>Érme</button>
-            <button className="market-search-btn font-btn" onClick={()=>handleExchange(1)}>Fa</button>
-            <button className="market-search-btn font-btn" onClick={()=>handleExchange(2)}>Kő</button>
-            <button className="market-search-btn font-btn" onClick={()=>handleExchange(3)}>Vas</button>
+        {count === 0 ? (
+          <div className="d-flex justify-content-center align-items-center">
+            <div className="col-9 text-center">
+              <button className="market-search-btn font-btn" onClick={()=>handleExchange(0)}>Érme</button>
+              <button className="market-search-btn font-btn" onClick={()=>handleExchange(1)}>Fa</button>
+              <button className="market-search-btn font-btn" onClick={()=>handleExchange(2)}>Kő</button>
+              <button className="market-search-btn font-btn" onClick={()=>handleExchange(3)}>Vas</button>
+            </div>
           </div>
-        </div>
+        ) : null}
         <div className="" style={{ height: "100%", width: "100%" }}>
           <div className="col-12 align-items-center d-flex justify-content-center">
             <div className="container">
