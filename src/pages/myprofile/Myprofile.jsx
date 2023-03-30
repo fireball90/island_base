@@ -62,9 +62,6 @@ export default function Myprofile() {
             <div className="User justify-content-center">
               <h2>{user.username}</h2>
               <h2>{user.email}</h2>
-              {
-                  isEmailVerified ? 'Email megerősítve' : 'Nincs megerősítve az email'
-              }
               <div className="reset-passwordjustify-content-center bg-bleur">
                 <h3 className="text-profile text-center">Jelszó módosítása:</h3>
                 <label className="text-label col-sm-12 text-center">
@@ -90,11 +87,11 @@ export default function Myprofile() {
                   onChange={confirmPasswordChangeHandler}
                 ></input>
               </div>
+              <div className="fs-5 text-danger">{errorMessage}</div>
               <div className="modifies d-flex justify-content-center">
                 <button className="modifies-btn" type="submit">
                   Módosít
                 </button>
-                <div className="fs-6 text-danger">{errorMessage}</div>
               </div>
             </div>
           </form>
