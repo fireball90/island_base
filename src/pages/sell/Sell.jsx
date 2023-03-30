@@ -5,11 +5,12 @@ import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
+import AlertModal from "../../components/alert-modal/Alert";
 
 export default function Sell() {
 
   const { setIsHudDisplayed } = useContext(HudContext);
-
+  const [errorMessage, setErrorMessage] = useState(null);
   const [modalShow, setModalShow] = React.useState(false);
 
   const [myItem, setMyItem] = useState(0);
@@ -52,11 +53,11 @@ export default function Sell() {
     })
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        alert("Nem sikerült kapcsolódni a szerverhez.");
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        alert(
-          "Nincs elég anyagod az adott hirdetés feladásához.")
-     }})
+        setErrorMessage(error.response.data);
+      }
+    })
     .finally(() => {
       
     });
@@ -64,6 +65,16 @@ export default function Sell() {
 
   return (
     <Layout navigations={[]} title="Hirdetés feladása">
+
+      {errorMessage ? (
+                <div>
+                  <AlertModal
+                      title="Hiba történt"
+                  > 
+                    <span className="text-white">{errorMessage}</span>
+                  </AlertModal>
+                </div>
+      ) : null}
 
       <SellModal
             show={modalShow}

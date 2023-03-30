@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../notifications/notifications.css";
 import Layout from "../../components/layout/Layout";
+import AlertModal from "../../components/alert-modal/Alert";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
 import moment from "moment";
@@ -9,6 +10,8 @@ import 'moment/locale/hu';
 export default function Notifications() {
   const { setIsHudDisplayed } = useContext(HudContext);
   const [notifications,setNotification] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
+
 
   function removeNotification(notId) {
     return (
@@ -28,11 +31,9 @@ export default function Notifications() {
     })
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        alert("Nem sikerült kapcsolódni a szerverhez.");
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        alert(
-          "Nem található értesítés."
-        );
+        setErrorMessage(error.response.data);
       }
     })
     .finally(() => {
@@ -46,11 +47,9 @@ export default function Notifications() {
     .delete(`https://localhost:7276/api/Notification/DeleteNotification?id=${id}`)
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        alert("Nem sikerült kapcsolódni a szerverhez.");
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        alert(
-          "Nem található értesítés."
-        );
+        setErrorMessage(error.response.data);
       }
     })
     .then(()=>{
@@ -64,6 +63,15 @@ export default function Notifications() {
 
   return (
     <Layout navigations={[]} title="Értesítések">
+      {errorMessage ? (
+                <div>
+                  <AlertModal
+                      title="Hiba történt"
+                  > 
+                    <span className="text-white">{errorMessage}</span>
+                  </AlertModal>
+                </div>
+      ) : null}
       <div className="container-fluid">
           <div className="col-12 align-items-center d-flex justify-content-center">
             <div className="container">

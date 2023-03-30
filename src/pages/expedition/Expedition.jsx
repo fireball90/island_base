@@ -4,11 +4,13 @@ import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
+import AlertModal from "../../components/alert-modal/Alert";
 
 export default function Expedition() {
   const { setIsHudDisplayed } = useContext(HudContext);
   const [modalShow, setModalShow] = React.useState(false);
   const [expData, setExpData] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   function selectExpeditionHandler(difficulty) {
     axios
@@ -21,9 +23,9 @@ export default function Expedition() {
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          alert("Nem sikerült kapcsolódni a szerverhez");
+          setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
         } else {
-          alert("A lefutott expedíció után 10 percig nem indítható új.");
+          setErrorMessage(error.response.data);
         }
       });
   }
@@ -39,6 +41,7 @@ export default function Expedition() {
         aria-labelledby="contained-modal-title-vcenter modal-animation"
         centered
       >
+        
         <div className="modal-exp-container">
           <Modal.Body>
             <div className="" key={expData.id}>
@@ -110,6 +113,15 @@ export default function Expedition() {
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
+      {errorMessage ? (
+                <div>
+                  <AlertModal
+                      title="Hiba történt"
+                  > 
+                    <span className="text-white">{errorMessage}</span>
+                  </AlertModal>
+                </div>
+      ) : null}
       <div className="container-fluid">
         <div className="expedition justify-content-center">
           <h2>Válasszon az expedíciók erősségei közül</h2>

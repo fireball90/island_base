@@ -93,7 +93,6 @@ export default function Login() {
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
           setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
-          
         } else {
           navigate("/select-island");
         }
@@ -169,7 +168,6 @@ export default function Login() {
               </div>
               {errorMessage ? (
                 <div>
-                  {/* <span className="login-error-msg">{errorMessage}</span> */}
                   <AlertModal
                       title="Hiba történt"
                   > 

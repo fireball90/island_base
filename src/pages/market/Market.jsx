@@ -5,12 +5,14 @@ import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
+import AlertModal from "../../components/alert-modal/Alert";
 
 export default function Market() {
   const { setIsHudDisplayed } = useContext(HudContext);
   const [exchange,setExchange] = useState([]);
   const [count,setCount] = useState(0);
   const [modalShow, setModalShow] = React.useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const iconPaths  = [
     "../images/icons/coin.png",
@@ -35,11 +37,9 @@ export default function Market() {
     })
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        alert("Nem sikerült kapcsolódni a szerverhez.");
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        alert(
-          "Nem találtunk hirdetéseket. Próbálja meg újra."
-        );
+        setErrorMessage(error.response.data);
       }
     })
  }
@@ -54,11 +54,9 @@ export default function Market() {
     })
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        alert("Nem sikerült kapcsolódni a szerverhez.");
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        alert(
-          "Nem találtunk hirdetéseket. Próbálja meg újra."
-        );
+        setErrorMessage(error.response.data);
       }
     })
     .finally(() => {
@@ -75,11 +73,9 @@ export default function Market() {
     })
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        alert("Nem sikerült kapcsolódni a szerverhez.");
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        alert(
-          "Nem találtunk hirdetéseket. Próbálja meg újra."
-        );
+        setErrorMessage(error.response.data);
       }
     })
     .finally(() => {
@@ -96,9 +92,9 @@ export default function Market() {
     })
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        alert("Nem sikerült kapcsolódni a szerverhez.");
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        alert("Hiba a megjelenítésben. Próbálja meg újra.")
+        setErrorMessage(error.response.data);
       }
     })
     .finally(() => {
@@ -120,11 +116,9 @@ export default function Market() {
     })
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        alert("Nem sikerült kapcsolódni a szerverhez.");
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        alert(
-          "Nem létező hirdetés."
-        );
+        setErrorMessage(error.response.data);
       }
     })
     .finally(() => {
@@ -139,11 +133,9 @@ export default function Market() {
     })
     .catch((error) => {
       if (error.code === "ERR_NETWORK") {
-        alert("Nem sikerült kapcsolódni a szerverhez.");
+        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
       } else {
-        alert(
-          "Nem létező hirdetés."
-        );
+        setErrorMessage(error.response.data);
       }
     })
     .then(() => {
@@ -162,6 +154,15 @@ export default function Market() {
       ]}
       title="Jelenlegi piaci hirdetések"
     >
+     {errorMessage ? (
+                <div>
+                  <AlertModal
+                      title="Hiba történt"
+                  > 
+                    <span className="text-white">{errorMessage}</span>
+                  </AlertModal>
+                </div>
+      ) : null}
     <MarketModal
         show={modalShow}
         onHide={() => setModalShow(false)}
