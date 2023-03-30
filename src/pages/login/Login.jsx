@@ -8,6 +8,7 @@ import ResendVerifyEmailForm from "../../components/resend-verify-email-form/Res
 import HudContext from "../../contexts/HudContext";
 import IslandContext from "../../contexts/IslandContext";
 import UserContext from "../../contexts/UserContext";
+import AlertModal from "../../components/alert-modal/Alert";
 
 import "../login/login.css";
 
@@ -92,6 +93,7 @@ export default function Login() {
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
           setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+          
         } else {
           navigate("/select-island");
         }
@@ -167,7 +169,12 @@ export default function Login() {
               </div>
               {errorMessage ? (
                 <div>
-                  <span className="login-error-msg">{errorMessage}</span>
+                  {/* <span className="login-error-msg">{errorMessage}</span> */}
+                  <AlertModal
+                      title="Hiba történt"
+                  > 
+                    <span className="text-white">{errorMessage}</span>
+                  </AlertModal>
                 </div>
               ) : null}
               <div className="d-flex justify-content-center">
