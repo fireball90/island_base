@@ -2,10 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
 import useSound from "use-sound";
-import music0 from "../../sounds/music0.mp3";
-import music1 from "../../sounds/music2.mp3";
-import music2 from "../../sounds/music1.mp3";
-import music3 from "../../sounds/music3.mp3";
+import musicEu from "../../sounds/musicEu.mp3";
+import musicInd from "../../sounds/musicInd.ogg";
+import musicVik from "../../sounds/musicVik.ogg";
+import musicJap from "../../sounds/musicJap.ogg";
 import click from "../../sounds/click2.wav";
 
 import style from "./Hud.module.css";
@@ -33,13 +33,13 @@ export default function Hud() {
 
   function musicChange1 (island) {
     if (island==="Indian"){
-      return music0;
+      return musicInd;
     }else if (island==="Europian"){
-      return music1;
+      return musicEu;
     }else if (island==="Viking"){
-      return music2;
+      return musicVik;
     }else {
-      return music3;
+      return musicJap;
     }
   }
 

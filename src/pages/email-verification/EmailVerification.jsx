@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import HudContext from "../../contexts/HudContext";
+import BaseModal from "../../components/base-modal/BaseModal";
 
 import style from "./EmailVerification.module.css";
 
@@ -35,10 +36,14 @@ export default function EmailVerification() {
 
   return !isVerifyingPending ? (
     <div className={style.container}>
-      <div className="w-25 h-25 text-white d-flex flex-column justify-content-between p-4">
+      <BaseModal title="Email megerősítés">
+      <div className="text-center text-white d-flex flex-column justify-content-between p-4">
         {message}
-        <button className={style.verifyBtn} onClick={() => navigate("/")}>Vissza a bejelentkezéshez</button>
+        <div className="font-btn">
+          <button className={style.verifyBtn} onClick={() => navigate("/")}>Vissza a bejelentkezéshez</button>
+        </div>
       </div>
+      </BaseModal>
     </div>
   ) : null;
 }
