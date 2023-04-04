@@ -1,18 +1,41 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Component, useContext, useEffect, useState } from "react";
 import "../expedition/expedition.css";
 import Layout from "../../components/layout/Layout";
 import HudContext from "../../contexts/HudContext";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import AlertModal from "../../components/alert-modal/Alert";
+import IslandContext from "../../contexts/IslandContext";
+import { Subject, switchMap, timer, scan, takeWhile } from "rxjs";
+
+const block$ = new Subject()
+  .pipe(
+    switchMap(date => {
+      const countdownTick = 1000;
+
+      const now = new Date();
+      const nextExpeditionTime = date.getTime() - now.getTime() + 1000;
+      const beginTime = nextExpeditionTime % countdownTick;
+
+      return timer(beginTime, countdownTick)
+        .pipe(
+          scan((previousTime) => {
+            return previousTime - countdownTick;
+          }, nextExpeditionTime - beginTime),
+          takeWhile(countdown => countdown >= 0)
+        )
+    })
+  );
 
 export default function Expedition() {
+  const { player, setPlayer } = useContext(IslandContext);
   const { setIsHudDisplayed } = useContext(HudContext);
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const [expData, setExpData] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [blockTime, setBlockTime] = useState(0);
 
-  function selectExpeditionHandler(difficulty) {
+  function handleChooseExpedition(difficulty) {
     axios
       .get(
         `https://localhost:7276/api/Expedition/Expedition?difficulty=${difficulty}`
@@ -30,6 +53,18 @@ export default function Expedition() {
       });
   }
   useEffect(() => {
+    const now = new Date();
+    const lastExpeditionDate = new Date(player.lastExpeditionDate)
+    lastExpeditionDate = lastExpeditionDate.addMinutes(lastExpeditionDate.getMinutes() + 1);
+
+    if (lastExpeditionDate.getTime() > now.getTime()) {
+      block$.next(lastExpeditionDate);
+    }
+
+
+    block$.subscribe(time => {
+      console.log(time);
+    })
     setIsHudDisplayed(true);
   }, []);
 
@@ -41,7 +76,7 @@ export default function Expedition() {
         aria-labelledby="contained-modal-title-vcenter modal-animation"
         centered
       >
-        
+
         <div className="modal-exp-container">
           <Modal.Body>
             <div className="" key={expData.id}>
@@ -89,9 +124,6 @@ export default function Expedition() {
                   </span>
                 </p>
               </div>
-              {/*               <div className="exp-message-container text-center text-white">
-
-              </div> */}
               <div className="d-flex justify-content-center">
                 <button
                   onClick={props.onHide}
@@ -114,13 +146,13 @@ export default function Expedition() {
         onHide={() => setModalShow(false)}
       />
       {errorMessage ? (
-                <div>
-                  <AlertModal
-                      title="Hiba történt"
-                  > 
-                    <span className="text-white">{errorMessage}</span>
-                  </AlertModal>
-                </div>
+        <div>
+          <AlertModal
+            title="Hiba történt"
+          >
+            <span className="text-white">{errorMessage}</span>
+          </AlertModal>
+        </div>
       ) : null}
       <div className="container-fluid">
         <div className="expedition justify-content-center">
@@ -137,7 +169,7 @@ export default function Expedition() {
                 <button
                   className="expedition-btn font-btn"
                   title="KÖNNYŰ"
-                  onClick={() => selectExpeditionHandler(1)}
+                  onClick={() => handleChooseExpedition(1)}
                 >
                   KÖNNYŰ
                 </button>
@@ -158,7 +190,7 @@ export default function Expedition() {
                 <button
                   className="expedition-btn font-btn"
                   title="NORMÁL"
-                  onClick={() => selectExpeditionHandler(2)}
+                  onClick={() => handleChooseExpedition(2)}
                 >
                   NORMÁL
                 </button>
@@ -179,7 +211,7 @@ export default function Expedition() {
                 <button
                   className="expedition-btn font-btn"
                   title="NEHÉZ"
-                  onClick={() => selectExpeditionHandler(3)}
+                  onClick={() => handleChooseExpedition(3)}
                 >
                   NEHÉZ
                 </button>
@@ -192,6 +224,7 @@ export default function Expedition() {
           </div>
         </div>
       </div>
+      <button onClick={() => block$.next(new Date('2023-04-04T18:03:00'))}>Asd</button>
     </Layout>
   );
 }
