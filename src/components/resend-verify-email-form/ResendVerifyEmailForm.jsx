@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import "./ResendVerifyEmailForm.css";
 
 export default function ResendVerifyEmailForm() {
   const [email, setEmail] = useState("");
@@ -33,7 +34,7 @@ export default function ResendVerifyEmailForm() {
 
   function inputErrorMessage() {
     return isEmailTouched && email.length === 0 ? (
-      <Form.Text className="text-danger">
+      <Form.Text className="text-danger fs-5">
         Az email cím megadása kötelező!
       </Form.Text>
     ) : null;
@@ -62,9 +63,20 @@ export default function ResendVerifyEmailForm() {
         />
         {inputErrorMessage()}
       </Form.Group>
-      <Button type="submit" disabled={email.length === 0 || isVerifyingPending}>
-        Megerősítő email újraküldése
-      </Button>
+      <div>
+        <div className="d-flex justify-content-center">
+          <button className="font-btn email-resend-send" type="submit" disabled={email.length === 0 || isVerifyingPending}>
+            Megerősítő email újraküldése
+          </button>
+        </div>
+        <div className="d-flex justify-content-center">
+          <Link to='/'>
+            <button className="email-resend-close font-btn">
+              Vissza a bejelentkezéshez
+            </button>
+          </Link> 
+        </div>  
+      </div>
       {formErrorMessage()}
     </form>
   ) : (
