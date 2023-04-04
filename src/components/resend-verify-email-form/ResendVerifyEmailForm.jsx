@@ -63,15 +63,19 @@ export default function ResendVerifyEmailForm() {
         />
         {inputErrorMessage()}
       </Form.Group>
-      <div className="d-flex justify-content-center">
-        <button className="font-btn email-resend-send" type="submit" disabled={email.length === 0 || isVerifyingPending}>
-          Megerősítő email újraküldése
-        </button>
-        <Link to='/'>
-          <button className="email-resend-close font-btn">
-            Vissza a bejelentkezéshez
+      <div>
+        <div className="d-flex justify-content-center">
+          <button className="font-btn email-resend-send" type="submit" disabled={email.length === 0 || isVerifyingPending}>
+            Megerősítő email újraküldése
           </button>
-        </Link>   
+        </div>
+        <div className="d-flex justify-content-center">
+          <Link to='/'>
+            <button className="email-resend-close font-btn">
+              Vissza a bejelentkezéshez
+            </button>
+          </Link> 
+        </div>  
       </div>
       {formErrorMessage()}
     </form>
