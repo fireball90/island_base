@@ -9,6 +9,7 @@ import HudContext from "../../contexts/HudContext";
 import IslandContext from "../../contexts/IslandContext";
 import UserContext from "../../contexts/UserContext";
 import AlertModal from "../../components/alert-modal/Alert";
+import BaseModal from "../../components/base-modal/BaseModal";
 
 import "../login/login.css";
 
@@ -166,13 +167,35 @@ export default function Login() {
                   onChange={passwordChangeHandler}
                 />
               </div>
+              {showVerifyEmailModal ? (
+                <div>
+                  <BaseModal
+                    title="Email megerősítés"
+                  > 
+                      <div className="text-white">
+                      <div className="p-3">
+                        <p className="text-center">    
+                          Nem sikerült bejelentkezni, mert nem lett megerősítve az email cím. A
+                          korábban elküldött megerősítő emailben található linkre kattintva
+                          teheted ezt meg.
+                        </p> 
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <div className="col-9">
+                          <ResendVerifyEmailForm /> 
+                        </div>
+                      </div>
+                    </div>
+                  </BaseModal> 
+                </div>)
+                : null}
               {errorMessage ? (
                 <div>
                   <AlertModal
                       title="Hiba történt"
                   > 
                     <span className="text-white">{errorMessage}</span>
-                  </AlertModal>
+                  </AlertModal> 
                 </div>
               ) : null}
               <div className="d-flex justify-content-center">
@@ -200,22 +223,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <Modal className="modal-animation" show={showVerifyEmailModal} centered>
-        <Modal.Body>
-          Nem sikerült bejelentkezni, mert nem lett megerősítve az email cím. A
-          korábban elküldött megerősítő emailben található linkre kattintva
-          teheted ezt meg.
-        </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-center">
-          <ResendVerifyEmailForm />
-          <Button
-            variant="outline-primary"
-            onClick={() => setShowVerifyEmailModal(false)}
-          >
-            Vissza a bejelentkezéshez
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
     </>
   );
 }
