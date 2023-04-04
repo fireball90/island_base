@@ -28,6 +28,8 @@ const block$ = new Subject()
   );
 
 export default function Expedition() {
+  const [ dispose, setDispose ] = useState(0);
+  
   const { player, setPlayer } = useContext(IslandContext);
   const { setIsHudDisplayed } = useContext(HudContext);
   const [modalShow, setModalShow] = useState(false);
@@ -53,20 +55,15 @@ export default function Expedition() {
       });
   }
   useEffect(() => {
-    const now = new Date();
-    const lastExpeditionDate = new Date(player.lastExpeditionDate)
-    lastExpeditionDate = lastExpeditionDate.addMinutes(lastExpeditionDate.getMinutes() + 1);
-
-    if (lastExpeditionDate.getTime() > now.getTime()) {
-      block$.next(lastExpeditionDate);
-    }
-
-
-    block$.subscribe(time => {
-      console.log(time);
-    })
     setIsHudDisplayed(true);
   }, []);
+
+  // Dispose
+  useEffect(() => {
+    return () => {
+      console.log('Hello')
+    }
+  }, [])
 
   function ExpeditionResultModal(props) {
     return (
@@ -76,7 +73,6 @@ export default function Expedition() {
         aria-labelledby="contained-modal-title-vcenter modal-animation"
         centered
       >
-
         <div className="modal-exp-container">
           <Modal.Body>
             <div className="" key={expData.id}>
@@ -140,6 +136,7 @@ export default function Expedition() {
   }
 
   return (
+
     <Layout navigations={[]} title="Expedíció">
       <ExpeditionResultModal
         show={modalShow}
@@ -224,7 +221,7 @@ export default function Expedition() {
           </div>
         </div>
       </div>
-      <button onClick={() => block$.next(new Date('2023-04-04T18:03:00'))}>Asd</button>
+      <button onClick={() => block$.next(new Date('2023-04-04T19:57:00'))}>Asd</button>
     </Layout>
   );
 }
