@@ -137,7 +137,7 @@ export default function Hud() {
               src="../images/ui/notification.png"
             ></img>
           </Link>
-          <button onClick={() => handleLogout()}>
+          <button onClick={() => {stop();handleLogout()}}>
             <img
               alt="Kijelentkezés"
               title="Kijelentkezés"
