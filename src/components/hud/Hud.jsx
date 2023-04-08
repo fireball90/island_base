@@ -153,7 +153,7 @@ export default function Hud() {
               ) : null}
             </div>
           </Link>
-          <button onClick={() => handleLogout()}>
+          <button onClick={() => {stop();handleLogout()}}>
             <img
               alt="Kijelentkezés"
               title="Kijelentkezés"
