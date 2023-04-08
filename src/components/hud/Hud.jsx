@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { Cookies } from "react-cookie";
 import useSound from "use-sound";
 import musicEu from "../../sounds/musicEu.mp3";
 import musicInd from "../../sounds/musicInd.ogg";
@@ -14,13 +13,16 @@ import ProfileImage from "../profile-image/ProfileImage";
 import HudContext from "../../contexts/HudContext";
 import UserContext from "../../contexts/UserContext";
 import IslandContext from "../../contexts/IslandContext";
+import NotificationContext from "../../contexts/NotificationContext";
 
 export default function Hud() {
   const { setUserLoggedOut } = useContext(UserContext);
   const { player } = useContext(IslandContext);
   const { isHudDisplayed } = useContext(HudContext);
-
+  const { notifications } = useContext(NotificationContext);
   const navigate = useNavigate();
+
+  const [isNotificationAlert, setIsNotificationAlert] = useState(false);
 
   const [play1] = useSound(click, {
     volume: 0.2,
@@ -30,22 +32,21 @@ export default function Hud() {
     play1();
   };
 
-
-  function musicChange1 (island) {
-    if (island==="Indian"){
+  function musicChange1(island) {
+    if (island === "Indian") {
       return musicInd;
-    }else if (island==="Europian"){
+    } else if (island === "Europian") {
       return musicEu;
-    }else if (island==="Viking"){
+    } else if (island === "Viking") {
       return musicVik;
-    }else {
+    } else {
       return musicJap;
     }
   }
 
   const [play, { stop }] = useSound(musicChange1(player.selectedIsland), {
     volume: 0.1,
-    loop:true
+    loop: true,
   });
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -63,6 +64,13 @@ export default function Hud() {
     setUserLoggedOut();
     navigate("");
   }
+
+  useEffect(() => {
+    const notOpenedNotifications = notifications.filter(
+      (notification) => notification.isOpened === false
+    );
+    setIsNotificationAlert(notOpenedNotifications.length > 0);
+  }, [notifications]);
 
   return isHudDisplayed ? (
     <div className={style.layout}>
@@ -131,11 +139,19 @@ export default function Hud() {
             ></img>
           </Link>
           <Link to="/notifications" onClick={() => handleClick()}>
-            <img
-              alt="Értesítések"
-              title="Értesítések"
-              src="../images/ui/notification.png"
-            ></img>
+            <div className={style.notificationIcon}>
+              <img
+                alt="Értesítések"
+                title="Értesítések"
+                src="../images/ui/notification.png"
+              ></img>
+              {isNotificationAlert ? (
+                <img
+                  alt="Új értesítés"
+                  src="../images/notification_msg.png"
+                ></img>
+              ) : null}
+            </div>
           </Link>
           <button onClick={() => handleLogout()}>
             <img

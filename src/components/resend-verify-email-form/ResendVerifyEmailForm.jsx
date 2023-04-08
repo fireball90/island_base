@@ -15,8 +15,7 @@ export default function ResendVerifyEmailForm() {
     setEmail(event.target.value);
   }
 
-  function submit(event) {
-    event.preventDefault();
+  function send(event) {
     setIsVerifyingPending(true);
 
     axios
@@ -47,10 +46,7 @@ export default function ResendVerifyEmailForm() {
   }
 
   return !isEmailSended ? (
-    <form
-      onSubmit={(event) => submit(event)}
-      className="d-flex flex-column w-100"
-    >
+    <div className="d-flex flex-column w-100">
       <div className="h6 text-center">Ellenőrző email újraküldése</div>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email cím</Form.Label>
@@ -65,23 +61,20 @@ export default function ResendVerifyEmailForm() {
       </Form.Group>
       <div>
         <div className="d-flex justify-content-center">
-          <button className="font-btn email-resend-send" type="submit" disabled={email.length === 0 || isVerifyingPending}>
+          <button
+            className="font-btn email-resend-send"
+            onClick={() => send()}
+            disabled={email.length === 0 || isVerifyingPending}
+          >
             Megerősítő email újraküldése
           </button>
         </div>
-        <div className="d-flex justify-content-center">
-          <Link to='/'>
-            <button className="email-resend-close font-btn">
-              Vissza a bejelentkezéshez
-            </button>
-          </Link> 
-        </div>  
       </div>
       {formErrorMessage()}
-    </form>
+    </div>
   ) : (
-    <div className="h6">
-      Elküldtük a megerősítő emailt a megadott címre!
+    <div className="text-center">
+      <h6>Elküldtük a megerősítő emailt a megadott címre!</h6>
     </div>
   );
 }

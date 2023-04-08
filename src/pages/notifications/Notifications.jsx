@@ -1,83 +1,36 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "../notifications/notifications.css";
 import Layout from "../../components/layout/Layout";
-import AlertModal from "../../components/alert-modal/Alert";
 import HudContext from "../../contexts/HudContext";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import 'moment/locale/hu';
+import NotificationContext from "../../contexts/NotificationContext";
 
 export default function Notifications() {
   const { setIsHudDisplayed } = useContext(HudContext);
-  const [notifications,setNotification] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const { notifications, deleteNotification } = useContext(NotificationContext);
 
-
-  function removeNotification(notId) {
-    return (
-      setNotification(previousNotifications => previousNotifications.filter((notification)=> notification.id !== notId ))
-    );
-  }
+  const navigate = useNavigate()
 
   useEffect(() => {
     setIsHudDisplayed(true);
-    
-    axios
-    .get("https://localhost:7276/api/Notification/GetAllNotifications")
-    .then((response) => {
-      const allNotification = response.data;
-
-      setNotification(allNotification)
-    })
-    .catch((error) => {
-      if (error.code === "ERR_NETWORK") {
-        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
-      } else {
-        setErrorMessage(error.response.data);
-      }
-    })
-    .finally(() => {
-
-    });
   }, []);
 
-  function deleteNotification(id){
-    console.log(id);
-    axios
-    .delete(`https://localhost:7276/api/Notification/DeleteNotification?id=${id}`)
-    .catch((error) => {
-      if (error.code === "ERR_NETWORK") {
-        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
-      } else {
-        setErrorMessage(error.response.data);
-      }
-    })
-    .then(()=>{
-      
-    })
-    .finally(() => {
-      
-    });
+  function openNotification(id) {
+    navigate(`/single-notification/${id}`)
   }
+
   moment.locale('hu')
 
   return (
     <Layout navigations={[]} title="Értesítések">
-      {errorMessage ? (
-                <div>
-                  <AlertModal
-                      title="Hiba történt"
-                  > 
-                    <span className="text-white">{errorMessage}</span>
-                  </AlertModal>
-                </div>
-      ) : null}
       <div className="container-fluid">
           <div className="col-12 align-items-center d-flex justify-content-center">
             <div className="container">
               <div className="row">
-              {notifications.map((notification)=>(
-                <div className="not-list-container container" key={notification.id}>
+              {notifications.map((notification, index)=>(
+                <div className={notification.isOpened ? "not-list-container container" : "not-list-container container new-notification"} key={index}>
                   <div className="row d-flex align-items-center justify-content-center not-height">               
                     <div className="col-3 text-center">
                       <h4>{notification.title}</h4>
@@ -109,7 +62,8 @@ export default function Notifications() {
                       <p>{moment(notification.createDate).format("llll")}</p>
                     </div>
                     <div className="col-3 text-center">
-                      <button className="not-delete-btn font-btn" onClick={() => {deleteNotification(notification.id); removeNotification(notification.id)}}>Törlés</button>
+                      <button className="open-btn font-btn" onClick={() => openNotification(notification.id)}>Megnyitás</button>
+                      <button className="not-delete-btn font-btn" onClick={() => deleteNotification(notification.id)}>Törlés</button>
                     </div>
                   </div>
                 </div>

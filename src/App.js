@@ -16,13 +16,16 @@ import Guard from "./models/Guard";
 import Hud from "./components/hud/Hud";
 import IslandContext from "./contexts/IslandContext";
 import UserContext from "./contexts/UserContext";
+import NotificationContext from "./contexts/NotificationContext";
 import HudContext from "./contexts/HudContext";
 import Management from "./pages/management/Management";
+import SingleNotification from "./pages/single-notification/SingleNotification";
 import axios from "axios";
 import { forkJoin, from } from "rxjs";
 import Battle from "./pages/battle/Battle";
 import EmailVerification from "./pages/email-verification/EmailVerification";
 import { Cookies } from "react-cookie";
+import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 
 export default class App extends Component {
   constructor(props) {
@@ -61,6 +64,8 @@ export default class App extends Component {
         npcSprites: [],
       },
       buildingToBeBuilt: null,
+      notifications: [],
+      websocketConnection: null,
     };
 
     this.setUserLogined = (username, email) => {
@@ -74,9 +79,11 @@ export default class App extends Component {
       }));
     };
 
-    this.setUserLoggedOut = () => {
+    this.setUserLoggedOut = async () => {
+      await this.state.websocketConnection.stop();
+
       const cookies = new Cookies();
-      cookies.remove('token', { path: '/' });
+      cookies.remove("token", { path: "/" });
 
       this.setState((state) => ({
         ...state,
@@ -110,6 +117,8 @@ export default class App extends Component {
           npcRoutes: [],
           npcSprites: [],
         },
+        notifications: [],
+        websocketConnection: null,
       }));
     };
 
@@ -204,10 +213,106 @@ export default class App extends Component {
             },
           }));
         },
-        error: (error) => {
-          console.log(error);
+        error: () => {
+          alert("Nem sikerült kapcsolódni a szerverhez!");
         },
       });
+    };
+
+    this.populateNotifications = () => {
+      axios
+        .get("https://localhost:7276/api/Notification/GetAllNotifications")
+        .then((response) => {
+          const notifications = response.data;
+          this.setState((state) => ({
+            ...state,
+            notifications: notifications,
+          }));
+        })
+        .catch(() => {
+          alert("Nem sikerült kapcsolódni a szerverhez!");
+        });
+    };
+
+    this.deleteNotification = (id) => {
+      axios
+        .delete(
+          `https://localhost:7276/api/Notification/DeleteNotification?id=${id}`
+        )
+        .then(() => {
+          const notifications = this.state.notifications.filter(
+            (notification) => notification.id !== id
+          );
+
+          this.setState((state) => ({
+            ...state,
+            notifications: notifications,
+          }));
+        })
+        .catch(() => {
+          alert("Nem sikerült kapcsolódni a szerverhez!");
+        });
+    };
+
+    this.setNotificationToOpened = (id) => {
+      axios
+        .post(
+          `https://localhost:7276/api/Notification/SetNotificationToOpened?id=${id}`
+        )
+        .then(() => {
+          const notifications = this.state.notifications.map((notification) => {
+            return notification.id == id
+              ? {
+                  ...notification,
+                  isOpened: true,
+                }
+              : notification;
+          });
+
+          this.setState((state) => ({
+            ...state,
+            notifications: notifications,
+          }));
+        })
+        .catch(() => {
+          alert("Nem sikerült kapcsolódni a szerverhez!");
+        });
+    };
+
+    this.getNotification = (id) => {
+      return this.state.notifications.find(
+        (notification) => notification.id == id
+      );
+    };
+
+    this.connectToNotificationHub = async () => {
+      const cookies = new Cookies();
+      const token = cookies.get("token");
+
+      try {
+        const connection = new HubConnectionBuilder()
+          .withUrl("https://localhost:7276/notificationHub", {
+            accessTokenFactory: () => token,
+          })
+          .configureLogging(LogLevel.Information)
+          .build();
+
+        connection.on("ReceiveNotification", (notification) => {
+          this.setState((state) => ({
+            ...state,
+            notifications: [notification, ...this.state.notifications],
+          }));
+        });
+
+        await connection.start();
+
+        this.setState((state) => ({
+          ...state,
+          websocketConnection: connection,
+        }));
+      } catch (error) {
+        alert("Nem sikerült csatlakozni a hubhoz!");
+      }
     };
   }
 
@@ -248,120 +353,142 @@ export default class App extends Component {
               interruptBuildingRequest: this.interruptBuildingRequest,
             }}
           >
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Hud />}>
-                  <Route index element={<Login />} />
+            <NotificationContext.Provider
+              value={{
+                notifications: this.state.notifications,
+
+                populateNotifications: this.populateNotifications,
+                connectToNotificationHub: this.connectToNotificationHub,
+                deleteNotification: this.deleteNotification,
+                getNotification: this.getNotification,
+                setNotificationToOpened: this.setNotificationToOpened,
+              }}
+            >
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Hud />}>
+                    <Route index element={<Login />} />
+                    <Route
+                      path="management"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <Management />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="battle"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <Battle />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="island"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <Island />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="expedition"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <Expedition />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="market"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <Market />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="select-island"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <SelectIsland />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="tutorial"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <Tutorial />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="notifications"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <Notifications />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="single-notification/:id"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <SingleNotification />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="myprofile"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <Myprofile />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="sell"
+                      element={
+                        <ProtectedRoute
+                          guards={[new Guard(this.state.isLogined, "/")]}
+                        >
+                          <Sell />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Route>
+                  <Route path="register" element={<Register />} />
                   <Route
-                    path="management"
-                    element={
-                      <ProtectedRoute
-                        guards={[new Guard(this.state.isLogined, "/")]}
-                      >
-                        <Management />
-                      </ProtectedRoute>
-                    }
+                    path="email-verification/:token"
+                    element={<EmailVerification />}
                   />
-                  <Route
-                    path="battle"
-                    element={
-                      <ProtectedRoute
-                        guards={[new Guard(this.state.isLogined, "/")]}
-                      >
-                        <Battle />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="island"
-                    element={
-                      <ProtectedRoute
-                        guards={[new Guard(this.state.isLogined, "/")]}
-                      >
-                        <Island />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="expedition"
-                    element={
-                      <ProtectedRoute
-                        guards={[new Guard(this.state.isLogined, "/")]}
-                      >
-                        <Expedition />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="market"
-                    element={
-                      <ProtectedRoute
-                        guards={[new Guard(this.state.isLogined, "/")]}
-                      >
-                        <Market />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="select-island"
-                    element={
-                      <ProtectedRoute
-                        guards={[new Guard(this.state.isLogined, "/")]}
-                      >
-                        <SelectIsland />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="tutorial"
-                    element={
-                      <ProtectedRoute
-                        guards={[new Guard(this.state.isLogined, "/")]}
-                      >
-                        <Tutorial />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="notifications"
-                    element={
-                      <ProtectedRoute
-                        guards={[new Guard(this.state.isLogined, "/")]}
-                      >
-                        <Notifications />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="myprofile"
-                    element={
-                      <ProtectedRoute
-                        guards={[new Guard(this.state.isLogined, "/")]}
-                      >
-                        <Myprofile />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="sell"
-                    element={
-                      <ProtectedRoute
-                        guards={[new Guard(this.state.isLogined, "/")]}
-                      >
-                        <Sell />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Route>
-                <Route path="register" element={<Register />} />
-                <Route
-                  path="email-verification/:token"
-                  element={<EmailVerification />}
-                />
-                <Route path="pwreset" element={<Pwreset />} />
-                <Route path="error" element={<Error />} />
-              </Routes>
-            </BrowserRouter>
+                  <Route path="pwreset" element={<Pwreset />} />
+                  <Route path="error" element={<Error />} />
+                </Routes>
+              </BrowserRouter>
+            </NotificationContext.Provider>
           </IslandContext.Provider>
         </UserContext.Provider>
       </HudContext.Provider>

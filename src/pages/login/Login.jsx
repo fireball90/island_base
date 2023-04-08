@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState, useContext } from "react";
 import { useEffect } from "react";
-import { Button, Modal } from "react-bootstrap";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import ResendVerifyEmailForm from "../../components/resend-verify-email-form/ResendVerifyEmailForm";
@@ -12,12 +11,14 @@ import AlertModal from "../../components/alert-modal/Alert";
 import BaseModal from "../../components/base-modal/BaseModal";
 
 import "../login/login.css";
+import NotificationContext from "../../contexts/NotificationContext";
 
 export default function Login() {
   const cookie = new Cookies();
   const navigate = useNavigate();
 
   const { setIsHudDisplayed } = useContext(HudContext);
+  const { populateNotifications, connectToNotificationHub } = useContext(NotificationContext);
   const { setUserLogined } = useContext(UserContext);
   const { setPlayer } = useContext(IslandContext);
 
@@ -63,9 +64,10 @@ export default function Login() {
         setUserLogined(decodedToken.Username, decodedToken.Email);
 
         requestPlayer();
+        populateNotifications();
+        connectToNotificationHub();
       })
       .catch((error) => {
-        console.log(error);
         if (error.code === "ERR_NETWORK") {
           setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
           return;
@@ -119,6 +121,8 @@ export default function Login() {
     setUserLogined(decodedToken.Username, decodedToken.Email);
 
     requestPlayer();
+    populateNotifications();
+    connectToNotificationHub();
   }, []);
 
   return isPlayerLoading ? null : (
@@ -169,33 +173,29 @@ export default function Login() {
               </div>
               {showVerifyEmailModal ? (
                 <div>
-                  <BaseModal
-                    title="Email megerősítés"
-                  > 
-                      <div className="text-white">
+                  <BaseModal title="Email megerősítés" onHide={() => setShowVerifyEmailModal(false)}>
+                    <div className="text-white">
                       <div className="p-3">
-                        <p className="text-center">    
-                          Nem sikerült bejelentkezni, mert nem lett megerősítve az email cím. A
-                          korábban elküldött megerősítő emailben található linkre kattintva
-                          teheted ezt meg.
-                        </p> 
+                        <p className="text-center">
+                          Nem sikerült bejelentkezni, mert nem lett megerősítve
+                          az email cím. A korábban elküldött megerősítő emailben
+                          található linkre kattintva teheted ezt meg.
+                        </p>
                       </div>
                       <div className="d-flex justify-content-center">
                         <div className="col-9">
-                          <ResendVerifyEmailForm /> 
+                          <ResendVerifyEmailForm />
                         </div>
                       </div>
                     </div>
-                  </BaseModal> 
-                </div>)
-                : null}
+                  </BaseModal>
+                </div>
+              ) : null}
               {errorMessage ? (
                 <div>
-                  <AlertModal
-                      title="Hiba történt"
-                  > 
+                  <AlertModal title="Hiba történt">
                     <span className="text-white">{errorMessage}</span>
-                  </AlertModal> 
+                  </AlertModal>
                 </div>
               ) : null}
               <div className="d-flex justify-content-center">
@@ -223,7 +223,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-
     </>
   );
 }

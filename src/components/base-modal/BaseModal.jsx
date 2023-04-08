@@ -1,13 +1,13 @@
 import "../base-modal/BaseModal.css";
-import { Link } from "react-router-dom";
 
-export default function BaseModal({ title, children }) {
+export default function BaseModal({ title, children, onHide }) {
 
     return (
         <div>
             <div className="d-flex justify-content-center  align-items-center">
                 <div className="base-modal-container modal-animation">
                     <div className="base-modal-popup">
+                        <button className="close-button" onClick={() => onHide()}></button>
                         <div className="base-modal-header">
                             <div className="base-modal-title">
                                 <h3 className="text-white">{title}</h3>

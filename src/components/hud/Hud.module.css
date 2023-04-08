@@ -103,6 +103,28 @@ nav button {
     padding: 0;
 }
 
+.notificationIcon {
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+.notificationIcon img:first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.notificationIcon img:nth-child(2) {
+    width: 2rem;
+    height: 2rem;
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    top: 0;
+} 
+
 @media only screen and (max-height: 480px) {
     .hudLeft {
         width: 110px;
@@ -111,7 +133,18 @@ nav button {
     }
     nav img{
         width: 55px;
+        height: 55px;
     }
+
+    .notificationIcon {
+        width: 55px;
+        height: 55px;
+    }
+    .notificationIcon img:nth-child(2) {
+        width: 1rem;
+        height: 1rem;
+    }
+
     .items {
         width: 140px;
         position: relative;

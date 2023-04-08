@@ -137,7 +137,7 @@ export default function BuildingModal({
           ))}
         </ListGroup>
 
-        <div> Következő termelés: {moment(openedBuildingRemainingTime - (1000 * 60 * 60)).format("LTS")}</div>
+        {/* <div> Következő termelés: {moment(openedBuildingRemainingTime - (1000 * 60 * 60)).format("LTS")}</div> */}
 
         {isNextLevelAvailable && checkEnoughRawMaterials() ? (
           <div className="d-flex flex-column align-items-center unbuilt-building-card">

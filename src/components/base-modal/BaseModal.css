@@ -8,7 +8,22 @@
     overflow: hidden;
 }
 
+.close-button {
+    z-index: 1000;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    height: 3rem;
+    width: 3rem;
+    border: none;
+    background-image: url('../../../public/images/ui/close.png');
+    background-size: cover;
+    background-color: transparent;
+    image-rendering: crisp-edges;
+}
+
 .base-modal-popup {
+    position: relative;
     background-image: url('../../../public/images/ui/contentbg2.png');
     background-position: center;
     background-size: cover;
