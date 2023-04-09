@@ -15,7 +15,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    max-width: calc(100% / 3 * 2);
+    width: calc(100% / 3 * 2);
     overflow-x: auto;
 }
 
