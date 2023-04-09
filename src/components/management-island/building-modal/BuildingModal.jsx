@@ -1,20 +1,19 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { ListGroup, Modal } from "react-bootstrap";
-import { OverlayTrigger } from "react-bootstrap";
-import { Popover } from "react-bootstrap";
 import IslandContext from "../../../contexts/IslandContext";
 
 import "./BuildingModal.css";
+import UnbuiltBuilding from "../../unbuilt-building/UnbuiltBuilding";
 
 export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
   const { player, setPlayer, buildings, setBuildings } =
     useContext(IslandContext);
 
-  const [nextLevelOfBuilding, setNextLevelOfBuilding] = useState();
+  const [nextLevelBuilding, setNextLevelBuilding] = useState();
   const [isNextLevelAvailable, setIsNextLevelAvailable] = useState(false);
 
-  function upgradeBuilding() {
+  const upgradeBuilding = () => {
     axios
       .post(
         `https://localhost:7276/api/Building/UpgradeBuilding?type=${openedBuilding.buildingType}`
@@ -42,7 +41,7 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
       .catch(() => {
         alert("Nem sikerült kapcsolódni a szerverhez.");
       });
-  }
+  };
 
   function notNullProducedItems() {
     const notNullProducedItems = [];
@@ -78,7 +77,8 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
           `https://localhost:7276/api/Building/GetNextLevelOfBuilding?type=${openedBuilding.buildingType}`
         )
         .then((response) => {
-          setNextLevelOfBuilding(response.data);
+          console.log(response.data);
+          setNextLevelBuilding(response.data);
           setIsNextLevelAvailable(true);
         })
         .catch(() => {
@@ -96,9 +96,11 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
       centered
     >
       <Modal.Header className="border-0">
-        <div className="d-flex justify-content-center align-items-baseline gap-2 w-100 h-100">
-          <h5>{openedBuilding.name}</h5>
-          <span className="fs-5">{openedBuilding.level}</span>
+        <div className="d-flex justify-content-center gap-2 w-100 h-100">
+          <h5>
+            {openedBuilding.name}{" "}
+            <span className="fs-5 text-warning">{openedBuilding.level}</span>
+          </h5>
         </div>
         <button className="close" onClick={() => closeBuildingModal()}></button>
       </Modal.Header>
@@ -119,48 +121,15 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
         </ListGroup>
         {isNextLevelAvailable ? (
           <div className="d-flex justify-content-center">
-            <div className="next-level-building-card">
-              <h6>Következő szint</h6>
-              <div>
-                <img
-                className="next-level-building-sprite"
-                alt={nextLevelOfBuilding.name}
-                src={nextLevelOfBuilding.spritePath}
-              />
-              </div>
-              <div>
-                <button onClick={() => upgradeBuilding()}>Fejlesztés</button>
-                <OverlayTrigger
-                  trigger="focus"
-                  placement="right"
-                  overlay={
-                    <Popover id="popover-basic" className="rounded-0">
-                      <Popover.Header as="h3" className="bg-body">
-                        Szükséges anyagok
-                      </Popover.Header>
-                      <Popover.Body className="d-flex flex-column bg-transparent text-center">
-                        <div>Érmék: {openedBuilding.coinsForBuild}</div>
-                        <div>Vas: {openedBuilding.stonesForBuild}</div>
-                        <div>Kő: {openedBuilding.stonesForBuild}</div>
-                        <div>Fa: {openedBuilding.woodsForBuild}</div>
-                      </Popover.Body>
-                    </Popover>
-                  }
-                >
-                  <button className="build-question-btn">
-                    <img
-                      alt="Leírás"
-                      title="Leírás"
-                      src="../images/ui/kerdojel_btn.png"
-                    ></img>
-                  </button>
-                </OverlayTrigger>
-              </div>
-            </div>
+            <UnbuiltBuilding
+              building={nextLevelBuilding}
+              isBuilt={false}
+              isInUpgradeMode={true}
+              upgradeHandler={upgradeBuilding}
+              tooltipPosition="right"
+            />
           </div>
-        ) : (
-          <div>Nem érhető el további fejlesztés</div>
-        )}
+        ) : null}
       </Modal.Body>
     </Modal>
   );

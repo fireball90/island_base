@@ -61,7 +61,7 @@ a, p, li, span {
   text-shadow: 2px 2px black;
 }
 .font-btn:hover{
-  transform: scale(1.05,1.05);
+  transform: scale(1.05);
 }
 
 .modal-animation {  

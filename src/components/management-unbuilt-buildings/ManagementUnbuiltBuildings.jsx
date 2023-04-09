@@ -4,7 +4,6 @@ import UnbuiltBuilding from "../unbuilt-building/UnbuiltBuilding";
 
 export default function ManagementUnbuiltBuildings() {
   const {
-    player,
     isIslandInitialized,
     buildings,
     unbuiltBuildings,
@@ -15,15 +14,6 @@ export default function ManagementUnbuiltBuildings() {
     return (
       buildings.filter((building) => building.buildingType === buildingType)
         .length > 0
-    );
-  }
-
-  function checkHasEnoughMaterialsToBuild(building) {
-    return (
-      player.coins >= building.coinsForBuild &&
-      player.woods >= building.woodsForBuild &&
-      player.stones >= building.stonesForBuild &&
-      player.irons >= building.ironsForBuild
     );
   }
 
@@ -51,8 +41,8 @@ export default function ManagementUnbuiltBuildings() {
         <UnbuiltBuilding
           key={index}
           isBuilt={checkIsBuilt(building.buildingType)}
-          hasEnoughMaterials={checkHasEnoughMaterialsToBuild(building)}
           building={building}
+          tooltipPosition="left"
         />
       ))}
     </div>
