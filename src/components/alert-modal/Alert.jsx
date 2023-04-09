@@ -5,7 +5,7 @@ export default function AlertModal({ title, close, children }) {
 
     return (
         <div>
-            <div className="d-flex justify-content-center  align-items-center">
+            <div>
                 <div className="alert-modal-container modal-animation">
                     <div className="alert-modal-popup">
                         <div className="alert-modal-header">
