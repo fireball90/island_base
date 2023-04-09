@@ -7,10 +7,7 @@ import IslandContext from "../../../contexts/IslandContext";
 
 import "./BuildingModal.css";
 
-export default function BuildingModal({
-  openedBuilding,
-  closeBuildingModal,
-}) {
+export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
   const { player, setPlayer, buildings, setBuildings } =
     useContext(IslandContext);
 
@@ -99,15 +96,13 @@ export default function BuildingModal({
       centered
     >
       <Modal.Header className="border-0">
-        <div className="title">
+        <div className="d-flex justify-content-center align-items-baseline gap-2 w-100 h-100">
           <h5>{openedBuilding.name}</h5>
-          <span className="fs-5">
-            <span className="text-warning"> {openedBuilding.level}</span>
-          </span>
+          <span className="fs-5">{openedBuilding.level}</span>
         </div>
         <button className="close" onClick={() => closeBuildingModal()}></button>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="pt-0">
         <ListGroup>
           {notNullProducedItems(openedBuilding).map((item, index) => (
             <ListGroup.Item
@@ -123,47 +118,49 @@ export default function BuildingModal({
           ))}
         </ListGroup>
         {isNextLevelAvailable ? (
-          <div className="next-level-building-card">
-            <h6>Következő szint</h6>
-            <div>
-              {/* <img
+          <div className="d-flex justify-content-center">
+            <div className="next-level-building-card">
+              <h6>Következő szint</h6>
+              <div>
+                <img
                 className="next-level-building-sprite"
                 alt={nextLevelOfBuilding.name}
                 src={nextLevelOfBuilding.spritePath}
-              /> */}
-            </div>
-            <div>
-              <button onClick={() => upgradeBuilding()}>
-                Fejlesztés
-              </button>
-              <OverlayTrigger
-                trigger="focus"
-                placement="top"
-                overlay={
-                  <Popover id="popover-basic" className="rounded-0">
-                    <Popover.Header as="h3" className="bg-body">
-                      Szükséges anyagok
-                    </Popover.Header>
-                    <Popover.Body className="d-flex flex-column bg-transparent text-center">
-                      <div>Érmék: {openedBuilding.coinsForBuild}</div>
-                      <div>Vas: {openedBuilding.stonesForBuild}</div>
-                      <div>Kő: {openedBuilding.stonesForBuild}</div>
-                      <div>Fa: {openedBuilding.woodsForBuild}</div>
-                    </Popover.Body>
-                  </Popover>
-                }
-              >
-                <button className="build-question-btn">
-                  <img
-                    alt="Leírás"
-                    title="Leírás"
-                    src="../images/ui/kerdojel_btn.png"
-                  ></img>
-                </button>
-              </OverlayTrigger>
+              />
+              </div>
+              <div>
+                <button onClick={() => upgradeBuilding()}>Fejlesztés</button>
+                <OverlayTrigger
+                  trigger="focus"
+                  placement="right"
+                  overlay={
+                    <Popover id="popover-basic" className="rounded-0">
+                      <Popover.Header as="h3" className="bg-body">
+                        Szükséges anyagok
+                      </Popover.Header>
+                      <Popover.Body className="d-flex flex-column bg-transparent text-center">
+                        <div>Érmék: {openedBuilding.coinsForBuild}</div>
+                        <div>Vas: {openedBuilding.stonesForBuild}</div>
+                        <div>Kő: {openedBuilding.stonesForBuild}</div>
+                        <div>Fa: {openedBuilding.woodsForBuild}</div>
+                      </Popover.Body>
+                    </Popover>
+                  }
+                >
+                  <button className="build-question-btn">
+                    <img
+                      alt="Leírás"
+                      title="Leírás"
+                      src="../images/ui/kerdojel_btn.png"
+                    ></img>
+                  </button>
+                </OverlayTrigger>
+              </div>
             </div>
           </div>
-        ) : <div>Nem érhető el további fejlesztés</div>}
+        ) : (
+          <div>Nem érhető el további fejlesztés</div>
+        )}
       </Modal.Body>
     </Modal>
   );

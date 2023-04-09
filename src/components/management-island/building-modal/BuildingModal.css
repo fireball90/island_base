@@ -1,7 +1,8 @@
 .next-level-building-card {
-    background-color: aqua;
-    width: 160px;
-    height: 200px;
+    background-image: url('../../../../public/images/ui/build_card_2_shadow.png');
+    background-size: cover;
+    width: 210px;
+    height: 260px;
 }
 
 .building-modal .modal-content {
@@ -14,13 +15,6 @@
 .building-modal .modal-title {
     text-align: center;
     width: 100%;
-}
-
-.title {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .close {
@@ -79,5 +73,10 @@
 @media only screen and (max-height: 480px) {
     .stat-container{
         width: 7.5rem;
+    }
+
+    .next-level-building-card {
+        width: 160px;
+        height: 200px;
     }
 }

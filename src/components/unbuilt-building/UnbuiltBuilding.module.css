@@ -39,10 +39,6 @@
     text-shadow: 2px 2px black;
 }
 
-.btnBuilding:disabled {
-    opacity: 0%;
-}
-
 .btnQuestionBuilding{
     border: none;
     background-color: rgba(240, 248, 255,0);
