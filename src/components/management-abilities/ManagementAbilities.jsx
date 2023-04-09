@@ -53,6 +53,10 @@ export default function ManagementAbilities() {
     }
   }
 
+  function checkUnsavedPoints() {
+    return addedStrength + addedAgility + addedIntelligence > 0;
+  }
+
   function handleCancel() {
     setAddedStrength(0);
     setAddedIntelligence(0);
@@ -256,10 +260,18 @@ export default function ManagementAbilities() {
         </div>
       </div>
       <div className="d-flex justify-content-center gap-2">
-        <button className={`${style.btnBase} font-btn`} onClick={handleSave}>
+        <button
+          className={`${style.btnBase} font-btn`}
+          onClick={handleSave}
+          disabled={!checkUnsavedPoints()}
+        >
           <span>Mentés</span>
         </button>
-        <button className={`${style.btnBase} font-btn`} onClick={handleCancel}>
+        <button
+          className={`${style.btnBase} font-btn`}
+          onClick={handleCancel}
+          disabled={!checkUnsavedPoints()}
+        >
           <span>Visszavonás</span>
         </button>
       </div>

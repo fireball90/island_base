@@ -77,3 +77,11 @@ a, p, li, span {
       opacity: 1;
   }
 }
+
+button:disabled {
+  opacity: 50%;
+}
+
+button:disabled:hover {
+  transform: none;
+}

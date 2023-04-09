@@ -3,6 +3,7 @@ import { Subject } from "rxjs";
 import { fromEvent } from "rxjs/internal/observable/fromEvent";
 import { startWith } from "rxjs/internal/operators/startWith";
 import { takeUntil } from "rxjs/internal/operators/takeUntil";
+import { tap } from 'rxjs/operators';
 import GameFieldContext from "../../contexts/GameFieldContext";
 
 import style from "./GameField.module.css";
@@ -234,7 +235,7 @@ export default class GameField extends Component {
 
   componentDidMount() {
     this.mouseMove$
-      .pipe(takeUntil(this.componentDestroyed$))
+      .pipe(takeUntil(this.componentDestroyed$), tap(() => console.log('move')))
       .subscribe((event) => this.setCameraPositionByMove(event));
 
     this.mouseLeave$.pipe(takeUntil(this.componentDestroyed$)).subscribe(() => {
@@ -291,6 +292,8 @@ export default class GameField extends Component {
           onMouseDown={() => this.mouseDown$.next()}
           onMouseUp={() => this.mouseUp$.next()}
           onWheel={(event) => this.wheel$.next(event)}
+
+          onTouchMove={(event) => this.mouseMove$.next(event)}
         >
           <div
             className={style.background}
