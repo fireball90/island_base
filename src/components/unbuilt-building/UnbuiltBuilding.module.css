@@ -9,19 +9,6 @@
     background-size: cover;
 }
 
-.lock {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    backdrop-filter: grayscale(100%);
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .building img {
     image-rendering: pixelated;
     width: 100px;
@@ -46,11 +33,16 @@
     height: 55px;
     border: none;
     background-color: rgba(240, 248, 255, 0);
-    color: aliceblue;
+    color: white;
     font-weight: 600;
     padding-bottom: 0.5rem;
     text-shadow: 2px 2px black;
 }
+
+.btnBuilding:disabled {
+    opacity: 0%;
+}
+
 .btnQuestionBuilding{
     border: none;
     background-color: rgba(240, 248, 255,0);
@@ -63,6 +55,19 @@
 }
 
 @media only screen and (max-height: 480px) {
+    .lock {
+        position: absolute;
+        top: 50px;
+        left: 12px;
+        height: calc(100% - 104px);
+        width: calc(100% - 22px);
+        backdrop-filter: grayscale(100%);
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
     .building {
         width: 100%;
         height: auto;

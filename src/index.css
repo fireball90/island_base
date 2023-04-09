@@ -63,15 +63,6 @@ a, p, li, span {
 .font-btn:hover{
   transform: scale(1.05,1.05);
 }
-.popover-body {
-  padding: 0 !important;
-}
-
-.popover{
-  background-color: transparent !important;
-}
-
-.popover-arrow {visibility:hidden;}
 
 .modal-animation {  
   animation: fadeInAnimation ease 2s;

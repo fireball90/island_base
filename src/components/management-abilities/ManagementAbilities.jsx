@@ -145,7 +145,11 @@ export default function ManagementAbilities() {
               <img
                 alt="Plusz"
                 title="Plusz"
-                src={calculateUnusedAbilityPoints()===0 ? "../images/ui/plusz_btn_inactive.png" : "../images/ui/plusz_btn_active.png"}
+                src={
+                  calculateUnusedAbilityPoints() === 0
+                    ? "../images/ui/plusz_btn_inactive.png"
+                    : "../images/ui/plusz_btn_active.png"
+                }
               ></img>
             </button>
             <OverlayTrigger
@@ -155,18 +159,18 @@ export default function ManagementAbilities() {
                 <Popover id="popover-basic" className="rounded-0">
                   <Popover.Header as="h3" className="bg-body"></Popover.Header>
                   <Popover.Body className="d-flex flex-column bg-transparent text-center">
-                    Növeli a bevitt sebzés mértékét.
+                    <span>Növeli a bevitt sebzés mértékét.</span>
                   </Popover.Body>
                 </Popover>
               }
             >
-            <button className={style.btnBg}>
-              <img
-                alt="Leírás"
-                title="Leírás"
-                src="../images/ui/kerdojel_btn.png"
-              ></img>
-            </button>
+              <button className={style.btnBg}>
+                <img
+                  alt="Leírás"
+                  title="Leírás"
+                  src="../images/ui/kerdojel_btn.png"
+                ></img>
+              </button>
             </OverlayTrigger>
           </div>
         </div>
@@ -180,7 +184,11 @@ export default function ManagementAbilities() {
               <img
                 alt="Plusz"
                 title="Plusz"
-                src={calculateUnusedAbilityPoints()===0 ? "../images/ui/plusz_btn_inactive.png" : "../images/ui/plusz_btn_active.png"}
+                src={
+                  calculateUnusedAbilityPoints() === 0
+                    ? "../images/ui/plusz_btn_inactive.png"
+                    : "../images/ui/plusz_btn_active.png"
+                }
               ></img>
             </button>
             <OverlayTrigger
@@ -190,18 +198,18 @@ export default function ManagementAbilities() {
                 <Popover id="popover-basic" className="rounded-0">
                   <Popover.Header as="h3" className="bg-body"></Popover.Header>
                   <Popover.Body className="d-flex flex-column bg-transparent text-center">
-                   Növeli a kritikus találat esélyét.
+                    <span>Növeli a kritikus találat esélyét.</span>
                   </Popover.Body>
                 </Popover>
               }
             >
-            <button className={style.btnBg}>
-              <img
-                alt="Leírás"
-                title="Leírás"
-                src="../images/ui/kerdojel_btn.png"
-              ></img>
-            </button>
+              <button className={style.btnBg}>
+                <img
+                  alt="Leírás"
+                  title="Leírás"
+                  src="../images/ui/kerdojel_btn.png"
+                ></img>
+              </button>
             </OverlayTrigger>
           </div>
         </div>
@@ -215,7 +223,11 @@ export default function ManagementAbilities() {
               <img
                 alt="Plusz"
                 title="Plusz"
-                src={calculateUnusedAbilityPoints()===0 ? "../images/ui/plusz_btn_inactive.png" : "../images/ui/plusz_btn_active.png"}
+                src={
+                  calculateUnusedAbilityPoints() === 0
+                    ? "../images/ui/plusz_btn_inactive.png"
+                    : "../images/ui/plusz_btn_active.png"
+                }
               ></img>
             </button>
             <OverlayTrigger
@@ -225,7 +237,9 @@ export default function ManagementAbilities() {
                 <Popover id="popover-basic" className="rounded-0">
                   <Popover.Header as="h3" className="bg-body"></Popover.Header>
                   <Popover.Body className="d-flex flex-column bg-transparent text-center">
-                    Növeli a visszatérő alapanyagok, érmék és XP mennyiségét.
+                    <span>
+                      Növeli a visszatérő alapanyagok, érmék és XP mennyiségét.
+                    </span>
                   </Popover.Body>
                 </Popover>
               }
@@ -242,10 +256,10 @@ export default function ManagementAbilities() {
         </div>
       </div>
       <div className="d-flex justify-content-center gap-2">
-        <button className={style.btnBase} onClick={handleSave}>
+        <button className={`${style.btnBase} font-btn`} onClick={handleSave}>
           <span>Mentés</span>
         </button>
-        <button className={style.btnBase} onClick={handleCancel}>
+        <button className={`${style.btnBase} font-btn`} onClick={handleCancel}>
           <span>Visszavonás</span>
         </button>
       </div>

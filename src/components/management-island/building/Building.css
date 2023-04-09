@@ -31,3 +31,13 @@
     width: 32px;
     image-rendering: pixelated;
 }
+
+.building-sprite .popover-body {
+    padding: 0 !important;
+}
+  
+.building-sprite .popover{
+    background-color: transparent !important;
+}
+
+.building-sprite .popover-arrow {visibility:hidden;}
