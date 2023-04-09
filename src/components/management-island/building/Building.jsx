@@ -150,7 +150,7 @@ export default class Building extends Component {
         this.props.setCollectedItemsToPlayer(response.data); 
         this.props.updateLastCollectDate(this.props.building.id, collectDate)
       })
-      .catch((err) => {
+      .catch(() => {
         alert("Nem sikerült kapcsolódni a szerverhez!");
       });
   }

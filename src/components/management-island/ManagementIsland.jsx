@@ -595,7 +595,6 @@ export default class ManagementIsland extends Component {
           <BuildingModal
             openedBuilding={this.state.openedBuilding}
             closeBuildingModal={this.closeBuildingModal}
-            openedBuildingRemainingTime={this.state.openedBuildingRemainingTime}
           />
         ) : null}
         {this.context.buildingToBeBuild ? <BuildingNotification /> : null}

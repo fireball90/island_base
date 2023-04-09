@@ -1,6 +1,9 @@
-/* .modal-backdrop {
-    background-color: transparent !important; 
-}*/
+.next-level-building-card {
+    background-color: aqua;
+    width: 160px;
+    height: 200px;
+}
+
 .building-modal .modal-content {
     border-radius: 0.5rem !important;
     background-image: url('../../../../public/images/ui/contentbg2.png');

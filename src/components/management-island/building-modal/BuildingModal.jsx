@@ -4,14 +4,12 @@ import { ListGroup, Modal } from "react-bootstrap";
 import { OverlayTrigger } from "react-bootstrap";
 import { Popover } from "react-bootstrap";
 import IslandContext from "../../../contexts/IslandContext";
-import moment from "moment";
 
 import "./BuildingModal.css";
 
 export default function BuildingModal({
   openedBuilding,
   closeBuildingModal,
-  openedBuildingRemainingTime,
 }) {
   const { player, setPlayer, buildings, setBuildings } =
     useContext(IslandContext);
@@ -47,15 +45,6 @@ export default function BuildingModal({
       .catch(() => {
         alert("Nem sikerült kapcsolódni a szerverhez.");
       });
-  }
-
-  function checkEnoughRawMaterials() {
-    return (
-      player.coins >= nextLevelOfBuilding.coinsForBuild &&
-      player.irons >= nextLevelOfBuilding.ironsForBuild &&
-      player.stones >= nextLevelOfBuilding.stonesForBuild &&
-      player.woods >= nextLevelOfBuilding.woodsForBuild
-    );
   }
 
   function notNullProducedItems() {
@@ -95,10 +84,8 @@ export default function BuildingModal({
           setNextLevelOfBuilding(response.data);
           setIsNextLevelAvailable(true);
         })
-        .catch((error) => {
-          if (error.code === "ERR_NETWORK") {
-            alert("Nem sikerült kapcsolódni a szerverhez.");
-          }
+        .catch(() => {
+          alert("Nem sikerült kapcsolódni a szerverhez.");
         });
     }
   }, []);
@@ -111,11 +98,10 @@ export default function BuildingModal({
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header className="border-0 pb-1">
+      <Modal.Header className="border-0">
         <div className="title">
           <h5>{openedBuilding.name}</h5>
           <span className="fs-5">
-            SZINT:
             <span className="text-warning"> {openedBuilding.level}</span>
           </span>
         </div>
@@ -136,21 +122,18 @@ export default function BuildingModal({
             </ListGroup.Item>
           ))}
         </ListGroup>
-
-        {/* <div> Következő termelés: {moment(openedBuildingRemainingTime - (1000 * 60 * 60)).format("LTS")}</div> */}
-
-        {isNextLevelAvailable && checkEnoughRawMaterials() ? (
-          <div className="d-flex flex-column align-items-center unbuilt-building-card">
-            <h6>Elérhető fejlesztés</h6>
-            <div className="w-100 d-flex flex-row justify-content-center mb-2">
-              <img
+        {isNextLevelAvailable ? (
+          <div className="next-level-building-card">
+            <h6>Következő szint</h6>
+            <div>
+              {/* <img
                 className="next-level-building-sprite"
                 alt={nextLevelOfBuilding.name}
                 src={nextLevelOfBuilding.spritePath}
-              />
+              /> */}
             </div>
-            <div className="d-flex align-items-center justify-content-center">
-              <button className="upgrade-build-btn font-btn" onClick={() => upgradeBuilding()}>
+            <div>
+              <button onClick={() => upgradeBuilding()}>
                 Fejlesztés
               </button>
               <OverlayTrigger
@@ -180,7 +163,7 @@ export default function BuildingModal({
               </OverlayTrigger>
             </div>
           </div>
-        ) : null}
+        ) : <div>Nem érhető el további fejlesztés</div>}
       </Modal.Body>
     </Modal>
   );

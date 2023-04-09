@@ -27,6 +27,18 @@ export default function ManagementUnbuiltBuildings() {
     );
   }
 
+  function compare(a, b) {
+    if (checkIsBuilt(a.buildingType)) {
+      return 1;
+    }
+
+    if (checkIsBuilt(b.buildingType)) {
+      return -1;
+    }
+
+    return 0;
+  }
+
   useEffect(() => {
     if (!isIslandInitialized) {
       initializeIslandFromHttp();
@@ -35,7 +47,7 @@ export default function ManagementUnbuiltBuildings() {
 
   return (
     <div className="w-100 h-100 d-flex flex-wrap gap-3 align-content-start">
-      {unbuiltBuildings.map((building, index) => (
+      {unbuiltBuildings.sort(compare).map((building, index) => (
         <UnbuiltBuilding
           key={index}
           isBuilt={checkIsBuilt(building.buildingType)}
