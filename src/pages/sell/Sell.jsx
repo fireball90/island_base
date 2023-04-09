@@ -40,10 +40,8 @@ export default function Sell() {
 
   function submit(event){
     event.preventDefault();
-    if ((myItemAmount=0)||(theirItemAmount=0) || (myItemAmount>10000) || (theirItemAmount>10000)){
-      setErrorMessage("0 és 10000 között kell lennie a mennyiségnek!")
-    }
-    console.log(myItem,myItemAmount,theirItem,theirItemAmount)
+
+    console.log(myItem,myItemAmount,theirItem,theirItemAmount);
     axios
     .post("https://localhost:7276/api/Exchange/CreateExchange", {
       item: Number(myItem),
