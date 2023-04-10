@@ -6,7 +6,6 @@ import GameFieldContext from "../../../contexts/GameFieldContext";
 import MovablePopover from "../movable-popover/MovablePopover";
 import moment from "moment";
 
-
 import "./Building.css";
 
 export default class Building extends Component {
@@ -255,7 +254,7 @@ export default class Building extends Component {
                 </div>
               ))}
               <button
-                onClick={() => this.collectItems()}
+                onClick={() => {this.collectItems()}}
                 className="collect-btn"
               >
                 Begyűjt

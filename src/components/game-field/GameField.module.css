@@ -26,12 +26,12 @@
     height: 100%;
     position: relative;
 }
+
 .animations > div {
     width: 100%;
     height: 100%;
     position: absolute;
-    image-rendering: optimizeSpeed;
-    
+    image-rendering: optimizeSpeed; 
 }
 
 .animations > div * {

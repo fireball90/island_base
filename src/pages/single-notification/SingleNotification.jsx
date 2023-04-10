@@ -80,7 +80,7 @@ export default function SingleNotification() {
           </div>
         </div>
         <div>
-          <div>{moment(notification.createDate).format("llll")}</div>
+          <p>{moment(notification.createDate).format("llll")}</p>
         </div>
       </div>
     </Layout>

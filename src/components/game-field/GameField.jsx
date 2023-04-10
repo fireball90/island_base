@@ -1,9 +1,8 @@
 import { Component } from "react";
-import { Subject } from "rxjs";
+import { Subject, map, pairwise, skipWhile, switchMap, tap } from "rxjs";
 import { fromEvent } from "rxjs/internal/observable/fromEvent";
 import { startWith } from "rxjs/internal/operators/startWith";
 import { takeUntil } from "rxjs/internal/operators/takeUntil";
-import { tap } from 'rxjs/operators';
 import GameFieldContext from "../../contexts/GameFieldContext";
 
 import style from "./GameField.module.css";
@@ -36,6 +35,26 @@ export default class GameField extends Component {
     this.mouseDown$ = new Subject();
     this.wheel$ = new Subject();
     this.resize$ = fromEvent(window, "resize");
+
+    this.touchMove$ = new Subject();
+    this.touchStart$ = new Subject().pipe(
+      switchMap(() =>
+        this.touchMove$.pipe(
+          pairwise(),
+          map(([previousEvent, currentEvent]) => {
+            const previousTouches =
+              previousEvent.touches[0] || previousEvent.changedTouches[0];
+            const currentTouches =
+              currentEvent.touches[0] || currentEvent.changedTouches[0];
+            const movementX = currentTouches.clientX - previousTouches.clientX;
+            const movementY = currentTouches.clientY - previousTouches.clientY;
+
+            return [movementX, movementY];
+          })
+        )
+      )
+    );
+
     this.componentDestroyed$ = new Subject();
   }
 
@@ -157,18 +176,17 @@ export default class GameField extends Component {
     }
   }
 
-  setCameraPositionByMove(event) {
-    if (!this.state.isLeftButtonHolded) return;
+  setCameraPositionByMove(movementX, movementY, isTouchScreen) {
+    if (!this.state.isLeftButtonHolded && !isTouchScreen) return;
 
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
-    let newMapLeft = this.state.mapSizeAndPosition.left + event.movementX;
-    let newMapTop = this.state.mapSizeAndPosition.top + event.movementY;
+    let newMapLeft = this.state.mapSizeAndPosition.left + movementX;
+    let newMapTop = this.state.mapSizeAndPosition.top + movementY;
     let newBackgroundLeft =
-      this.state.backgroundSizeAndPosition.left + event.movementX;
-    let newBackgroundTop =
-      this.state.backgroundSizeAndPosition.top + event.movementY;
+      this.state.backgroundSizeAndPosition.left + movementX;
+    let newBackgroundTop = this.state.backgroundSizeAndPosition.top + movementY;
 
     if (
       newBackgroundLeft + this.state.backgroundSizeAndPosition.width <
@@ -235,8 +253,10 @@ export default class GameField extends Component {
 
   componentDidMount() {
     this.mouseMove$
-      .pipe(takeUntil(this.componentDestroyed$), tap(() => console.log('move')))
-      .subscribe((event) => this.setCameraPositionByMove(event));
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((event) =>
+        this.setCameraPositionByMove(event.movementX, event.movementY, false)
+      );
 
     this.mouseLeave$.pipe(takeUntil(this.componentDestroyed$)).subscribe(() => {
       this.setState((state) => ({
@@ -270,6 +290,12 @@ export default class GameField extends Component {
     this.resize$
       .pipe(takeUntil(this.componentDestroyed$), startWith(null))
       .subscribe(() => this.setCameraPositionByResize());
+
+    this.touchStart$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(([movementX, movementY]) => {
+        this.setCameraPositionByMove(movementX, movementY, true);
+      });
   }
 
   componentWillUnmount() {
@@ -292,8 +318,8 @@ export default class GameField extends Component {
           onMouseDown={() => this.mouseDown$.next()}
           onMouseUp={() => this.mouseUp$.next()}
           onWheel={(event) => this.wheel$.next(event)}
-
-          onTouchMove={(event) => this.mouseMove$.next(event)}
+          onTouchMove={(event) => this.touchMove$.next(event)}
+          onTouchStart={() => this.touchStart$.next()}
         >
           <div
             className={style.background}

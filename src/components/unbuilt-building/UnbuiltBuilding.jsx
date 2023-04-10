@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Card } from "react-bootstrap";
 import { OverlayTrigger } from "react-bootstrap";
 import { Popover } from "react-bootstrap";
-import CardHeader from "react-bootstrap/esm/CardHeader";
 import { useNavigate } from "react-router-dom";
 import IslandContext from "../../contexts/IslandContext";
 
