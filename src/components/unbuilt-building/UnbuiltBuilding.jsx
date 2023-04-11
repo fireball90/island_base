@@ -129,7 +129,15 @@ export default function UnbuiltBuilding({
                                   : ""
                               }
                             ></img>
-                            <span>Vas {building.ironsForBuild} db</span>
+                            <span
+                              className={
+                                building.ironsForBuild > player.irons
+                                  ? "opacity-25"
+                                  : ""
+                              }
+                            >
+                              Vas {building.ironsForBuild} db
+                            </span>
                           </div>
                           <div className="d-flex flex-column justify-content-center align-items-center">
                             <img
@@ -156,8 +164,7 @@ export default function UnbuiltBuilding({
                     </Popover>
                   }
                 >
-                  <button className={style.questionButton}>
-                  </button>
+                  <button className={style.questionButton}></button>
                 </OverlayTrigger>
               </>
             ) : null}
