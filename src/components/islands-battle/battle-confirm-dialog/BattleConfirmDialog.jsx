@@ -1,24 +1,21 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
-import style from "./BattleConfirmDialog.css";
+import "./BattleConfirmDialog.css";
 
 export default function BattleConfirmDialog({ close, attack }) {
   return (
-    <div >
-    <Modal show={true} centered classname={style.battleContainer}>
-
+    <>
+    <Modal show={true} centered>
       <Modal.Header className="border-0">
-        <Modal.Title>Csata megerősítése</Modal.Title>
+        <Modal.Title className="text-white"><span>Csata megerősítése</span></Modal.Title>
       </Modal.Header>
-      <Modal.Body>Biztosan megtámadja a kiválasztott szigetet?</Modal.Body>
+      <Modal.Body className="text-white"><span>Biztosan megtámadja a kiválasztott szigetet?</span></Modal.Body>
       <Modal.Footer className="border-0">
-        <Button onClick={() => close()}>Mégse</Button>
-        <Button onClick={() => attack()}>Támad</Button>
+        <button className="battle-confirm-button font-btn text-white" onClick={() => close()}>Mégse</button>
+        <button className="battle-confirm-button font-btn text-white" onClick={() => attack()}>Támad</button>
       </Modal.Footer>
-
     </Modal>
-    </div>
+    </>
   );
 }

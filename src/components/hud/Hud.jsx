@@ -114,7 +114,7 @@ export default function Hud() {
           <Link to="/management" onClick={() => handleClick()}>
             <img
               alt="Management"
-              title="Management"
+              title="Menedzsment"
               src="../images/ui/management.png"
             ></img>
           </Link>

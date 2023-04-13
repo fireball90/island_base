@@ -1,10 +1,16 @@
 .modal-content {
-    border: none !important;
-    border-radius: 0 !important;
-}
-
-.battleContainer{
-    background-color: rgb(155, 91, 19);
+    border-radius: 10px !important;
     background-image: url('../../../../public/images/ui/contentbg2.png');
     background-size: cover;
+    border: dashed 2px rgb(155, 98, 13) !important;
+}
+
+.battle-confirm-button {
+    width: 133px;
+    height: 53px;
+    background-image: url("../../../../public/images/ui/btn_bg_1.png");
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    padding-bottom: 0.5rem;
 }

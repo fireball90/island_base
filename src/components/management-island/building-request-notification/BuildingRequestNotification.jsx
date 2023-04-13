@@ -10,12 +10,12 @@ export default function BuildingRequestNotification () {
 
     return (
         <div className="building-notification">
-            <Card style={{ width: '18rem' }} className="border-0 rounded-0">
+            <Card style={{ width: '18rem' }} className="border-0 rounded-0 bg-transparent">
                 <Card.Body className="d-flex justify-content-between">
-                    <div>
+                    <span className="text-white">
                         Készülsz megépíteni ezt az épületet: <b>{ buildingToBeBuild.name }</b>
-                    </div>
-                    <CloseButton onClick={() => interruptBuildingRequest()}/> 
+                    </span>
+                    <button className="building-request-close" onClick={() => interruptBuildingRequest()}/> 
                 </Card.Body>
             </Card>
         </div>
