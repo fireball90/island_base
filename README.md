@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# Islanders frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## A projekt indításához szükséges a backend rész, ami egy másik repositoryban érhető el.
 
-## Available Scripts
+[Backend repository elérése](https://github.com/LeknerNorbert/Islands)
 
-In the project directory, you can run:
+## A projekt indítása
 
+Először végezzük el a backend repository-jában leírtakat (adatbázis elkészítése, backend elindítása).
+
+Másodszor terminálban (akár vs code-ban megnyitás után, akár mappából cmd-vel) indítsuk el az alábbi parancsot:
+### `npm install`
+
+Miután feltelepültek a package-k indítsuk el a projektet az alábbi paranccsal:
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Ezzel elindul a frontend része egy új böngésző ablakban. 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Amennyiben nem nyílik meg új ablak az alábbit írja be a böngésző sávjába:
+[http://localhost:3000](http://localhost:3000)
 
-### `npm test`
+## Az oldal működése
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Belépés
+Megadjuk a felhasználónevünket és jelszavunkat. Elérhető itt a regisztrációra átirányító link, ha nincs még regisztrált fiók. Illetve a password reset menüpontra irányító link is itt található. Ezt abban az esetben használhatjuk, ha elfelejtettük a jelszavunkat.
 
-### `npm run build`
+### Regisztráció
+Itt értelemszerűen kitöltjük az input mezőket. Jelszónál figyelve arra, hogy egy nagy betű és legalább egy szám legyen benne, valamint legalább 8 karakter hosszúságú legyen. Ezután a rendszer küld egy megerősítő emailt a megadott címre. Addig nem lehet belépni, míg azt el nem fogadjuk.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Elfelejtett jelszó
+Ha elfelejtettük a jelszavunkat, akkor a regisztrációnál megadott email címet megadva a rendszer küld egy levelet, amiben kapni fog egy új rendszer által generált jelszót. Azzal a jelszóval tud majd belépni és végül a Saját fiók menüben megtudja változtatni újra.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Menedzsment
+Ebből a menüpontból lehet az 5 alap épületet megépíteni, majd a szigeten lerakni, ahova szeretnénk. Illetve itt lehet elosztani a szintlépéskor kapott pontjainkat a 3 fő statisztikára: intelligencia, erő és ügyesség. Ezek segítenek a csatában és a nyert anyag mennyiségében.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Sziget
+Itt lehet a szigetet megtekinteni, az épületek által termelt nyersanyagokat begyűjteni és fejleszteni az épületeket.
 
-### `npm run eject`
+### Saját profil
+Itt láthatjuk a regisztrált email címünket és itt lehet jelszót módosítani.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Csata
+Feldob a szintünkhöz közeli ellenfél szigeteket (játékosokat), amelyeket megtámadhatunk. Ha nyerünk, akkor kapunk alapanyagokat. Mindkét sziget kap értesítést a csatáról. Ha a megtámadott sziget nyer, akkor ő kap alapanyagot, mi pedig semmit. 1 percenként lehet jelenleg csatázni.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Expedíció
+Ide kattintva feljön három expedíció indítási lehetőség. Könnyű - közepes - nehéz. A fokozattól függően kevesebb az esély a sikeres expedícióra és ettől függően több a visszajövő nyeremény is. Jelenleg 1 perc kell, hogy elteljen két expedíció indítása között.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Piac
+Itt lehet a többi szigettel (avagy felhasználóval) cserélni alapanyagokat és érmét. Kereshetünk adott alapanyagokra vagy rakhatunk fel saját hirdetést. Amennyiben van már hirdetésünk, akkor a saját hirdetések menüben tudjuk törölni őket, amennyiben meggondoltuk magunkat vagy rosszul raktuk fel.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Útmutató
+Itt írjuk le a játék működését, lényegét.
 
-## Learn More
+### Értesítések
+Ide jönnek meg a csata eredmények, expedíció eredmények és egyéb üzenetek. Egy felkiáltójel jelenik meg a menüponton, amennyiben új értesítés érkezett. Addig ott marad, amíg az adott értesítést nem nyitottuk meg (az olvasatlan értesítések körül van egy barna szaggatott vonal). Természetesen törölni is lehet őket.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Kilépés
+Kiléptet az oldalról.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Zene lejátszás
+Ide kattintva indul el az adott szigethez tartozó zene. Amennyiben ki akarjuk kapcsolni, csak kattintsunk rá mégegyszer.
