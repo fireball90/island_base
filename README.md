@@ -57,5 +57,5 @@ Ide jönnek meg a csata eredmények, expedíció eredmények és egyéb üzenete
 ### Kilépés
 Kiléptet az oldalról.
 
-### Zene lejátszás
+### Zene lejátszás ![Music icon](./public/images/ui/music_on.png)
 Ide kattintva indul el az adott szigethez tartozó zene. Amennyiben ki akarjuk kapcsolni, csak kattintsunk rá mégegyszer.
