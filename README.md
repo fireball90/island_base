@@ -1,3 +1,5 @@
+![Islanders logo](./public/images/islanders_logo.png)
+
 # Islanders frontend
 
 ## A projekt indításához szükséges a backend rész, ami egy másik repositoryban érhető el.
@@ -57,5 +59,5 @@ Ide jönnek meg a csata eredmények, expedíció eredmények és egyéb üzenete
 ### Kilépés
 Kiléptet az oldalról.
 
-### Zene lejátszás ![Music icon](./public/images/ui/music_on.png)
+### Zene lejátszás
 Ide kattintva indul el az adott szigethez tartozó zene. Amennyiben ki akarjuk kapcsolni, csak kattintsunk rá mégegyszer.
