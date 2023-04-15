@@ -1,3 +1,5 @@
+![Islanders logo](./public/images/islanders_logo.png)
+
 # Islanders frontend
 
 ## A projekt indításához szükséges a backend rész, ami egy másik repositoryban érhető el.
