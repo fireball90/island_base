@@ -12,7 +12,7 @@ export default function ExperienceBar({ experiencePoints }) {
 
     return (
         <div className={style.experienceBar}>
-            <img src="../images/ui/xpbar.png"></img>
+            <img src="../images/ui/xpbar.png" alt="xp"></img>
             <div className={style.experienceContent}>
                 <ProgressBar
                     now={Math.round(progressPercent)}

@@ -6,82 +6,133 @@ import HudContext from "../../contexts/HudContext";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import AlertModal from "../../components/alert-modal/Alert";
+import IslandContext from "../../contexts/IslandContext";
 
 export default function Sell() {
-
   const { setIsHudDisplayed } = useContext(HudContext);
+  const { player, setPlayer } = useContext(IslandContext);
+
   const [errorMessage, setErrorMessage] = useState(null);
   const [modalShow, setModalShow] = React.useState(false);
 
   const [myItem, setMyItem] = useState(0);
-  const [myItemAmount, setMyItemAmount] = useState(0);
+  const [myItemAmount, setMyItemAmount] = useState(1);
 
   const [theirItem, setTheirItem] = useState(0);
-  const [theirItemAmount, setTheirItemAmount] = useState(0);
+  const [theirItemAmount, setTheirItemAmount] = useState(1);
 
   function myItemChangeHandler(event) {
     setMyItem(event.target.value);
+    setMyItemAmount(1);
   }
   function myItemAmountChangeHandler(event) {
-    setMyItemAmount(event.target.value);
+    const availableAmount = getAvailableAmount();
+    console.log(availableAmount)
+    if (
+      event.target.value >= 1 &&
+      event.target.value <= 10000 &&
+      event.target.value <= availableAmount
+    ) {
+      setMyItemAmount(event.target.value);
+    }
   }
 
   function theirItemChangeHandler(event) {
     setTheirItem(event.target.value);
+    setTheirItemAmount(1);
   }
   function theirItemAmountChangeHandler(event) {
-    setTheirItemAmount(event.target.value);
+    if (
+      event.target.value >= 1 &&
+      event.target.value <= 10000
+    ) {
+      setTheirItemAmount(event.target.value);
+    }
   }
 
+  function getAvailableAmount() {
+    switch (Number(myItem)) {
+      case 0:
+        return player.coins;
+      case 1:
+        return player.woods;
+      case 2:
+        return player.stones;
+      case 3:
+        return player.irons;
+      default:
+        return 0;
+    }
+  }
 
   useEffect(() => {
     setIsHudDisplayed(true);
   }, []);
 
-  function submit(event){
+  function submit(event) {
     event.preventDefault();
 
-    console.log(myItem,myItemAmount,theirItem,theirItemAmount);
     axios
-    .post("https://localhost:7276/api/Exchange/CreateExchange", {
-      item: Number(myItem),
-      amount: Number(myItemAmount),
-      replacementItem: Number(theirItem),
-      replacementAmount: Number(theirItemAmount),
-    })
-    .then(()=>{
-      setModalShow(true);
-    })
-    .catch((error) => {
-      if (error.code === "ERR_NETWORK") {
-        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
-      } else {
-        setErrorMessage(error.response.data);
-      }
-    })
-    .finally(() => {
-      
-    });
+      .post(`${process.env.REACT_APP_API_BASE}/api/Exchange/CreateExchange`, {
+        item: Number(myItem),
+        amount: Number(myItemAmount),
+        replacementItem: Number(theirItem),
+        replacementAmount: Number(theirItemAmount),
+      })
+      .then(() => {
+        let updatedPlayer;
+        
+        switch (myItem) {
+          case 0:
+            updatedPlayer = {
+              ...player,
+              coins: player.coins - myItemAmount
+            };
+            break;
+          case 1:
+            updatedPlayer = {
+              ...player,
+              woods: player.woods - myItemAmount
+            }
+            break;
+          case 2:
+            updatedPlayer = {
+              ...player,
+              stones: player.stones - myItemAmount
+            }
+            break;
+          case 3:
+            updatedPlayer = {
+              ...player,
+              irons: player.irons - myItemAmount
+            }
+          // eslint-disable-next-line no-fallthrough
+          default:
+            break;
+        }
+        setPlayer(updatedPlayer);
+        setModalShow(true);
+      })
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+        } else {
+          setErrorMessage(error.response.data);
+        }
+      });
   }
 
   return (
     <Layout navigations={[]} title="Hirdetés feladása">
-
       {errorMessage ? (
-                <div>
-                  <AlertModal
-                      title="Hiba történt"
-                  > 
-                    <span className="text-white">{errorMessage}</span>
-                  </AlertModal>
-                </div>
+        <div>
+          <AlertModal title="Hiba történt">
+            <span className="text-white">{errorMessage}</span>
+          </AlertModal>
+        </div>
       ) : null}
 
-      <SellModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-      />
-
+      <SellModal show={modalShow} onHide={() => setModalShow(false)} />
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-center flex-column sell-all">
@@ -90,7 +141,13 @@ export default function Sell() {
                 <label className="col-sm-12 col-form-label text-center">
                   Válassz anyagot:
                 </label>
-                <select id="yourItems" name="myItem" className="form-select" value={myItem} onChange={myItemChangeHandler}>
+                <select
+                  id="yourItems"
+                  name="myItem"
+                  className="form-select"
+                  value={myItem}
+                  onChange={myItemChangeHandler}
+                >
                   <option value="0">Érme</option>
                   <option value="1">Fa</option>
                   <option value="2">Kő</option>
@@ -112,7 +169,13 @@ export default function Sell() {
                 <label className="col-sm-12 col-form-label text-center">
                   Mit kérsz cserébe:
                 </label>
-                <select id="theirItem" name="theirItem" className="form-select" value={theirItem} onChange={theirItemChangeHandler}>
+                <select
+                  id="theirItem"
+                  name="theirItem"
+                  className="form-select"
+                  value={theirItem}
+                  onChange={theirItemChangeHandler}
+                >
                   <option value="0">Érme</option>
                   <option value="1">Fa</option>
                   <option value="2">Kő</option>
@@ -165,8 +228,9 @@ function SellModal(props) {
         </Modal.Header>
         <Modal.Body>
           <p>
-           A hirdetését sikeresen feladta a piacon. A saját hirdetések gombra kattintva törölheti, ha meggondolja magát!
-           Kattinston a bezárás gombra a továbblépéshez!
+            A hirdetését sikeresen feladta a piacon. A saját hirdetések gombra
+            kattintva törölheti, ha meggondolja magát! Kattinston a bezárás
+            gombra a továbblépéshez!
           </p>
         </Modal.Body>
         <Modal.Footer>

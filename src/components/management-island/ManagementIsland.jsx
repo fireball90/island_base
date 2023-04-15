@@ -81,7 +81,7 @@ export default class ManagementIsland extends Component {
 
     this.buildBuilding = (xCoordinate, yCoordinate) => {
       axios
-        .post("https://localhost:7276/api/Building/CreateBuilding", {
+        .post(`${process.env.REACT_APP_API_BASE}/api/Building/CreateBuilding`, {
           buildingType: this.context.buildingToBeBuild.buildingType,
           xCoordinate: xCoordinate,
           yCoordinate: yCoordinate,

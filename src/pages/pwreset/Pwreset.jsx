@@ -22,9 +22,7 @@ export default function Pwreset() {
       return;
     }
 
-    axios.put("https://localhost:7276/api/Auth/SetTemporaryPassword", {
-      email: email
-    })
+    axios.put(`${process.env.REACT_APP_API_BASE}/api/Auth/SetTemporaryPassword?email=${email}`)
     .then(() => {
       setModalShow(true);
     })

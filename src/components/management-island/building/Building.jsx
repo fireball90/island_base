@@ -141,7 +141,7 @@ export default class Building extends Component {
 
     const collectDate = new Date();
     axios
-      .post("https://localhost:7276/api/Building/CollectItems", {
+      .post(`${process.env.REACT_APP_API_BASE}/api/Building/CollectItems`, {
         collectDate: moment(collectDate).format(),
         buildingType: this.props.building.buildingType,
       })

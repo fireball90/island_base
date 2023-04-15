@@ -37,3 +37,10 @@
 .animations > div * {
     image-rendering: optimizeSpeed;
 }
+
+.test {
+    z-index: 1000;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+}

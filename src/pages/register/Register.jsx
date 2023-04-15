@@ -18,9 +18,8 @@ export default function Register() {
   password.current = watch("password", "");
 
   const onSubmit = (data) => {
-    console.log(data);
     axios
-      .post("https://localhost:7276/api/Auth/Registration", data)
+      .post(`${process.env.REACT_APP_API_BASE}/api/Auth/Registration`, data)
       .then(() => {
         setModalShow(true);
       })

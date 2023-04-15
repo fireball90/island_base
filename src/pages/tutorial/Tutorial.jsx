@@ -266,9 +266,8 @@ class SlotGame extends Component {
   }
 
   gameCost() {
-    console.log("Levonás");
     axios
-      .put("https://localhost:7276/api/Player/CollectRewards", {
+      .put(`${process.env.REACT_APP_API_BASE}/api/Player/CollectRewards`, {
         coins: -10,
         woods: 0,
         stones: 0,
@@ -281,9 +280,8 @@ class SlotGame extends Component {
   }
 
   winPost() {
-    console.log("Hozzáadás");
     axios
-      .put("https://localhost:7276/api/Player/CollectRewards", {
+      .put(`${process.env.REACT_APP_API_BASE}/api/Player/CollectRewards`, {
         coins: 20,
         woods: 0,
         stones: 0,
@@ -296,9 +294,8 @@ class SlotGame extends Component {
   }
 
   jackpotPost() {
-    console.log("Jackpot");
     axios
-      .put("https://localhost:7276/api/Player/CollectRewards", {
+      .put(`${process.env.REACT_APP_API_BASE}/api/Player/CollectRewards`, {
         coins: 20,
         woods: 10,
         stones: 10,

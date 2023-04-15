@@ -57,7 +57,7 @@ export default class IslandsBattle extends Component {
 
       axios
         .get(
-          `https://localhost:7276/api/Battle/StartBattle?enemyUsername=${this.state.attackedEnemy.username}`
+          `${process.env.REACT_APP_API_BASE}/api/Battle/StartBattle?enemyUsername=${this.state.attackedEnemy.username}`
         )
         .then((response) => {
           const battleReports = response.data;
@@ -170,7 +170,7 @@ export default class IslandsBattle extends Component {
 
   searchEnemies() {
     axios
-      .get("https://localhost:7276/api/Battle/GetAllEnemies")
+      .get(`${process.env.REACT_APP_API_BASE}/api/Battle/GetAllEnemies`)
       .then((response) => {
         const enemiesWithCoordinates = this.enemiesWithCoordinates(
           response.data

@@ -11,7 +11,7 @@ export default function Myprofile() {
   const navigate = useNavigate();
 
   const { setIsHudDisplayed } = useContext(HudContext);
-  const { user, setUserLoggedOut, isEmailVerified } = useContext(UserContext);
+  const { user, setUserLoggedOut } = useContext(UserContext);
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -34,7 +34,7 @@ export default function Myprofile() {
     }
 
     axios
-      .put("https://localhost:7276/api/Auth/ResetPassword", {
+      .put(`${process.env.REACT_APP_API_BASE}/api/Auth/ResetPassword`, {
         password: password,
         confirmPassword: confirmPassword,
       })
@@ -42,8 +42,14 @@ export default function Myprofile() {
         setUserLoggedOut();
         navigate("");
       })
-      .catch(() => {
-        setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+        } else {
+          setErrorMessage(
+            "Az új jelszónak 8 karakter hosszúnak kell lennie, és legalább egy kis és nagybetűt, valamint számot kell tartalmaznia!"
+          );
+        }
       });
   }
 
@@ -58,7 +64,14 @@ export default function Myprofile() {
           <ProfileImage />
         </div>
         <div className="Profile d-flex justify-content-center">
-          <form id="myprofile-form" className="row" onSubmit={submitHandler}>
+          <form
+            id="myprofile-form"
+            style={{
+              width: 400,
+            }}
+            className="row"
+            onSubmit={submitHandler}
+          >
             <div className="User justify-content-center">
               <h2>{user.username}</h2>
               <h2>{user.email}</h2>

@@ -1,10 +1,3 @@
-.modal-content {
-    border-radius: 10px !important;
-    background-image: url('../../../../public/images/ui/contentbg2.png');
-    background-size: cover;
-    border: dashed 2px rgb(155, 98, 13) !important;
-}
-
 .battle-confirm-button {
     width: 133px;
     height: 53px;

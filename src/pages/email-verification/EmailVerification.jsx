@@ -19,7 +19,7 @@ export default function EmailVerification() {
     setIsHudDisplayed(false);
 
     axios
-      .post(`https://localhost:7276/api/Auth/VerifyEmail?token=${token}`)
+      .post(`${process.env.REACT_APP_API_BASE}/api/Auth/VerifyEmail?token=${token}`)
       .then(() => {
         setMessage("Email sikeresen megerősítve!");
       })
