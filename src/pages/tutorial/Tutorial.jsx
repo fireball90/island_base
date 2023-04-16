@@ -31,13 +31,13 @@ export default function Tutorial() {
               szükséges alapanyagokat más szigetekkel való cserével, csatával,
               vagy a saját szigeteden indított expedícióval és a szigetedre már
               letelepített épületekből termelődő alapanyagokból tudod
-              beszerezni. A szükséges tapasztalati pontokat az expedíciókkal és
-              csatákkal tudod összegyűjteni a fejlődéshez. Szintlépésenként
-              kapsz 3 tapasztalati pontot, amelyeket a szigeted alap pontjaihoz
-              tudsz hozzáadni, ezáltal növelheted a különböző tulajdonságait a
-              szigetednek. Ezeket alul részletezünk. Amennyiben szükséges
-              menetközben a gyors információ, a kérdőjel ikonora kattintva
-              tudhatsz meg többet.
+              beszerezni. A szintlépéshez szükséges tapasztalati pontokat (xp-t)
+              az expedíciókkal és csatákkal tudod összegyűjteni a fejlődéshez.
+              Szintlépésenként kapsz 3 képesség pontot, amelyeket a szigeted
+              alap pontjaihoz tudsz hozzáadni, ezáltal növelheted az erő,
+              ügyesség és intelligencia tulajdonságait a menedzsmentben. Ezeket
+              alul részletezünk. Amennyiben szükséges menetközben a gyors
+              információ, a kérdőjel ikonokra kattintva tudhatsz meg többet.
             </p>
 
             <h4 className="text-center text-warning">Szigetek</h4>
@@ -58,12 +58,12 @@ export default function Tutorial() {
             <h4 className="text-center text-warning">Az expedíció</h4>
             <p>
               Az expedíciót már a játék elején el tudod indítani. Két expedíció
-              között 1 perc várakozási ídő van, ezalatt nem indíthatsz újat. Az
-              expedíció sikerességének eredményét,a begyűjtött alapanyagokkal
+              között 1 perc várakozási idő van, ezalatt nem indíthatsz újat. Az
+              expedíció sikerességének eredményét, a begyűjtött alapanyagokkal
               együtt azonnal megkapod. Három nehézségi fokozat közül
               választhatsz, természetesen a legkönnyebb adja a legkevesebb
               anyagot és tapasztalati pontot, a legnehezebb a legtöbbet. A
-              sikerességük kimenetele úgyanígy a nehézségtől függően változik.
+              sikerességük kimenetele ugyanígy a nehézségtől függően változik.
               Az ötös szintig ez az egyetlen lehetőség az xp gyűjtésére a
               szintlépésekhez. Az expedíción kapott nyersanyagot befolyásolja
               még az intelligencia mennyisége is.
@@ -71,37 +71,45 @@ export default function Tutorial() {
 
             <h4 className="text-center text-warning">A csata</h4>
             <p>
-              Csatázni ötödik szint elérése után lesz lehetőséged.
+              Csatázni az ötödik szint elérése után lesz lehetőséged.
               Véletlenszerűen kisorsolt ellenfeleket dob fel a játék és azokat
-              tudod majd megtámadni. Próbál a rendszer a te szintednek megfelelő
-              ellenfél szigeteket adni, hogy ne legyen túl nagy különbség a
-              csaták során. A csatákat befolyásolják az alábbi tényezők: templom
-              szint, kiképző szint, ügyesség / erő / intelligencia mennyisége.
-              Alul pontosabb információkat kaphatsz róla, valamint az adott
-              menüben (fejlesztésnél, építésnél és tapasztalati pontnál) a
-              kérdőjel gombra kattintva több információhoz juthatsz.
+              tudod majd megtámadni. Legfeljebb 5 ellenséges sziget közül
+              választhatsz a csaták során. A rendszer a te szintedhez mérten az
+              egy szinttel alacsonyabbaktól a két szinttel magasabbakig adja be
+              az ellenfeleket, hogy ne legyen túl nagy különbség az
+              erőviszonyokban. A csatákat befolyásolják az alábbi tényezők:
+              templom szint, kiképző szint, ügyesség / erő / intelligencia
+              mennyisége. Alul pontosabb információkat kaphatsz róla, valamint
+              az adott menüben (fejlesztésnél, építésnél és tapasztalati
+              pontnál) a kérdőjelre kattintva ott is több információhoz
+              juthatsz.
             </p>
 
             <h4 className="text-center text-warning">A kereskedelem</h4>
             <p>
               A kereskedelem a többi szigettel a piac menüpont alatt zajlik. Itt
-              tudsz felrakni saját csere ajánlatokat, illetve tudod törölni, ha
-              meggondolod magadat. A levonás csak a cserék elfogadása után
-              történik, nem kell félned attól, hogy levonódik, amit kiraktál
-              alapanyag. Valamint a többi sziget által kirakott portékát is
-              megtekintheted, böngészheted kedved szerint.
+              találhatod a játékosok által feladott hirdetéseket. A többi sziget
+              által kirakott portékát az összes hirdetés gombra kattintva
+              tekintheted meg és böngészheted kedved szerint. A hirdetés
+              feladása gombra kattintva tudsz felrakni saját csere ajánlatokat.
+              A feladott hirdetéseidet a saját hirdetések gombra kattintva fogod
+              tudni elérni és törölni, ha meggondolnád magadat. A felkínált
+              portéka a hirdetés feladásakor levonásra kerül a készletedből.
+              Amint valaki e cserét elfogadja, a várt tétel jóvá íródik a te
+              alapanyagaid között. Amennyiben te fogadsz el egy hirdetést, a
+              csere azonnal megtörténik.
             </p>
 
             <h4 className="text-center text-warning">Fejlesztés és építés</h4>
             <p>
               Öt alap épületet tudsz lerakni és azokat tudod fejleszteni.
               Mindegyiknek megvan a sziget fajtájától függően az alapanyag
-              követelmény a megépítéshez és fejlesztéshez. Természetesen több
-              anyag szükséges a második és harmadik szintre való fejlesztés,
-              mint az első szint megépítése. Te magad döntöd el, hogy hova rakod
-              le az adott épületet és hogy milyen sorrendben. Mindegyik épület
-              termel passzívan alapanyagot és megépítéskor / fejlesztéskor ad
-              egy kevés XP-t.
+              követelménye a megépítéshez és fejlesztéshez. Természetesen több
+              anyag szükséges a második és harmadik szintre való fejlesztéshez,
+              mint az első szint megépítéséhez. Te magad döntöd el, hogy a
+              kijelölt területek közül melyik helyre rakod le az adott épületet
+              és hogy milyen sorrendben. Mindegyik épület termel passzívan
+              alapanyagot és megépítéskor / fejlesztéskor ad egy kevés XP-t.
               <br></br>
               <br></br>
               <span className="text-warning">Az öt alap épület:</span>
@@ -114,13 +122,13 @@ export default function Tutorial() {
               növeli. Szinttől függően több a sebzés kritikus támadás esetén és
               a termelt pénz mennyisége.
               <br></br>- <b>Fa termelő:</b> <br></br>
-              Passzívan fát termel. Szinttől függően több a termelt fa
+              Passzívan fát termel. Szinttől függően emelkedik a termelt fa
               mennyisége.
               <br></br>- <b>Kő termelő:</b> <br></br>
-              Passzívan követ termel. Szinttől függően több a termelt kő
+              Passzívan követ termel. Szinttől függően emelkedik a termelt kő
               mennyisége.
               <br></br>- <b>Vas termelő:</b> <br></br>
-              Passzívan vasat termel. Szinttől függően több a termelt vas
+              Passzívan vasat termel. Szinttől függően emelkedik a termelt vas
               mennyisége.
               <br></br>
             </p>
@@ -132,28 +140,29 @@ export default function Tutorial() {
               szerezhetsz általuk. Van maximum értékük, így nem rakhatsz minden
               pontot egy ágra.
               <br></br>
-              <br></br>- Erő: <br></br>
-              <p>Növeli a bevitt sebzés mértékét.</p>- Ügyesség: <br></br>
-              <p>Növeli a kritkus találat esélyét.</p>- Intelligencia: <br></br>
-              <p>
-                Növeli a sikeres expedíció és csata utáni alapanyag és xp
-                mennyiségét.
-              </p>
+              <br></br>- <b>Erő:</b> <br></br>
+              Növeli a bevitt sebzés mértékét.
+              <br></br>- <b>Ügyesség:</b> <br></br>
+              Növeli a kritikus találat esélyét.
+              <br></br>- <b>Intelligencia:</b> <br></br>
+              Növeli a sikeres expedíció és csata utáni alapanyag és xp
+              mennyiségét.
             </p>
 
             <h4 className="text-center text-warning">Alapanyagok</h4>
             <p>
-              Három fő alapanyag van és mellette van még XP és pénz. A pénz, fa,
-              kő és vas szükséges az épületek megépítéséhez és fejlesztéséhez.
-              Az XP pedig a sziget össz szintjének növeléséhez, amely plusz
-              pontokat ad a képességekhez.
+              Három fő alapanyag van a fa, kő, és a vas. Ezek mellett van még XP
+              és pénz. A pénz, fa, kő és vas szükségesek az épületek
+              megépítéséhez és fejlesztéséhez, az XP pedig a sziget össz
+              szintjének növeléséhez, amely a plusz pontokat adja a
+              képességekhez a fejlődésben.
             </p>
 
             <h4 className="text-center text-warning">Végszó</h4>
             <p>
-              Reméljük élvezni fogod a játékot. Amennyiben kérdés merülne fel,
-              mely nem került megválaszolásra az alábbi email címeken üzenhetsz
-              nekünk:
+              Reméljük élvezni fogod a játékot! Amennyiben olyan kérdésed
+              merülne fel, mely nem került megválaszolásra az alábbi email
+              címeken üzenhetsz nekünk:
             </p>
           </span>
           <div className="makers d-flex justify-content-evenly">
