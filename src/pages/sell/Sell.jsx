@@ -27,7 +27,6 @@ export default function Sell() {
   }
   function myItemAmountChangeHandler(event) {
     const availableAmount = getAvailableAmount();
-    console.log(availableAmount)
     if (
       event.target.value >= 1 &&
       event.target.value <= 10000 &&
@@ -72,39 +71,44 @@ export default function Sell() {
   function submit(event) {
     event.preventDefault();
 
+    const selectedItem = myItem;
+    const selectedAmount = myItemAmount;
+    const selectedReplacementItem = theirItem;
+    const selectedReplacementAmount = theirItemAmount;
+
     axios
       .post(`${process.env.REACT_APP_API_BASE}/api/Exchange/CreateExchange`, {
-        item: Number(myItem),
-        amount: Number(myItemAmount),
-        replacementItem: Number(theirItem),
-        replacementAmount: Number(theirItemAmount),
+        item: Number(selectedItem),
+        amount: Number(selectedAmount),
+        replacementItem: Number(selectedReplacementItem),
+        replacementAmount: Number(selectedReplacementAmount),
       })
       .then(() => {
-        let updatedPlayer;
+        let updatedPlayer = player;
         
-        switch (myItem) {
+        switch (selectedItem) {
           case 0:
             updatedPlayer = {
-              ...player,
-              coins: player.coins - myItemAmount
+              ...updatedPlayer,
+              coins: updatedPlayer.coins - selectedAmount
             };
             break;
           case 1:
             updatedPlayer = {
-              ...player,
-              woods: player.woods - myItemAmount
+              ...updatedPlayer,
+              woods: updatedPlayer.woods - selectedAmount
             }
             break;
           case 2:
             updatedPlayer = {
-              ...player,
-              stones: player.stones - myItemAmount
+              ...updatedPlayer,
+              stones: updatedPlayer.stones - selectedAmount
             }
             break;
           case 3:
             updatedPlayer = {
-              ...player,
-              irons: player.irons - myItemAmount
+              ...updatedPlayer,
+              irons: updatedPlayer.irons - selectedAmount
             }
           // eslint-disable-next-line no-fallthrough
           default:

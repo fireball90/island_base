@@ -93,7 +93,7 @@ export default class IslandsBattle extends Component {
       earliestBattleDate.setMinutes(earliestBattleDate.getMinutes() + 10);
 
       this.battle$.next(earliestBattleDate);
-      
+
       this.setState((state) => ({
         ...state,
         battleReport: null,
@@ -202,6 +202,10 @@ export default class IslandsBattle extends Component {
     this.searchEnemies();
   }
 
+  calculateMyHealth() {
+    return 100 + GameHelper.CalculateLevel(this.context.player.experience) * 15;
+  }
+
   componentWillUnmount() {
     this.componentDestroyed$.next();
     this.componentDestroyed$.complete();
@@ -209,7 +213,7 @@ export default class IslandsBattle extends Component {
 
   render() {
     return GameHelper.CalculateLevel(this.context.player.experience) < 5 ? (
-      <Lock>Csak 5. szint felett érhető el a csata!</Lock>
+      <Lock>Csak 5. szint elérése után nyílik meg a csata!</Lock>
     ) : this.state.tempoparyLockCounter !== 0 ? (
       <Lock>
         {moment(this.state.tempoparyLockCounter - 60 * 60 * 1000).format("LTS")}
@@ -232,6 +236,7 @@ export default class IslandsBattle extends Component {
               >
                 <EnemyIsland
                   enemy={enemy}
+                  myHealth={this.calculateMyHealth()}
                   setAttackedEnemy={this.setAttackedEnemy}
                 />
               </Tile>
@@ -247,7 +252,10 @@ export default class IslandsBattle extends Component {
           />
         ) : null}
         {this.state.battleReports ? (
-          <BattleReportDialog battleReports={this.state.battleReports} resetBattleReports={this.resetBattleReports}/>
+          <BattleReportDialog
+            battleReports={this.state.battleReports}
+            resetBattleReports={this.resetBattleReports}
+          />
         ) : null}
       </div>
     );

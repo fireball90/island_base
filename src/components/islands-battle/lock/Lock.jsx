@@ -4,14 +4,14 @@ import style from "./Lock.module.css";
 export default function Lock({ children }) {
   return (
     <div className={style.container}>
-      <Modal.Dialog className="p-3">
-        <Modal.Header>
-          <Modal.Title><span>Csata nem elérhető!</span></Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <div className={style.card}>
+        <div className={style.title}>
+          <h4>Csata nem elérhető!</h4>
+        </div>
+        <div className={style.body}>
           <span>{children}</span>
-        </Modal.Body>
-      </Modal.Dialog>
+        </div>
+      </div>
     </div>
   );
 }

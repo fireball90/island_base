@@ -5,10 +5,24 @@ import { scan, Subject, takeUntil, takeWhile, tap, timer } from "rxjs";
 import GameFieldContext from "../../../contexts/GameFieldContext";
 import MovablePopover from "../movable-popover/MovablePopover";
 import moment from "moment";
+import useSound from "use-sound";
+import click from "../../../sounds/click.mp3";
 
 import "./Building.css";
 
-export default class Building extends Component {
+export default function BuildingHoc(props) {
+  const [play] = useSound(click, {
+    volume: 0.2,
+  });
+
+  const playSound = () => {
+    play();
+  };
+
+  return <Building {...props} playSound={playSound} />;
+}
+
+export class Building extends Component {
   static contextType = GameFieldContext;
 
   constructor(props) {
@@ -29,7 +43,6 @@ export default class Building extends Component {
         this.props.building.producedWoods
       ),
       timeLeftToBuildingCompletion: 0,
-
     };
 
     const countdownTick = 1000;
@@ -54,18 +67,18 @@ export default class Building extends Component {
   calculateProducedItemsSinceLastCollection(item) {
     const now = new Date();
     const currentProductionDate = new Date(this.props.building.buildDate);
-    const lastCollectDate = new Date(this.props.building.lastCollectDate)
+    const lastCollectDate = new Date(this.props.building.lastCollectDate);
 
     let productionsFromLastCollection = 0;
 
-    while(currentProductionDate.getTime() < now.getTime()) {
+    while (currentProductionDate.getTime() < now.getTime()) {
       if (currentProductionDate.getTime() > lastCollectDate.getTime()) {
-        productionsFromLastCollection++
+        productionsFromLastCollection++;
       }
-      
+
       currentProductionDate.setTime(
         currentProductionDate.getTime() + this.props.building.productionInterval
-      )
+      );
     }
 
     return this.calculateProducedItem(item * productionsFromLastCollection);
@@ -95,7 +108,6 @@ export default class Building extends Component {
   }
 
   notNullProducedItems() {
-
     const notNullProducedItems = [];
 
     if (this.state.producedCoins > 0) {
@@ -146,8 +158,8 @@ export default class Building extends Component {
         buildingType: this.props.building.buildingType,
       })
       .then((response) => {
-        this.props.setCollectedItemsToPlayer(response.data); 
-        this.props.updateLastCollectDate(this.props.building.id, collectDate)
+        this.props.setCollectedItemsToPlayer(response.data);
+        this.props.updateLastCollectDate(this.props.building.id, collectDate);
       })
       .catch(() => {
         alert("Nem sikerült kapcsolódni a szerverhez!");
@@ -193,7 +205,6 @@ export default class Building extends Component {
           const buildDate = new Date(this.props.building.buildDate);
 
           if (now.getTime() >= buildDate.getTime()) {
-
             this.setState((state) => ({
               ...state,
               timeLeftToBuildingCompletion: 0,
@@ -227,8 +238,7 @@ export default class Building extends Component {
     this.componentDestroyed$.next();
     this.componentDestroyed$.complete();
   }
-  
-  
+
   render() {
     return this.state.timeLeftToBuildingCompletion === 0 ? (
       <div
@@ -254,7 +264,9 @@ export default class Building extends Component {
                 </div>
               ))}
               <button
-                onClick={() => {this.collectItems()}}
+                onClick={() => {
+                  this.collectItems(); this.props.playSound();
+                }}
                 className="collect-btn"
               >
                 Begyűjt
@@ -280,7 +292,9 @@ export default class Building extends Component {
           trigger={null}
           overlay={
             <MovablePopover zoom={this.context.zoom}>
-              {moment(this.state.timeLeftToBuildingCompletion - 60 * 60 * 1000).format("LTS")}
+              {moment(
+                this.state.timeLeftToBuildingCompletion - 60 * 60 * 1000
+              ).format("LTS")}
             </MovablePopover>
           }
         >

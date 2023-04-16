@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { Image, ProgressBar } from "react-bootstrap";
 import GameFieldContext from "../../../contexts/GameFieldContext";
+import { OverlayTrigger } from "react-bootstrap";
+import MovablePopover from "../../management-island/movable-popover/MovablePopover";
+import { Image } from "react-bootstrap";
 
-import style from "./EnemyIsland.module.css";
+import "./EnemyIsland.css";
 
 export class EnemyIsland extends Component {
   static contextType = GameFieldContext;
@@ -10,29 +12,66 @@ export class EnemyIsland extends Component {
   constructor(props) {
     super(props);
 
+    this.state ={
+      show: false
+    }
+
+    // Triggereli a popupot, hogy betöltés után rögtön megjelenjen
+    setTimeout(() => {
+      this.setState((state) => ({
+        ...state,
+        show: true
+      }))
+    })
+
     this.ref = React.createRef();
   }
 
-  health() {
-    return this.props.enemy.health / 5.5;
+  healthDifferent() {
+    const healthDifferent = this.props.enemy.health - this.props.myHealth;
+
+    if (healthDifferent > 0) {
+      return <div><span className="text-success">+{healthDifferent}</span> többlet élet</div>
+    } else if (healthDifferent < 0) {
+      return <div><span className="text-danger">{healthDifferent}</span> többlet élet</div>
+    } else {
+      return <div><span className="text-warning">{healthDifferent}</span> többlet élet</div>
+    }
   }
 
   render() {
     return (
       <div
+        ref={this.ref}
         onClick={() => this.props.setAttackedEnemy(this.props.enemy)}
-        className={style.island}
+        className="enemy-island"
         style={{ backgroundImage: `url(${this.props.enemy.spritePath})` }}
       >
-        <div className="w-75 h-25 bg-white d-flex">
-          <div className="w-25 h-75">
-            <Image className="w-100 h-100" src={this.props.enemy.profileImage}></Image>
-          </div>
-          <div className="w-75 h-100">
-            <div className="bg-primary text-white h-50">{this.props.enemy.username} - {this.props.enemy.level}</div>
-            <div className="d-flex align-items-center h-50"><ProgressBar className="w-100" now={this.health()} label={this.props.enemy.health}/></div>
-          </div>
-        </div>
+        <OverlayTrigger
+          show={this.state.show}
+          container={this.ref}
+          trigger={null}
+          overlay={
+            <MovablePopover zoom={this.context.zoom}>
+              <div className="enemy-island-hud">
+                <Image src={this.props.enemy.profileImage} />
+                <div className="enemy-data">
+                  <div className="title">
+                    <span>
+                      {this.props.enemy.username}
+                    </span>
+                    <span className="text-warning">
+                      {this.props.enemy.level}. SZINT
+                    </span>
+                  </div>
+                  <div>{ this.healthDifferent() }</div>
+                </div>
+              </div>
+            </MovablePopover>
+          }
+        >
+          <div></div>
+        </OverlayTrigger>
       </div>
     );
   }
