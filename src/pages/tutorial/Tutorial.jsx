@@ -28,21 +28,23 @@ export default function Tutorial() {
             <h4 className="text-center text-warning">Rövid ismertető</h4>
             <p>
               A játék lényege, hogy fejleszd a szigetedet. A fejlesztéshez
-              szükséges alapanyagokat más szigetekkel való cserével, csatával
-              vagy saját szigeten indított expedícióval tudod beszerezni.
-              Illetve a szükséges tapasztalati pontokat is az utóbbiakkal tudod
-              beszerezni a fejlődéshez. Szintlépésenként kapsz 3 tapasztalati
-              pontot, amelyet a szigeted alap pontjaihoz tudsz hozzáadni.
-              Ezáltal nőnek különböző tulajdonságok, amelyeket alul
-              részletezünk. Amennyiben szükséges gyors információ, akkor a
-              kérdőjel ikonos gombokra kattintva tudhatsz meg többet.
+              szükséges alapanyagokat más szigetekkel való cserével, csatával,
+              vagy a saját szigeteden indított expedícióval és a szigetedre már
+              letelepített épületekből termelődő alapanyagokból tudod
+              beszerezni. A szükséges tapasztalati pontokat az expedíciókkal és
+              csatákkal tudod összegyűjteni a fejlődéshez. Szintlépésenként
+              kapsz 3 tapasztalati pontot, amelyeket a szigeted alap pontjaihoz
+              tudsz hozzáadni, ezáltal növelheted a különböző tulajdonságait a
+              szigetednek. Ezeket alul részletezünk. Amennyiben szükséges
+              menetközben a gyors információ, a kérdőjel ikonora kattintva
+              tudhatsz meg többet.
             </p>
 
             <h4 className="text-center text-warning">Szigetek</h4>
             <p>
               Négy alap sziget van a játékban: Európai, japán, viking és indián.
               Mindegyikük más alapstatisztikával rendelkezik és más alapanyag
-              követelményekkel.
+              követelményekkel a fejlődéshez.
             </p>
 
             <h4 className="text-center text-warning">A játék négy fő része</h4>
@@ -55,14 +57,16 @@ export default function Tutorial() {
 
             <h4 className="text-center text-warning">Az expedíció</h4>
             <p>
-              Expedíciót már a játék legelején tudsz indítani. 10 percenként
-              lehet egy expedíciót elindítani, de eredményt az indításkor
-              megkapod. Jelenleg nincs a gyorsításra lehetőség. Három nehézségi
-              fokozat közül választhatsz, természetesen a legkönyebb adja a
-              legkevesebb anyagot és tapasztalati pontot és a legnehezebb a
-              legtöbbet. Ötös szintig az egyetlen lehetőség a cserén kívül,
-              arra, hogy alapanyagot szerezz. Az expedíción kapott nyersanyagot
-              befolyásolja még az intelligencia mennyisége is.
+              Az expedíciót már a játék elején el tudod indítani. Két expedíció
+              között 1 perc várakozási ídő van, ezalatt nem indíthatsz újat. Az
+              expedíció sikerességének eredményét,a begyűjtött alapanyagokkal
+              együtt azonnal megkapod. Három nehézségi fokozat közül
+              választhatsz, természetesen a legkönnyebb adja a legkevesebb
+              anyagot és tapasztalati pontot, a legnehezebb a legtöbbet. A
+              sikerességük kimenetele úgyanígy a nehézségtől függően változik.
+              Az ötös szintig ez az egyetlen lehetőség az xp gyűjtésére a
+              szintlépésekhez. Az expedíción kapott nyersanyagot befolyásolja
+              még az intelligencia mennyisége is.
             </p>
 
             <h4 className="text-center text-warning">A csata</h4>
@@ -106,9 +110,9 @@ export default function Tutorial() {
               arányban. Szinttől függően több a sebzés és a termelt pénz
               mennyisége.
               <br></br>- <b>Kiképző:</b> <br></br>
-              Passzívan pénzt termel. Csatában a kritikus találat sebézését
-              növeli. Szinttől függően több a sebéz kritikus támadás esetén és a
-              termelt pénz mennyisége.
+              Passzívan pénzt termel. Csatában a kritikus találat sebzését
+              növeli. Szinttől függően több a sebzés kritikus támadás esetén és
+              a termelt pénz mennyisége.
               <br></br>- <b>Fa termelő:</b> <br></br>
               Passzívan fát termel. Szinttől függően több a termelt fa
               mennyisége.
@@ -230,7 +234,7 @@ class SlotGame extends Component {
       secondSlot: this.ITEMS[1],
       thirdSlot: this.ITEMS[2],
       result: 0,
-      isFinished: false
+      isFinished: false,
     };
 
     this.imgPath = [
@@ -317,7 +321,7 @@ class SlotGame extends Component {
       SLOT_VALUES[Math.floor(Math.random() * SLOT_VALUES.length)];
     const newSlot3 =
       SLOT_VALUES[Math.floor(Math.random() * SLOT_VALUES.length)];
-    this.setSlots(newSlot1, newSlot2, newSlot3)
+    this.setSlots(newSlot1, newSlot2, newSlot3);
 
     if (!isLast) return;
     this.setIsFinished(true);
@@ -341,9 +345,10 @@ class SlotGame extends Component {
     this.spins$
       .pipe(
         tap(() => this.setIsFinished(false)),
-        switchMap(() => timer(0, 200).pipe(take(10))))
+        switchMap(() => timer(0, 200).pipe(take(10)))
+      )
       .subscribe((count) => {
-        this.spin(count === 9)
+        this.spin(count === 9);
       });
   }
 
@@ -359,11 +364,12 @@ class SlotGame extends Component {
           <Modal.Body>
             <div className="">
               <div className="winnings-img text-center">
-                {
-                  this.state.isFinished ? (
-                    <img src={this.imgPath[this.state.result]} alt="eredmény"></img>
-                  ) : null
-                }
+                {this.state.isFinished ? (
+                  <img
+                    src={this.imgPath[this.state.result]}
+                    alt="eredmény"
+                  ></img>
+                ) : null}
               </div>
               <div className="d-flex justify-content-center align-items-center">
                 <div className="slot-machine d-flex justify-content-center align-items-center">
@@ -381,9 +387,15 @@ class SlotGame extends Component {
               <div className="result-container d-flex justify-content-center">
                 <button
                   className="slot-btn"
-                  onClick={() => {this.spins$.next();this.gameCost()}}
+                  onClick={() => {
+                    this.spins$.next();
+                    this.gameCost();
+                  }}
                 ></button>
-                <button className="close-slot-btn font-btn" onClick={this.props.onHide}>
+                <button
+                  className="close-slot-btn font-btn"
+                  onClick={this.props.onHide}
+                >
                   Bezárás
                 </button>
               </div>
