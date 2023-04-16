@@ -86,7 +86,7 @@ export default function Sell() {
       .then(() => {
         let updatedPlayer = player;
         
-        switch (selectedItem) {
+        switch (Number(selectedItem)) {
           case 0:
             updatedPlayer = {
               ...updatedPlayer,
