@@ -14,6 +14,10 @@
     color: aliceblue;
 }
 
+#sell-form {
+    width: 400px;
+}
+
 .successful-sell-modal{
     background-image: url("../../../public/images/ui/contentbg3.png");
     background-repeat: repeat;

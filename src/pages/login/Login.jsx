@@ -17,7 +17,8 @@ export default function Login() {
   const navigate = useNavigate();
 
   const { setIsHudDisplayed } = useContext(HudContext);
-  const { populateNotifications, connectToNotificationHub } = useContext(NotificationContext);
+  const { populateNotifications, connectToNotificationHub } =
+    useContext(NotificationContext);
   const { setUserLogined } = useContext(UserContext);
   const { setPlayer } = useContext(IslandContext);
 
@@ -60,7 +61,12 @@ export default function Login() {
         axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
 
         const decodedToken = decodeToken(token);
-        setUserLogined(decodedToken.Username, decodedToken.Email);
+        setUserLogined(
+          decodedToken[
+            "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+          ],
+          decodedToken.Email
+        );
 
         requestPlayer();
         populateNotifications();
@@ -117,7 +123,12 @@ export default function Login() {
     if (decodedToken.exp < now) return;
 
     axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
-    setUserLogined(decodedToken.Username, decodedToken.Email);
+    setUserLogined(
+      decodedToken[
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+      ],
+      decodedToken.Email
+    );
 
     requestPlayer();
     populateNotifications();
@@ -172,7 +183,10 @@ export default function Login() {
               </div>
               {showVerifyEmailModal ? (
                 <div>
-                  <BaseModal title="Email megerősítés" onHide={() => setShowVerifyEmailModal(false)}>
+                  <BaseModal
+                    title="Email megerősítés"
+                    onHide={() => setShowVerifyEmailModal(false)}
+                  >
                     <div className="text-white">
                       <div className="p-3">
                         <p className="text-center">
@@ -190,7 +204,9 @@ export default function Login() {
                   </BaseModal>
                 </div>
               ) : null}
-              <div className="text-danger fs-bold"><span>{ errorMessage }</span></div>
+              <div className="text-danger fs-bold">
+                <span>{errorMessage}</span>
+              </div>
               <div className="d-flex justify-content-center">
                 <button
                   className="btn-button1 font-btn"

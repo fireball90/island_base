@@ -21,32 +21,43 @@ export default function Sell() {
   const [theirItem, setTheirItem] = useState(0);
   const [theirItemAmount, setTheirItemAmount] = useState(1);
 
+  const [myItemValid, setMyItemValid] = useState(true);
+  const [theirItemValid, setTheirItemValid] = useState(true);
+
+  function checkFormIsValid() {
+    return myItemValid && theirItemValid;
+  }
+
   function myItemChangeHandler(event) {
     setMyItem(event.target.value);
-    setMyItemAmount(1);
   }
   function myItemAmountChangeHandler(event) {
     const availableAmount = getAvailableAmount();
+
     if (
       event.target.value >= 1 &&
       event.target.value <= 10000 &&
       event.target.value <= availableAmount
     ) {
-      setMyItemAmount(event.target.value);
+      setMyItemValid(true);
+    } else {
+      setMyItemValid(false);
     }
+
+    setMyItemAmount(event.target.value);
   }
 
   function theirItemChangeHandler(event) {
     setTheirItem(event.target.value);
-    setTheirItemAmount(1);
   }
   function theirItemAmountChangeHandler(event) {
-    if (
-      event.target.value >= 1 &&
-      event.target.value <= 10000
-    ) {
-      setTheirItemAmount(event.target.value);
+    if (event.target.value >= 1 && event.target.value <= 10000) {
+      setTheirItemValid(true);
+    } else {
+      setTheirItemValid(false);
     }
+
+    setTheirItemAmount(event.target.value);
   }
 
   function getAvailableAmount() {
@@ -85,37 +96,41 @@ export default function Sell() {
       })
       .then(() => {
         let updatedPlayer = player;
-        
+
         switch (Number(selectedItem)) {
           case 0:
             updatedPlayer = {
               ...updatedPlayer,
-              coins: updatedPlayer.coins - selectedAmount
+              coins: updatedPlayer.coins - selectedAmount,
             };
             break;
           case 1:
             updatedPlayer = {
               ...updatedPlayer,
-              woods: updatedPlayer.woods - selectedAmount
-            }
+              woods: updatedPlayer.woods - selectedAmount,
+            };
             break;
           case 2:
             updatedPlayer = {
               ...updatedPlayer,
-              stones: updatedPlayer.stones - selectedAmount
-            }
+              stones: updatedPlayer.stones - selectedAmount,
+            };
             break;
           case 3:
             updatedPlayer = {
               ...updatedPlayer,
-              irons: updatedPlayer.irons - selectedAmount
-            }
+              irons: updatedPlayer.irons - selectedAmount,
+            };
           // eslint-disable-next-line no-fallthrough
           default:
             break;
         }
         setPlayer(updatedPlayer);
         setModalShow(true);
+        setMyItem(0);
+        setTheirItem(0);
+        setMyItemAmount(1);
+        setTheirItemAmount(0);
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
@@ -169,6 +184,14 @@ export default function Sell() {
                   className="form-control"
                 ></input>
               </div>
+              {!myItemValid ? (
+                <div className="text-danger">
+                  <span>
+                    Csak 1 és 10000 közötti értéket adhatsz meg, vagy nem áll
+                    rendelkezésedre elég nyersanyag!
+                  </span>
+                </div>
+              ) : null}
               <div className="justify-content-center">
                 <label className="col-sm-12 col-form-label text-center">
                   Mit kérsz cserébe:
@@ -196,8 +219,19 @@ export default function Sell() {
                   onChange={theirItemAmountChangeHandler}
                   className="form-control"
                 ></input>
+                {!theirItemValid ? (
+                  <div>
+                    <span className="text-danger">
+                      Csak 1 és 10000 közötti értéket adhatsz meg!
+                    </span>
+                  </div>
+                ) : null}
                 <div className="d-flex justify-content-center pt-3">
-                  <button className="sell-btn font-btn" type="submit">
+                  <button
+                    className="sell-btn font-btn"
+                    type="submit"
+                    disabled={!checkFormIsValid()}
+                  >
                     Hirdetés feladása
                   </button>
                 </div>
