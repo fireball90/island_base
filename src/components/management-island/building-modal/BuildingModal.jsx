@@ -16,7 +16,7 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
   const upgradeBuilding = () => {
     axios
       .post(
-        `https://localhost:7276/api/Building/UpgradeBuilding?type=${openedBuilding.buildingType}`
+        `${process.env.REACT_APP_API_BASE}/api/Building/UpgradeBuilding?type=${openedBuilding.buildingType}`
       )
       .then((response) => {
         const upgradedBuilding = response.data;
@@ -74,10 +74,9 @@ export default function BuildingModal({ openedBuilding, closeBuildingModal }) {
     if (openedBuilding.maxLevel > openedBuilding.level) {
       axios
         .get(
-          `https://localhost:7276/api/Building/GetNextLevelOfBuilding?type=${openedBuilding.buildingType}`
+          `${process.env.REACT_APP_API_BASE}/api/Building/GetNextLevelOfBuilding?type=${openedBuilding.buildingType}`
         )
         .then((response) => {
-          console.log(response.data);
           setNextLevelBuilding(response.data);
           setIsNextLevelAvailable(true);
         })

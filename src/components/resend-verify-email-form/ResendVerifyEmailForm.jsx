@@ -15,11 +15,11 @@ export default function ResendVerifyEmailForm() {
     setEmail(event.target.value);
   }
 
-  function send(event) {
+  function send() {
     setIsVerifyingPending(true);
 
     axios
-      .post(`https://localhost:7276/api/Auth/ResendVerifyEmail?email=${email}`)
+      .post(`${process.env.REACT_APP_API_BASE}/api/Auth/ResendVerifyEmail?email=${email}`)
       .then(() => setIsEmailSended(true))
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {

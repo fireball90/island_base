@@ -7,7 +7,6 @@ import ResendVerifyEmailForm from "../../components/resend-verify-email-form/Res
 import HudContext from "../../contexts/HudContext";
 import IslandContext from "../../contexts/IslandContext";
 import UserContext from "../../contexts/UserContext";
-import AlertModal from "../../components/alert-modal/Alert";
 import BaseModal from "../../components/base-modal/BaseModal";
 
 import "../login/login.css";
@@ -50,7 +49,7 @@ export default function Login() {
     setIsloginPending(true);
 
     axios
-      .post("https://localhost:7276/api/Auth/Login", {
+      .post(`${process.env.REACT_APP_API_BASE}/api/Auth/Login`, {
         username: username,
         password: password,
       })
@@ -69,7 +68,7 @@ export default function Login() {
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+          alert("Nem sikerült kapcsolódni a szerverhez.");
           return;
         }
         if (error.response.data.includes("EmailNotValidatedException")) {
@@ -88,14 +87,14 @@ export default function Login() {
     setIsPlayerLoading(true);
 
     axios
-      .get("https://localhost:7276/api/Player/GetPlayer")
+      .get(`${process.env.REACT_APP_API_BASE}/api/Player/GetPlayer`)
       .then((response) => {
         setPlayer(response.data);
         navigate("/island");
       })
       .catch((error) => {
         if (error.code === "ERR_NETWORK") {
-          setErrorMessage("Nem sikerült kapcsolódni a szerverhez.");
+          alert("Nem sikerült kapcsolódni a szerverhez.");
         } else {
           navigate("/select-island");
         }
@@ -191,13 +190,7 @@ export default function Login() {
                   </BaseModal>
                 </div>
               ) : null}
-              {errorMessage ? (
-                <div>
-                  <AlertModal title="Hiba történt">
-                    <span className="text-white">{errorMessage}</span>
-                  </AlertModal>
-                </div>
-              ) : null}
+              <div className="text-danger fs-bold"><span>{ errorMessage }</span></div>
               <div className="d-flex justify-content-center">
                 <button
                   className="btn-button1 font-btn"

@@ -66,7 +66,7 @@ export default class ExpeditionInterface extends Component {
   handleChooseExpedition(difficulty) {
     axios
       .get(
-        `https://localhost:7276/api/Expedition/Expedition?difficulty=${difficulty}`
+        `${process.env.REACT_APP_API_BASE}/api/Expedition/Expedition?difficulty=${difficulty}`
       )
       .then((response) => {
         const expeditionResult = response.data;

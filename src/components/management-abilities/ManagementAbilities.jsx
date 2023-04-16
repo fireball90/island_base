@@ -65,7 +65,7 @@ export default function ManagementAbilities() {
 
   function handleSave() {
     axios
-      .put("https://localhost:7276/api/Player/UpdateSkillPoints", {
+      .put(`${process.env.REACT_APP_API_BASE}/api/Player/UpdateSkillPoints`, {
         strength: addedStrength,
         intelligence: addedIntelligence,
         agility: addedAgility,
@@ -108,8 +108,8 @@ export default function ManagementAbilities() {
 
   function requestDefaultAndMaximumSkills() {
     const urls = [
-      "https://localhost:7276/api/Island/GetDefaultSkills",
-      "https://localhost:7276/api/Island/GetMaximumSkillPoints",
+      `${process.env.REACT_APP_API_BASE}/api/Island/GetDefaultSkills`,
+      `${process.env.REACT_APP_API_BASE}/api/Island/GetMaximumSkillPoints`,
     ];
     const request$ = urls.map((url) => from(axios.get(url)));
 

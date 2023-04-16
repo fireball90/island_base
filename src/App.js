@@ -187,9 +187,9 @@ export default class App extends Component {
 
     this.initializeIslandFromHttp = () => {
       const urls = [
-        "https://localhost:7276/api/Island/GetIsland",
-        "https://localhost:7276/api/Building/GetAllBuildings",
-        "https://localhost:7276/api/Building/GetAllUnbuiltBuildings",
+        `${process.env.REACT_APP_API_BASE}/api/Island/GetIsland`,
+        `${process.env.REACT_APP_API_BASE}/api/Building/GetAllBuildings`,
+        `${process.env.REACT_APP_API_BASE}/api/Building/GetAllUnbuiltBuildings`,
       ];
 
       const requests$ = urls.map((url) => from(axios.get(url)));
@@ -221,7 +221,7 @@ export default class App extends Component {
 
     this.populateNotifications = () => {
       axios
-        .get("https://localhost:7276/api/Notification/GetAllNotifications")
+        .get(`${process.env.REACT_APP_API_BASE}/api/Notification/GetAllNotifications`)
         .then((response) => {
           const notifications = response.data;
           this.setState((state) => ({
@@ -237,7 +237,7 @@ export default class App extends Component {
     this.deleteNotification = (id) => {
       axios
         .delete(
-          `https://localhost:7276/api/Notification/DeleteNotification?id=${id}`
+          `${process.env.REACT_APP_API_BASE}/api/Notification/DeleteNotification?id=${id}`
         )
         .then(() => {
           const notifications = this.state.notifications.filter(
@@ -257,7 +257,7 @@ export default class App extends Component {
     this.setNotificationToOpened = (id) => {
       axios
         .post(
-          `https://localhost:7276/api/Notification/SetNotificationToOpened?id=${id}`
+          `${process.env.REACT_APP_API_BASE}/api/Notification/SetNotificationToOpened?id=${id}`
         )
         .then(() => {
           const notifications = this.state.notifications.map((notification) => {
@@ -291,7 +291,7 @@ export default class App extends Component {
 
       try {
         const connection = new HubConnectionBuilder()
-          .withUrl("https://localhost:7276/notificationHub", {
+          .withUrl(`${process.env.REACT_APP_API_BASE}/notificationHub`, {
             accessTokenFactory: () => token,
           })
           .configureLogging(LogLevel.Information)
@@ -302,6 +302,19 @@ export default class App extends Component {
             ...state,
             notifications: [notification, ...this.state.notifications],
           }));
+
+          if (notification.isItemsUpdateForce) {
+            this.setState(state => ({
+              ...state,
+              player: {
+                ...state.player,
+                experience: state.player.experience + notification.experience,
+                coins: state.player.coins + notification.coins,
+                woods: state.player.woods + notification.woods,
+                stones: state.player.stones + notification.stones,
+                irons: state.player.irons + notification.irons,
+            }}));
+          }
         });
 
         await connection.start();

@@ -1,5 +1,16 @@
 import { Component } from "react";
-import { Subject, map, pairwise, skipWhile, switchMap, tap } from "rxjs";
+import {
+  Subject,
+  map,
+  pairwise,
+  switchMap,
+  scan,
+  takeWhile,
+  distinctUntilChanged,
+  skip,
+  filter,
+  debounceTime,
+} from "rxjs";
 import { fromEvent } from "rxjs/internal/observable/fromEvent";
 import { startWith } from "rxjs/internal/operators/startWith";
 import { takeUntil } from "rxjs/internal/operators/takeUntil";
@@ -27,13 +38,15 @@ export default class GameField extends Component {
         top: 0,
         left: 0,
       },
+      centerX: 0,
+      centerY: 0,
     };
 
     this.mouseMove$ = new Subject();
     this.mouseLeave$ = new Subject();
     this.mouseUp$ = new Subject();
     this.mouseDown$ = new Subject();
-    this.wheel$ = new Subject();
+    this.wheel$ = new Subject().pipe(debounceTime(5));
     this.resize$ = fromEvent(window, "resize");
 
     this.touchMove$ = new Subject();
@@ -41,16 +54,67 @@ export default class GameField extends Component {
       switchMap(() =>
         this.touchMove$.pipe(
           pairwise(),
+          filter(([previousEvent, currentEvent]) => {
+            return (
+              previousEvent.touches.length === 1 &&
+              currentEvent.touches.length === 1
+            );
+          }),
           map(([previousEvent, currentEvent]) => {
-            const previousTouches =
+            const previousTouch =
               previousEvent.touches[0] || previousEvent.changedTouches[0];
-            const currentTouches =
+            const currentTouch =
               currentEvent.touches[0] || currentEvent.changedTouches[0];
-            const movementX = currentTouches.clientX - previousTouches.clientX;
-            const movementY = currentTouches.clientY - previousTouches.clientY;
+            const movementX = currentTouch.clientX - previousTouch.clientX;
+            const movementY = currentTouch.clientY - previousTouch.clientY;
 
             return [movementX, movementY];
           })
+        )
+      )
+    );
+
+    this.pinch$ = new Subject();
+    this.pinchEnd$ = new Subject();
+    this.pinchStart$ = new Subject().pipe(
+      switchMap(() =>
+        this.pinch$.pipe(
+          debounceTime(5),
+          takeWhile((event) => {
+            const touches = event.touches || event.changedTouches;
+            return touches.length === 2;
+          }),
+          map((event) => {
+            const touches = event.touches || event.changedTouches;
+
+            const coordinateX = Math.round(
+              (touches[0].pageX + touches[1].pageX) / 2
+            );
+            const coordinateY = Math.round(
+              (touches[0].pageY + touches[1].pageY) / 2
+            );
+
+            const distance = Math.sqrt(
+              Math.pow(Math.abs(touches[0].pageX - touches[1].pageX), 2) +
+                Math.pow(Math.abs(touches[0].pageY - touches[1].pageY), 2)
+            );
+
+            return {
+              coordinateX: coordinateX,
+              coordinateY: coordinateY,
+              distance: distance,
+              scale: 0,
+            };
+          }),
+          scan((lastPinchEvent, currentPinchEvent) => {
+            return lastPinchEvent.distance + 10 <= currentPinchEvent.distance
+              ? { ...currentPinchEvent, scale: 1.25 }
+              : lastPinchEvent.distance - 10 >= currentPinchEvent.distance
+              ? { ...currentPinchEvent, scale: 0.8 }
+              : lastPinchEvent;
+          }),
+          distinctUntilChanged(),
+          skip(1)
         )
       )
     );
@@ -109,12 +173,9 @@ export default class GameField extends Component {
     }
   }
 
-  setCameraDistance(scale, mouseX, mouseY) {
+  setCameraDistance(scale, resizeOrigoX, resizeOrigoY) {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
-
-    let resizeOrigoX = mouseX;
-    let resizeOrigoY = mouseY;
 
     let newBackgroundWidth = this.state.backgroundSizeAndPosition.width * scale;
     let newBackgroundHeight =
@@ -148,31 +209,33 @@ export default class GameField extends Component {
       this.state.zoom + zoomMeasure >= 0 &&
       this.state.zoom + zoomMeasure <= 5
     ) {
-      this.setState((state) => ({
-        ...state,
-        tileSize: state.tileSize * scale,
-        backgroundSizeAndPosition: {
-          width: state.backgroundSizeAndPosition.width * scale,
-          height: state.backgroundSizeAndPosition.height * scale,
-          top:
-            resizeOrigoY -
-            (resizeOrigoY - state.backgroundSizeAndPosition.top) * scale,
-          left:
-            resizeOrigoX -
-            (resizeOrigoX - state.backgroundSizeAndPosition.left) * scale,
-        },
-        mapSizeAndPosition: {
-          width: state.mapSizeAndPosition.width * scale,
-          height: state.mapSizeAndPosition.height * scale,
-          top:
-            resizeOrigoY -
-            (resizeOrigoY - state.mapSizeAndPosition.top) * scale,
-          left:
-            resizeOrigoX -
-            (resizeOrigoX - state.mapSizeAndPosition.left) * scale,
-        },
-        zoom: state.zoom + zoomMeasure,
-      }));
+      this.setState(
+        (state) => ({
+          ...state,
+          tileSize: state.tileSize * scale,
+          backgroundSizeAndPosition: {
+            width: state.backgroundSizeAndPosition.width * scale,
+            height: state.backgroundSizeAndPosition.height * scale,
+            top:
+              resizeOrigoY -
+              (resizeOrigoY - state.backgroundSizeAndPosition.top) * scale,
+            left:
+              resizeOrigoX -
+              (resizeOrigoX - state.backgroundSizeAndPosition.left) * scale,
+          },
+          mapSizeAndPosition: {
+            width: state.mapSizeAndPosition.width * scale,
+            height: state.mapSizeAndPosition.height * scale,
+            top:
+              resizeOrigoY -
+              (resizeOrigoY - state.mapSizeAndPosition.top) * scale,
+            left:
+              resizeOrigoX -
+              (resizeOrigoX - state.mapSizeAndPosition.left) * scale,
+          },
+          zoom: state.zoom + zoomMeasure,
+        })
+      );
     }
   }
 
@@ -296,11 +359,30 @@ export default class GameField extends Component {
       .subscribe(([movementX, movementY]) => {
         this.setCameraPositionByMove(movementX, movementY, true);
       });
+
+    this.pinchStart$
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((event) => {
+        this.setState((state) => ({
+          ...state,
+          centerX: event.coordinateX,
+          centerY: event.coordinateY,
+        }));
+        this.setCameraDistance(
+          event.scale,
+          event.coordinateX,
+          event.coordinateY
+        );
+      });
   }
 
   componentWillUnmount() {
     this.componentDestroyed$.next();
     this.componentDestroyed$.complete();
+  }
+
+  handleToggleFullScreen() {
+    document.documentElement.requestFullscreen();
   }
 
   render() {
@@ -318,8 +400,15 @@ export default class GameField extends Component {
           onMouseDown={() => this.mouseDown$.next()}
           onMouseUp={() => this.mouseUp$.next()}
           onWheel={(event) => this.wheel$.next(event)}
-          onTouchMove={(event) => this.touchMove$.next(event)}
-          onTouchStart={() => this.touchStart$.next()}
+          onTouchMove={(event) => {
+            this.touchMove$.next(event);
+            this.pinch$.next(event);
+          }}
+          onTouchStart={() => {
+            this.touchStart$.next();
+            this.pinchStart$.next();
+          }}
+          onTouchEnd={() => this.pinchEnd$.next()}
         >
           <div
             className={style.background}

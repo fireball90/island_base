@@ -23,11 +23,11 @@ export default function SelectIsland() {
 
     axios
       .post(
-        `https://localhost:7276/api/Player/CreatePlayer?island=${selectedIsland}`
+        `${process.env.REACT_APP_API_BASE}/api/Player/CreatePlayer?island=${selectedIsland}`
       )
       .then((response) => {
         setPlayer(response.data);
-        navigate("/notifications");
+        navigate("/");
       })
       .catch(() => {
         alert("Nem sikerült kapcsolódni a szerverhez");

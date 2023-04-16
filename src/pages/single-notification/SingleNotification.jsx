@@ -38,7 +38,9 @@ export default function SingleNotification() {
       <div className="text-white text-center d-flex flex-column justify-content-between w-100">
         <div>
           <h3>{notification.title}</h3>
-          <p>{notification.message}</p>
+          <p style={{
+            whiteSpace: 'pre-line'
+          }}>{notification.message}</p>
           <h5>Szerzett értékek</h5>
           <div className="d-flex justify-content-center gap-3 mb-3">
             <div>
