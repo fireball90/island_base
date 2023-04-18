@@ -25,7 +25,7 @@ Amennyiben nem nyílik meg új ablak az alábbit írja be a böngésző sávjáb
 
 [https://islanders-b7706.web.app/](https://islanders-b7706.web.app/)
 
-## APK letöltési link: [Drive link](https://drive.google.com/file/d/1O5Dg_WZLsM9yS78fsBiAyVj4ARINLl1G/view?usp=sharing) 
+## APK letöltési link: [Drive link](https://drive.google.com/file/d/1WGelaRy3E8ZCe_cKAB6aX95UlDfARWSi/view?usp=sharing)
 
 ## Az oldal működése
 
