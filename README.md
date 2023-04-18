@@ -21,6 +21,10 @@ Ezzel elindul a frontend része egy új böngésző ablakban.
 Amennyiben nem nyílik meg új ablak az alábbit írja be a böngésző sávjába:
 [http://localhost:3000](http://localhost:3000)
 
+## A projekt firebase által deploy-olva lett az alábbi elérhetőségen:
+
+[https://islanders-b7706.web.app/](https://islanders-b7706.web.app/)
+
 ## Az oldal működése
 
 ### Belépés
