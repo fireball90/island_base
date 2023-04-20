@@ -21,6 +21,14 @@ Ezzel elindul a frontend része egy új böngésző ablakban.
 Amennyiben nem nyílik meg új ablak az alábbit írja be a böngésző sávjába:
 [http://localhost:3000](http://localhost:3000)
 
+## A `Prezentacio` mappában található:
+### - Magyar nyelvű prezentáció (PDF és PPTX formátumban)
+### - Angol nyelvű prezentáció (PDF és PPTX formátumban)
+
+## A `Dokumentacio` mappában található:
+### - Dokumentáció a programról (PDF és DOCX formátumban)
+### - Tesztelési dokumentáció (PDF és DOCX formátumban)
+
 ## A projekt firebase által deploy-olva lett az alábbi elérhetőségen:
 
 [https://islanders-b7706.web.app/](https://islanders-b7706.web.app/)
